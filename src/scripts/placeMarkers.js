@@ -39,7 +39,7 @@ const placeMarkers = (data, map) => {
             className,
         });
         const marker = Leaflet.marker(coordinates, { icon: markerIcon });
-        marker.bindPopup(`
+        const popup = `
             <address>
                 <span><strong>${name}</strong></span><br />
                 <a href="tel:${phone.replace(/\(0.*\)/, '+886')}">${phone}</a><br />
@@ -49,8 +49,9 @@ const placeMarkers = (data, map) => {
                 <span>成人口罩：${masksLeft}</span><br />
                 <span>兒童口罩：${childMasksLeft}</span>
             </p>
-            <p class="footnote">口罩數量以藥局實際存量為主，此處顯示數量僅供參考。</p>
-        `);
+            <p class="footnote">口罩數量以藥局實際存量為主，線上查詢之數量僅供參考。</p>
+        `;
+        marker.bindPopup(popup, { maxWidth: 260 });
         marker.on('click', (event) => {
             const { lat, lng } = event.latlng;
             setLastLocation([lat, lng]);

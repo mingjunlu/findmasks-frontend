@@ -39,7 +39,7 @@ html, body, #map {
 }
 
 .footnote {
-    font-size: 1.2rem;
+    color: rgb(140, 140, 140);
 }
 
 @media (max-width: 480px) {
