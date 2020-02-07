@@ -1,3 +1,5 @@
+import setLastLocation from './setLastLocation';
+
 const locateUser = (element, map) => {
     const { button } = element;
     const { _container: mapDiv } = map;
@@ -8,7 +10,8 @@ const locateUser = (element, map) => {
     mapDiv.style.setProperty('filter', 'brightness(50%)');
 
     // Remove loading styles after locating completed/failed
-    map.on('locationfound', () => {
+    map.on('locationfound', (event) => {
+        setLastLocation([event.latlng.lat, event.latlng.lng]);
         button.removeAttribute('disabled');
         map.dragging.enable();
         mapDiv.style.removeProperty('filter');

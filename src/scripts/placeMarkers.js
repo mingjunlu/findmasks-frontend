@@ -1,3 +1,5 @@
+import setLastLocation from './setLastLocation';
+
 const placeMarkers = (data, map) => {
     // eslint-disable-next-line no-undef
     const Leaflet = L;
@@ -36,19 +38,22 @@ const placeMarkers = (data, map) => {
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/images/marker-shadow.png',
             className,
         });
-        const marker = Leaflet
-            .marker(coordinates, { icon: markerIcon })
-            .bindPopup(`
-                <address>
-                    <span><strong>${name}</strong></span><br />
-                    <a href="tel:${phone.replace(/\(0.*\)/, '+886')}">${phone}</a><br />
-                    <a href="https://www.google.com/maps?q=${address}">${address}</a><br />
-                </address>
-                <p>
-                    <span>成人口罩：${masksLeft}</span><br />
-                    <span>兒童口罩：${childMasksLeft}</span>
-                </p>
-            `);
+        const marker = Leaflet.marker(coordinates, { icon: markerIcon });
+        marker.bindPopup(`
+            <address>
+                <span><strong>${name}</strong></span><br />
+                <a href="tel:${phone.replace(/\(0.*\)/, '+886')}">${phone}</a><br />
+                <a href="https://www.google.com/maps?q=${address}">${address}</a><br />
+            </address>
+            <p>
+                <span>成人口罩：${masksLeft}</span><br />
+                <span>兒童口罩：${childMasksLeft}</span>
+            </p>
+        `);
+        marker.on('click', (event) => {
+            const { lat, lng } = event.latlng;
+            setLastLocation([lat, lng]);
+        });
 
         // Add the marker into cluster group
         markers.addLayer(marker);
