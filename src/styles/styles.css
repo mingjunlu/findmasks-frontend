@@ -38,6 +38,10 @@ html, body, #map {
     font-size: 1.4rem;
 }
 
+.footnote {
+    font-size: 1.2rem;
+}
+
 @media (max-width: 480px) {
     .leaflet-bottom.leaflet-right {
         transform: scale(0.8) translateX(38px);

@@ -49,6 +49,7 @@ const placeMarkers = (data, map) => {
                 <span>成人口罩：${masksLeft}</span><br />
                 <span>兒童口罩：${childMasksLeft}</span>
             </p>
+            <p class="footnote">口罩數量以藥局實際存量為主，此處顯示數量僅供參考。</p>
         `);
         marker.on('click', (event) => {
             const { lat, lng } = event.latlng;
