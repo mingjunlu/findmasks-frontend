@@ -10,9 +10,9 @@ const placeMarkers = (data, map) => {
             name,
             address,
             phone,
+            coordinates,
             masksLeft,
             childMasksLeft,
-            coordinates,
         } = pharmacy;
 
         // Calculate how much perecent of masks left
@@ -22,7 +22,7 @@ const placeMarkers = (data, map) => {
         // Assign classes to markers
         let className;
         switch (true) {
-            case (rate >= 25):
+            case (rate >= 50):
                 className = '';
                 break;
             case (rate >= 5):
