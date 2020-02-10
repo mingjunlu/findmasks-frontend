@@ -53,8 +53,10 @@ const placeMarkers = (data, map) => {
         `;
         marker.bindPopup(popup, { maxWidth: 260 });
         marker.on('click', (event) => {
-            const { lat, lng } = event.latlng;
-            setLastLocation([lat, lng]);
+            setLastLocation({
+                longitude: event.latlng.lng,
+                latitude: event.latlng.lat,
+            });
         });
 
         // Add the marker into cluster group
