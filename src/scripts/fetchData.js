@@ -1,4 +1,5 @@
 import papa from 'papaparse';
+import transformHeader from './transformHeader';
 import toHalfWidth from './toHalfWidth';
 import coords from '../assets/coords.json';
 
@@ -8,26 +9,7 @@ const fetchData = async () => {
         rawPharmacies = await new Promise((resolve, reject) => {
             papa.parse('/pharmacies?format=csv', {
                 header: true,
-                transformHeader(header) {
-                    switch (header) {
-                        case '醫事機構代碼':
-                            return 'id';
-                        case '醫事機構名稱':
-                            return 'name';
-                        case '醫事機構地址':
-                            return 'address';
-                        case '醫事機構電話':
-                            return 'phone';
-                        case '成人口罩總剩餘數':
-                            return 'masksLeft';
-                        case '兒童口罩剩餘數':
-                            return 'childMasksLeft';
-                        case '來源資料時間':
-                            return 'updatedAt';
-                        default:
-                            return header;
-                    }
-                },
+                transformHeader,
                 dynamicTyping: true,
                 complete(results) {
                     resolve(results);
