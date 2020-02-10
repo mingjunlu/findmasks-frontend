@@ -18,9 +18,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     const maskMap = Leaflet.map('map', { preferCanvas: true });
     initializeMap(maskMap);
     placeMarkers(pharmacies, maskMap);
-
-    // Remove loading screen
-    const layer = document.querySelector('.loading-layer');
-    layer.addEventListener('transitionend', (event) => { event.target.remove(); });
-    layer.classList.add('loading-layer--transparent');
 });

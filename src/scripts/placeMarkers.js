@@ -38,7 +38,8 @@ const placeMarkers = (data, map) => {
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/images/marker-shadow.png',
             className,
         });
-        const marker = Leaflet.marker(coordinates, { icon: markerIcon });
+        const { latitude, longitude } = coordinates;
+        const marker = Leaflet.marker([latitude, longitude], { icon: markerIcon });
         const popup = `
             <address>
                 <span><strong>${name}</strong></span><br />
