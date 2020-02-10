@@ -14,11 +14,6 @@ const initializeMap = (map) => {
     map.attributionControl.setPrefix(''); // Remove the "Leaflet" prefix
     map.setView(initialLocation, (lastLocation ? 14 : 11));
 
-    // Remove loading screen
-    const layer = document.querySelector('.loading-layer');
-    layer.addEventListener('transitionend', (event) => { event.target.remove(); });
-    layer.classList.add('loading-layer--transparent');
-
     // Show the map
     Leaflet
         .tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
