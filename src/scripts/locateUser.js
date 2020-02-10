@@ -30,7 +30,7 @@ const locateUser = (element, map) => {
     // Zoom in to current location
     map.locate({
         setView: true,
-        maxZoom: 17,
+        maxZoom: 16,
         enableHighAccuracy: true,
     });
 };

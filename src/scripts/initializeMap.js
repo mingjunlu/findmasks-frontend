@@ -22,7 +22,7 @@ const initializeMap = (map) => {
                     <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a> maps | Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors
                 </footer>
             `,
-            maxZoom: 17,
+            maxZoom: 16,
         })
         .addTo(map);
 
