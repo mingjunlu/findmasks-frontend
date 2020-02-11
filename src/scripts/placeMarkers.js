@@ -25,7 +25,7 @@ const placeMarkers = async (map) => {
                 download: true,
                 skipEmptyLines: true,
             };
-            papa.parse('/pharmacies?format=csv', parseConfig);
+            papa.parse('/pharmacies', parseConfig);
         });
     } catch (error) {
         // eslint-disable-next-line no-alert
