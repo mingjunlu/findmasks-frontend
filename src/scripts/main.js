@@ -1,3 +1,4 @@
+import 'fg-loadcss/dist/cssrelpreload';
 import initializeMap from './initializeMap';
 import placeMarkers from './placeMarkers';
 

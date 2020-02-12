@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
     <head>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <!-- Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-157952368-1"></script>
-        <script>
+        <script class="remove">
             window.dataLayer = window.dataLayer || [];
             function gtag() { window.dataLayer.push(arguments); }
             gtag('js', new Date());
@@ -22,17 +22,84 @@
         <link rel="icon" type="image/png" sizes="32x32" data-href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" data-href="/favicon-16x16.png" />
         <link rel="manifest" data-href="/site.webmanifest" />
-        <script src="scripts/loadFavicons.js"></script>
+        <script class="remove">
+            document.querySelectorAll('link[data-href]').forEach((tag) => {
+                tag.setAttribute('href', tag.dataset.href);
+                tag.removeAttribute('data-href');
+            })
+        </script>
 
-        <!-- Stlesheets -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
-        <link rel="stylesheet" href="styles/reset.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
-        <link rel="stylesheet" href="styles/styles.css" />
+        <!-- Critical Styles -->
+        <style>
+            html, body, #map {
+                width: 100vw;
+                height: 100vh;
+            }
+            .loading-layer {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgb(97, 189, 172);
+                z-index: 1001;
+                transition: background-color ease-in 400ms;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .loading-layer--transparent {
+                background-color: transparent;
+            }
+            @keyframes sk-bounce {
+                0%, 100% { transform: scale(0.0); }
+                50% { transform: scale(1.0); }
+            }
+            .spinner {
+                width: 40px;
+                height: 40px;
+                position: relative;
+                margin: 100px auto;
+            }
+            .double-bounce1, .double-bounce2 {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background-color: white;
+                opacity: 0.6;
+                position: absolute;
+                top: 0;
+                left: 0;
+                animation: sk-bounce 2.0s infinite ease-in-out;
+            }
+            .double-bounce2 {
+                animation-delay: -1.0s;
+            }
+        </style>
+
+        <!-- Non-Critical Styles -->
+        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="preload" href="styles/reset.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="preload" href="styles/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"></noscript>
+        <noscript><link rel="stylesheet" href="styles/reset.css"></noscript>
+        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"></noscript>
+        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css"></noscript>
+        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.css"></noscript>
+        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"></noscript> 
+        <noscript><link rel="stylesheet" href="styles/styles.css"></noscript>
     </head>
+
+    <!-- Scripts -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <script defer src="scripts/main.js"></script>
+
     <body>
         <noscript>請在瀏覽器中啟用 JavaScript，確保網站功能可以正常運作。</noscript>
         <div class="loading-layer">
@@ -42,9 +109,5 @@
             </div>
         </div>
         <div id="map"></div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
-        <script src="scripts/main.js"></script>
     </body>
 </html>
