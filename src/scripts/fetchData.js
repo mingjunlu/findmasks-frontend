@@ -1,6 +1,6 @@
 const fetchData = async () => {
     try {
-        const response = await fetch('/pharmacies', { headers: { Accept: 'application/json' } });
+        const response = await fetch(process.env.ENDPOINT, { headers: { Accept: 'application/json' } });
         if (!response.ok) {
             throw new Error(response.statusText);
         }
