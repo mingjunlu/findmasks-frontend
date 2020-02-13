@@ -16,13 +16,14 @@ const initializeMap = (map) => {
 
     // Show the map
     Leaflet
-        .tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
+        .tileLayer('https://api.maptiler.com/maps/basic/256/{z}/{x}/{y}@2x.png?key={accessToken}', {
             attribution: `
                 <footer>
-                    <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a> maps | Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors
+                    © <a href="https://www.maptiler.com/copyright/" target="_blank">MapTiler</a> | © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors
                 </footer>
             `,
-            maxZoom: 16,
+            minZoom: 7,
+            accessToken: process.env.MAPTILER_TOKEN,
         })
         .addTo(map);
 
