@@ -34,6 +34,7 @@
             html, body, #map {
                 width: 100vw;
                 height: 100vh;
+                overflow: hidden;
             }
             .loading-layer {
                 position: fixed;
@@ -42,7 +43,7 @@
                 bottom: 0;
                 left: 0;
                 background-color: rgb(97, 189, 172);
-                z-index: 1001;
+                z-index: 4;
                 transition: background-color ease-in 400ms;
                 display: flex;
                 justify-content: center;
@@ -77,26 +78,7 @@
             }
         </style>
 
-        <!-- Non-Critical Styles -->
-        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"></noscript>
-        <link rel="preload" href="styles/reset.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="styles/reset.css"></noscript>
-        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"></noscript>
-        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css"></noscript>
-        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.css"></noscript>
-        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"></noscript>
-        <link rel="preload" href="styles/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="styles/styles.css"></noscript>
-
         <!-- Scripts -->
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.js"></script>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.js"></script>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
         <script defer src="scripts/main.js"></script>
     </head>
 
@@ -108,6 +90,14 @@
                 <div class="double-bounce2"></div>
             </div>
         </div>
+        <div class="controls controls--invisible controls--top-right">
+            <button type="button" class="controls__button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="controls__icon controls__icon--locate">
+                    <path fill="rgb(58, 58, 60)" d="M444.52 3.52L28.74 195.42c-47.97 22.4-31.98 92.75 19.2 92.75h175.9v175.9c0 51.17 70.36 67.17 92.75 19.2L508.5 67.5c16-38.4-25.6-79.97-63.97-63.97z" />
+                </svg>
+            </button>
+        </div>
+        <div class="sheet sheet--vanished"></div>
         <div id="map"></div>
     </body>
 </html>

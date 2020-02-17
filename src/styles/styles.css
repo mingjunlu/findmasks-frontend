@@ -17,28 +17,191 @@ body {
         "Segoe UI Symbol";
 }
 
-.marker-cluster span {
+.disabled {
+    pointer-events: none;
+    filter: brightness(0.5);
+}
+
+.controls {
+    background-color: rgb(250, 250, 250);
+    border-radius: 0.8rem;
+    border: 1px solid rgb(229, 229, 234);
+    box-shadow: 0px 0px 6px 0px rgba(15, 15, 15, 0.2);
+    position: fixed;
+    z-index: 3;
+}
+
+.controls--invisible {
     visibility: hidden;
 }
 
-.insufficient {
-    filter: grayscale(1);
+.controls--top-right {
+    top: 0.8rem;
+    right: 0.8rem;
 }
 
-.caution {
-    filter: hue-rotate(170deg) brightness(1.13);
+.controls__button {
+    width: 4.4rem;
+    height: 4.4rem;
+    outline: none;
+    display: block;
 }
 
-.leaflet-popup-content {
+.controls__button:disabled {
+    cursor: not-allowed;
+}
+
+.controls__icon--locate {
+    width: 1.4rem;
+    height: 1.4rem;
+    position: relative;
+    top: 0.1rem;
+}
+
+.sheet {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 2.0rem 1.6rem;
+    background-color: rgb(250, 250, 250);
+    z-index: 3;
+    border: 1px solid rgb(229, 229, 234);
+    border-top-left-radius: 1.6rem;
+    border-top-right-radius: 1.6rem;
+    box-shadow: 1px 2px 30px rgba(15, 15, 15, 0.2);
+    transition: transform 300ms ease-in;
+}
+
+.sheet:empty {
+    z-index: -1;
+}
+
+.sheet--vanished {
+    transform: translateY(130%);
+}
+
+.sheet__heading { 
+    display: flex;
+    justify-content: space-between;
+}
+
+.sheet__name {
+    font-weight: bold;
+    font-size: 2.0rem;
+    line-height: 32px;
+}
+
+.sheet__buttons {
+    display: inline-flex;
+}
+
+.sheet__button {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    outline: none;
+    border-radius: 50%;
+    background-color: rgb(229, 229, 234);
+    margin-left: 0.4rem;
+}
+
+.sheet__icon--phone {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.sheet__icon--direction {
+    width: 1.6rem;
+    height: 1.6rem;
+    position: relative;
+    top: 0.2rem;
+}
+
+.sheet__icon--cancel {
+    width: 1.6rem;
+    height: 1.6rem;
+    position: relative;
+    top: 0.2rem;
+}
+
+.sheet__masks {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1.6rem;
+    padding-bottom: 1.0rem;
+}
+
+.sheet__masksLeft {
+    flex-basis: 48%;
+    border-radius: 1.0rem;
+    padding: 1.0rem 1.4rem;
+    color: white;
+    background-color: rgb(17, 120, 122);
+}
+
+.sheet__masksLeft--caution {
+    background-color: rgb(230, 126, 34);
+}
+
+.sheet__masksLeft--insufficient {
+    background-color: rgb(142, 142, 147);
+}
+
+.sheet__label {
+    display: block;
+    text-align: center;
     font-size: 1.4rem;
+    line-height: 2.4rem;
 }
 
-.footnote {
-    color: rgb(140, 140, 140);
+.sheet__value {
+    display: block;
+    font-size: 3.2rem;
+    text-align: center;
+    position: relative;
 }
 
-@media (max-width: 480px) {
-    .leaflet-bottom.leaflet-right {
-        transform: scale(0.8) translateX(38px);
+.sheet__value::after {
+    content: "片";
+    font-size: 1.0rem;
+    position: absolute;
+    bottom: 0;
+    line-height: 2.2rem;
+    padding: 0 0.4rem;
+}
+
+.sheet__segment {
+    display: none;
+    min-height: 40px;
+}
+
+@media (min-width: 768px) {
+    .sheet {
+        top: 0.8rem;
+        right: unset;
+        bottom: unset;
+        left: 0.8rem;
+        min-width: 400px;
+        border-radius: 1.2rem;
+        transform: unset;
+    }
+
+    .sheet--vanished {
+        transform: translateX(-110%);
+    }
+
+    .sheet__buttons {
+        display: none;
+    }
+
+    .sheet__masks {
+        padding-bottom: 1.6rem;
+    }
+
+    .sheet__segment {
+        display: flex;
+        align-items: center;
     }
 }

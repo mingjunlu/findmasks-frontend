@@ -1,38 +1,32 @@
-import setLastLocation from './setLastLocation';
+import getPosition from './getPosition';
 
-const locateUser = (element, map) => {
-    const { button } = element;
-    const { _container: mapDiv } = map;
-
+const locateUser = async (map) => {
     // Set loading styles
-    button.setAttribute('disabled', true);
-    map.dragging.disable();
-    mapDiv.style.setProperty('filter', 'brightness(50%)');
+    const mapContainer = document.querySelector('#map');
+    const controlsDiv = document.querySelector('.controls');
+    mapContainer.classList.add('disabled');
+    controlsDiv.classList.add('disabled');
 
-    // Remove loading styles after locating completed/failed
-    map.on('locationfound', (event) => {
-        setLastLocation({
-            longitude: event.latlng.lng,
-            latitude: event.latlng.lat,
-        });
-        button.removeAttribute('disabled');
-        map.dragging.enable();
-        mapDiv.style.removeProperty('filter');
-    });
-    map.on('locationerror', () => {
+    // Get coordinates
+    let coordinates = [];
+    try {
+        coordinates = await getPosition();
+        const hasCoordinates = (coordinates.length === 2);
+        const areNumbers = coordinates.every((item) => (typeof item === 'number'));
+        if (!hasCoordinates || !areNumbers) {
+            throw new Error();
+        }
+    } catch (error) {
         // eslint-disable-next-line no-alert
         alert('定位失敗');
-        button.removeAttribute('disabled');
-        map.dragging.enable();
-        mapDiv.style.removeProperty('filter');
-    });
+        return;
+    }
 
-    // Zoom in to current location
-    map.locate({
-        setView: true,
-        maxZoom: 14,
-        enableHighAccuracy: true,
-    });
+    // Remove loading styles
+    mapContainer.classList.remove('disabled');
+    controlsDiv.classList.remove('disabled');
+
+    map.flyTo({ center: coordinates, zoom: 14 });
 };
 
 export default locateUser;
