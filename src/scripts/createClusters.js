@@ -2,7 +2,7 @@ const createClusters = (map) => {
     map.addLayer({
         id: 'clusters',
         type: 'circle',
-        source: 'pharmacies',
+        source: 'places',
         filter: ['has', 'point_count'],
         paint: {
             'circle-stroke-width': 8,
@@ -16,7 +16,7 @@ const createClusters = (map) => {
     map.on('click', 'clusters', (event) => {
         const [feature] = map.queryRenderedFeatures(event.point, { layers: ['clusters'] });
         const { cluster_id: clusterId } = feature.properties;
-        map.getSource('pharmacies').getClusterExpansionZoom(clusterId, (error, zoomValue) => {
+        map.getSource('places').getClusterExpansionZoom(clusterId, (error, zoomValue) => {
             if (error) { return; }
             map.easeTo({
                 center: feature.geometry.coordinates,

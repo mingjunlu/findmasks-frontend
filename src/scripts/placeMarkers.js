@@ -15,7 +15,7 @@ const placeMarkers = async (map) => {
         map.addLayer({
             id: 'unclustered-point',
             type: 'symbol',
-            source: 'pharmacies',
+            source: 'places',
             filter: ['!', ['has', 'point_count']],
             layout: {
                 'icon-image': 'map-marker',
@@ -36,7 +36,7 @@ const placeMarkers = async (map) => {
     const sheet = document.querySelector('.sheet');
     sheet.removeAttribute('style');
 
-    // Show pharmacy info on click
+    // Show place info on click
     map.on('click', 'unclustered-point', (event) => {
         const [feature] = event.features;
         const { geometry, properties } = feature;
@@ -90,7 +90,7 @@ const placeMarkers = async (map) => {
         const closeButton = document.querySelector('button.sheet__button');
         closeButton.addEventListener('click', () => { sheet.classList.add('sheet--vanished'); });
 
-        // Move the pharmacy to center and show its info
+        // Center the place and show its info
         sheet.classList.remove('sheet--vanished');
         map.flyTo({ center: geometry.coordinates });
     });

@@ -6,12 +6,12 @@ const initializeMap = async (promise, map) => {
     const geoJson = await promise;
     if (geoJson instanceof Error) {
         // eslint-disable-next-line no-alert
-        alert('無法取得藥局資料');
+        alert('無法取得資料');
         return;
     }
 
     // Load GeoJson data
-    map.addSource('pharmacies', {
+    map.addSource('places', {
         type: 'geojson',
         data: geoJson,
         cluster: true,
