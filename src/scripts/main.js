@@ -3,19 +3,13 @@ import '../styles/reset.css';
 import 'mapbox-gl/src/css/mapbox-gl.css';
 import '../styles/styles.css';
 import mapboxgl from 'mapbox-gl';
-import fetchData from './fetchData';
 import getLastLocation from './getLastLocation';
+import fetchData from './fetchData';
 import initializeMap from './initializeMap';
-import createClusters from './createClusters';
-import placeMarkers from './placeMarkers';
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const geoJson = await fetchData();
-    if (geoJson instanceof Error) {
-        // eslint-disable-next-line no-alert
-        alert('無法取得藥局資料');
-        return;
-    }
+window.addEventListener('DOMContentLoaded', () => {
+    // Start fetching data
+    const promisedData = fetchData();
 
     // Load the last known location
     const lastLocation = getLastLocation();
@@ -24,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ? [lastLocation.longitude, lastLocation.latitude]
         : somewhereInTaipei;
 
-    // Mapbox settings
+    // Set up Mapbox
     mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
     const maskMap = new mapboxgl.Map({
         container: 'map',
@@ -34,14 +28,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         minZoom: 6,
     });
 
-    maskMap.on('load', () => {
-        initializeMap(geoJson, maskMap);
-        createClusters(maskMap);
-        placeMarkers(maskMap);
-
-        // Show control buttons
-        const controlsDiv = document.querySelector('.controls');
-        controlsDiv.classList.remove('controls--invisible');
+    // Initialize the map
+    maskMap.on('load', async () => {
+        await initializeMap(promisedData, maskMap);
     });
 
     // Remove loading screen
