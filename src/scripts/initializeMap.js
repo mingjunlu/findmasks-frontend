@@ -3,18 +3,22 @@ import placeMarkers from './placeMarkers';
 import locateUser from './locateUser';
 
 const initializeMap = async (promise, map) => {
+    // Disable map rotation
+    map.touchZoomRotate.disableRotation();
+    map.dragRotate.disable();
+
+    // Wait until data fetched
     const response = await promise;
     if (response instanceof Error) {
         // eslint-disable-next-line no-alert
         alert('無法取得資料');
         return;
     }
-    const { data, updatedAt } = response;
 
     // Load GeoJson data
     map.addSource('places', {
         type: 'geojson',
-        data,
+        data: response.data,
         cluster: true,
         clusterMaxZoom: 13,
         clusterRadius: 80,
@@ -22,7 +26,7 @@ const initializeMap = async (promise, map) => {
 
     // Create clusters & markers
     createClusters(map);
-    placeMarkers(map, updatedAt);
+    placeMarkers(map, response.updatedAt);
 
     // Allow users to locate themselves
     const locateButton = document.querySelector('.controls__icon--locate').parentElement;
