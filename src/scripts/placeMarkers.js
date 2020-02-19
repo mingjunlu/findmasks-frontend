@@ -1,7 +1,13 @@
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/zh-tw';
 import getClassSufix from './getClassSufix';
 import setLastLocation from './setLastLocation';
 
-const placeMarkers = async (map) => {
+dayjs.extend(relativeTime);
+dayjs.locale('zh-tw');
+
+const placeMarkers = async (map, time) => {
     // Create a marker
     const markerImage = await new Promise((resolve, reject) => {
         const image = new Image(16, 21); // 26:34
@@ -47,9 +53,15 @@ const placeMarkers = async (map) => {
             latitude: geometry.coordinates[1],
         });
 
+        // Calculate the relative time
+        const updateTime = time ? dayjs(time).fromNow() : '';
+
         sheet.innerHTML = `
             <div class="sheet__heading">
-                <h1 class="sheet__name">${properties.name}</h1>
+                <div class="sheet__title">
+                    <h1 class="sheet__name">${properties.name}</h1>
+                    <p class="sheet__time">${updateTime}</p>
+                </div>
                 <div class="sheet__buttons">
                     <a href="tel:${properties.phone.replace(/\(0.*\)/, '+886')}" class="sheet__button">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="sheet__icon--phone">
@@ -90,13 +102,12 @@ const placeMarkers = async (map) => {
         const closeButton = document.querySelector('button.sheet__button');
         closeButton.addEventListener('click', () => { sheet.classList.add('sheet--vanished'); });
 
-        // Center the place and show its info
+        // Show the place's info
         sheet.classList.remove('sheet--vanished');
-        map.flyTo({ center: geometry.coordinates });
     });
 
     // Hide the sheet when clicked elsewhere
-    map.on('touchend', () => { sheet.classList.add('sheet--vanished'); });
+    // map.on('touchend', () => { sheet.classList.add('sheet--vanished'); });
 
     // Change the cursor on hover & blur
     map.on('mouseenter', 'unclustered-point', () => {

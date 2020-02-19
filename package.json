@@ -19,6 +19,7 @@
         "staticPath": "src/assets"
     },
     "dependencies": {
+        "dayjs": "^1.8.20",
         "mapbox-gl": "^1.7.0",
         "normalize.css": "^8.0.1",
         "parcel-bundler": "^1.12.4",
