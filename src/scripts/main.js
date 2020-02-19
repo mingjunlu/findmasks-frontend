@@ -25,7 +25,10 @@ window.addEventListener('DOMContentLoaded', () => {
         style: 'mapbox://styles/mapbox/light-v10',
         center: initialLocation,
         zoom: lastLocation ? 14 : 9,
-        minZoom: 6,
+        maxBounds: [
+            [117.82303563424552, 20.555013006344305], // Bottom-left corrdinates
+            [123.84450551116388, 26.833835878766501], // Top-right corrdinates
+        ],
     });
 
     // Initialize the map
