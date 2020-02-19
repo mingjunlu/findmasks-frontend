@@ -17,9 +17,32 @@ body {
         "Segoe UI Symbol";
 }
 
-.disabled {
-    pointer-events: none;
-    filter: brightness(0.5);
+@keyframes compass {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.locating-layer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(15, 15, 15, 0.7);
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.locating-layer--vanished {
+    display: none;
+}
+
+.locating-layer__icon {
+    width: 6.0vh;
+    height: 6.0vh;
+    animation: compass 2.2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite alternate;
 }
 
 .controls {

@@ -2,10 +2,10 @@ import getPosition from './getPosition';
 
 const locateUser = async (map) => {
     // Set loading styles
-    const mapContainer = document.querySelector('#map');
-    const controlsDiv = document.querySelector('.controls');
-    mapContainer.classList.add('disabled');
-    controlsDiv.classList.add('disabled');
+    const locatingScreen = document.querySelector('.locating-layer');
+    if (locatingScreen) {
+        locatingScreen.classList.remove('locating-layer--vanished');
+    }
 
     // Get coordinates
     let coordinates = [];
@@ -23,8 +23,9 @@ const locateUser = async (map) => {
     }
 
     // Remove loading styles
-    mapContainer.classList.remove('disabled');
-    controlsDiv.classList.remove('disabled');
+    if (locatingScreen) {
+        locatingScreen.classList.add('locating-layer--vanished');
+    }
 
     map.flyTo({ center: coordinates, zoom: 14 });
 };
