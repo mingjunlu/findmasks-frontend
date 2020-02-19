@@ -218,7 +218,7 @@ body {
         transform: translateX(-110%);
     }
 
-    .sheet__buttons {
+    .sheet__buttons > a {
         display: none;
     }
 
