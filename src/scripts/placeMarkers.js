@@ -8,36 +8,69 @@ dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
 
 const placeMarkers = async (map, time) => {
-    // Create a marker
-    const markerImage = await new Promise((resolve, reject) => {
-        const image = new Image(16, 21); // 26:34
-        image.addEventListener('load', () => { resolve(image); });
-        image.addEventListener('error', (error) => { reject(error); });
-        image.src = '/marker.svg';
-    });
+    // Load marker images
+    const promisedMarkers = [
+        new Promise((resolve, reject) => {
+            const image = new Image(16, 21);
+            image.addEventListener('load', () => { resolve(image); });
+            image.addEventListener('error', (error) => { reject(error); });
+            image.src = '/marker-insufficient.svg';
+        }),
+        new Promise((resolve, reject) => {
+            const image = new Image(16, 21);
+            image.addEventListener('load', () => { resolve(image); });
+            image.addEventListener('error', (error) => { reject(error); });
+            image.src = '/marker-caution.svg';
+        }),
+        new Promise((resolve, reject) => {
+            const image = new Image(16, 21);
+            image.addEventListener('load', () => { resolve(image); });
+            image.addEventListener('error', (error) => { reject(error); });
+            image.src = '/marker-sufficient.svg';
+        }),
+    ];
+    const results = await Promise.allSettled(promisedMarkers);
+    const markers = results.map((promise) => promise.value);
+    map.addImage('insufficient-marker', markers[0]);
+    map.addImage('caution-marker', markers[1]);
+    map.addImage('sufficient-marker', markers[2]);
 
-    if (markerImage) {
-        map.addImage('map-marker', markerImage);
-        map.addLayer({
-            id: 'unclustered-point',
-            type: 'symbol',
-            source: 'places',
-            filter: ['!', ['has', 'point_count']],
-            layout: {
-                'icon-image': 'map-marker',
-                'icon-allow-overlap': false,
-                'text-field': '{name}',
-                'text-size': 12,
-                'text-letter-spacing': 0.05,
-                'text-offset': [0, 1.6],
-            },
-            paint: {
-                'text-color': 'rgb(34, 0, 34)',
-                'text-halo-color': 'rgb(255, 255, 255)',
-                'text-halo-width': 1,
-            },
-        });
-    }
+    // Paint the marker
+    map.addLayer({
+        id: 'unclustered-point',
+        type: 'symbol',
+        source: 'places',
+        filter: ['!', ['has', 'point_count']],
+        layout: {
+            'icon-allow-overlap': false,
+            'text-field': '{name}',
+            'text-size': 12,
+            'text-letter-spacing': 0.05,
+            'text-offset': [0, 1.6],
+            'icon-image': [
+                'step',
+                ['get', 'masksLeft'],
+                'insufficient-marker',
+                20,
+                'caution-marker',
+                100,
+                'sufficient-marker',
+            ],
+        },
+        paint: {
+            'text-halo-color': 'rgb(255, 255, 255)',
+            'text-halo-width': 1,
+            'text-color': [
+                'step',
+                ['get', 'masksLeft'],
+                'rgb(142, 142, 147)',
+                20,
+                'rgb(230, 126, 34)',
+                100,
+                'rgb(17, 120, 122)',
+            ],
+        },
+    });
 
     const sheet = document.querySelector('.sheet');
     sheet.removeAttribute('style');
@@ -81,11 +114,11 @@ const placeMarkers = async (map, time) => {
                 </div>
             </div>
             <div class="sheet__masks">
-                <p class="${getClassSufix(properties.masksLeft, 200)}">
+                <p class="${getClassSufix(properties.masksLeft, 400)}">
                     <span class="sheet__label">成人口罩</span>
                     <span class="sheet__value">${properties.masksLeft}</span>
                 </p>
-                <p class="${getClassSufix(properties.childMasksLeft, 50)}">
+                <p class="${getClassSufix(properties.childMasksLeft, 200)}">
                     <span class="sheet__label">兒童口罩</span>
                     <span class="sheet__value">${properties.childMasksLeft}</span>
                 </p>

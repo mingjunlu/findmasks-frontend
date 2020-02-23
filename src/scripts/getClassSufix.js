@@ -4,7 +4,7 @@ const getClassSuffix = (amount, quota, className = 'sheet__masksLeft') => {
 
     // Assign classes to markers
     switch (true) {
-        case (rate >= 50):
+        case (rate >= 25):
             return className;
         case (rate >= 5):
             return `${className} ${className}--caution`;
