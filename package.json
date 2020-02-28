@@ -5,24 +5,30 @@
     "main": "index.js",
     "scripts": {
         "build": "parcel build src/index.html --out-dir build",
-        "prebuild": "rm -rf build",
+        "lint": "eslint src",
+        "prebuild": "rm -rf .cache build",
         "start": "parcel src/index.html --out-dir build"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "private": true,
+    "dependencies": {
+        "dayjs": "^1.8.20",
+        "mapbox-gl": "^1.7.0",
+        "normalize.css": "^8.0.1"
+    },
+    "devDependencies": {
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb-base": "^14.0.0",
+        "eslint-plugin-import": "^2.20.1",
+        "parcel-bundler": "^1.12.4",
+        "parcel-plugin-static-files-copy": "^2.3.1"
+    },
     "browserslist": [
         "since 2017-06"
     ],
     "staticFiles": {
         "staticPath": "src/assets"
-    },
-    "dependencies": {
-        "dayjs": "^1.8.20",
-        "mapbox-gl": "^1.7.0",
-        "normalize.css": "^8.0.1",
-        "parcel-bundler": "^1.12.4",
-        "parcel-plugin-static-files-copy": "^2.3.1"
     }
 }
