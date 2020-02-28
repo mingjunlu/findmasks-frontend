@@ -1,14 +1,14 @@
 const fetchData = async () => {
+    const currentHour = new Date().getHours();
+    const isPeakTime = (currentHour >= 7) && (currentHour < 23);
+    const url = isPeakTime ? process.env.ENDPOINT : process.env.GIST_URL;
+
     try {
-        const response = await fetch(process.env.ENDPOINT, { headers: { Accept: 'application/geo+json' } });
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error(response.statusText);
         }
-        const data = await response.json();
-        return {
-            data,
-            updatedAt: response.headers.get('Last-Modified'),
-        };
+        return response.json();
     } catch (error) {
         return error;
     }

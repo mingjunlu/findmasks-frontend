@@ -8,8 +8,8 @@ const initializeMap = async (promise, map) => {
     map.dragRotate.disable();
 
     // Wait until data fetched
-    const response = await promise;
-    if (response instanceof Error) {
+    const data = await promise;
+    if (data instanceof Error) {
         // eslint-disable-next-line no-alert
         alert('無法取得資料');
         return;
@@ -18,7 +18,7 @@ const initializeMap = async (promise, map) => {
     // Load GeoJson data
     map.addSource('places', {
         type: 'geojson',
-        data: response.data,
+        data,
         cluster: true,
         clusterMaxZoom: 13,
         clusterRadius: 80,
@@ -26,7 +26,7 @@ const initializeMap = async (promise, map) => {
 
     // Create clusters & markers
     createClusters(map);
-    placeMarkers(map, response.updatedAt);
+    placeMarkers(map, data.updatedAt);
 
     // Allow users to locate themselves
     const locateButton = document.querySelector('.controls__icon--locate').parentElement;
