@@ -3,9 +3,9 @@ import '../styles/reset.css';
 import 'mapbox-gl/src/css/mapbox-gl.css';
 import '../styles/styles.css';
 import mapboxgl from 'mapbox-gl';
-import getLastLocation from './getLastLocation';
-import fetchData from './fetchData';
-import initializeMap from './initializeMap';
+import getLastLocation from './utilities/getLastLocation';
+import fetchData from './utilities/fetchData';
+import initializeMap from './utilities/initializeMap';
 
 window.addEventListener('DOMContentLoaded', () => {
     // Start fetching data
