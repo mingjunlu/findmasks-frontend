@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
     mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
     const maskMap = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/light-v10',
+        style: 'mapbox://styles/mapbox/light-v10?optimize=true',
         center: initialLocation,
         zoom: lastLocation ? 14 : 9,
         maxBounds: [
