@@ -1,4 +1,4 @@
-const getClassSuffix = (amount, quota, className = 'sheet__masksLeft') => {
+const getClassSuffix = (amount, quota, className) => {
     // Calculate how much perecent of masks left
     const rate = Math.round((amount / quota) * 100);
 

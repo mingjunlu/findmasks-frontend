@@ -84,20 +84,33 @@ body {
 .sheet {
     position: fixed;
     right: 0;
-    bottom: 0;
     left: 0;
-    padding: 2.0rem 1.6rem;
+    bottom: 0;
+    padding: 2.0rem 1.6rem 0 1.6rem;
     background-color: rgb(250, 250, 250);
-    z-index: 3;
+    z-index: 4;
     border: 1px solid rgb(229, 229, 234);
     border-top-left-radius: 1.6rem;
     border-top-right-radius: 1.6rem;
     box-shadow: 1px 2px 30px rgba(15, 15, 15, 0.2);
-    transition: transform 300ms ease-in;
+    transition: transform 100ms ease-in-out;
+    transition-delay: 1ms; /* Prevent Safari's twitching bug */
 }
 
-.sheet:empty {
-    z-index: -1;
+.sheet::before {
+    content: "　";
+    width: 3.2rem;
+    height: 0.4rem;
+    background-color: rgb(209, 209, 214);
+    border-radius: 2.0rem;
+    margin: 0 auto;
+    position: absolute;
+    top: 0.8rem;
+    left: calc(50% - 1.6rem);
+}
+
+.sheet--condensed {
+    transform: translateY(41%);
 }
 
 .sheet--vanished {
@@ -114,6 +127,7 @@ body {
 }
 
 .sheet__name {
+    color: rgb(44, 44, 46);
     font-weight: bold;
     font-size: 2.0rem;
     line-height: 32px;
@@ -155,13 +169,6 @@ body {
     height: 1.2rem;
 }
 
-.sheet__icon--direction {
-    width: 1.6rem;
-    height: 1.6rem;
-    position: relative;
-    top: 0.2rem;
-}
-
 .sheet__icon--cancel {
     width: 1.6rem;
     height: 1.6rem;
@@ -169,14 +176,13 @@ body {
     top: 0.2rem;
 }
 
-.sheet__masks {
+.sheet__cards {
     display: flex;
     justify-content: space-between;
-    padding-top: 1.6rem;
-    padding-bottom: 1.0rem;
+    margin-top: 1.8rem;
 }
 
-.sheet__masksLeft {
+.sheet__card {
     flex-basis: 48%;
     border-radius: 1.0rem;
     padding: 1.0rem 1.4rem;
@@ -184,29 +190,29 @@ body {
     background-color: rgb(17, 120, 122);
 }
 
-.sheet__masksLeft--caution {
+.sheet__card--caution {
     background-color: rgb(230, 126, 34);
 }
 
-.sheet__masksLeft--insufficient {
+.sheet__card--insufficient {
     background-color: rgb(142, 142, 147);
 }
 
-.sheet__label {
+.sheet__card-label {
     display: block;
     text-align: center;
     font-size: 1.4rem;
     line-height: 2.4rem;
 }
 
-.sheet__value {
+.sheet__card-value {
     display: block;
     font-size: 3.2rem;
     text-align: center;
     position: relative;
 }
 
-.sheet__value::after {
+.sheet__card-value::after {
     content: "片";
     font-size: 1.0rem;
     position: absolute;
@@ -215,12 +221,35 @@ body {
     padding: 0 0.4rem;
 }
 
-.sheet__segment {
-    display: none;
-    min-height: 40px;
+.sheet__touchable {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border-bottom: 0.5px solid rgb(142, 142, 147);
+    padding: 1.4rem 0;
 }
 
-@media (min-width: 768px) {
+.sheet__touchable:last-child {
+    border-bottom: 0;
+}
+
+.sheet__label {
+    display: block;
+    color: rgb(142, 142, 147);
+    font-size: 1.4rem;
+    line-height: 1.8;
+}
+
+.sheet__value {
+    display: block;
+    color: rgb(44, 44, 46);
+}
+
+.sheet__value--highlighted {
+    color: rgb(10, 132, 255);
+}
+
+@media (min-width: 540px) {
     .sheet {
         top: 0.8rem;
         right: unset;
@@ -229,22 +258,24 @@ body {
         min-width: 400px;
         border-radius: 1.2rem;
         transform: unset;
+        padding-bottom: 2.0rem;
+    }
+
+    .sheet::before {
+        display: none;
     }
 
     .sheet--vanished {
         transform: translateX(-110%);
     }
 
-    .sheet__buttons > a {
-        display: none;
+    .sheet__cards {
+        margin-top: 0;
+        padding: 2.4rem 0 1.0rem 0;
     }
 
-    .sheet__masks {
-        padding-bottom: 1.6rem;
-    }
-
-    .sheet__segment {
-        display: flex;
-        align-items: center;
+    .sheet__touchable {
+        border-bottom: 0;
+        padding: 0.8rem 0;
     }
 }
