@@ -6,6 +6,7 @@ import mapboxgl from 'mapbox-gl';
 import getLastLocation from './utilities/getLastLocation';
 import fetchData from './utilities/fetchData';
 import initializeMap from './utilities/initializeMap';
+import showDisclaimer from './utilities/showDisclaimer';
 
 window.addEventListener('DOMContentLoaded', () => {
     // Start fetching data
@@ -34,6 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // Initialize the map
     maskMap.on('load', async () => {
         await initializeMap(promisedData, maskMap);
+        showDisclaimer();
     });
 
     // Remove loading screen
