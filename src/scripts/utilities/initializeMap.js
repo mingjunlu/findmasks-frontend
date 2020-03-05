@@ -26,7 +26,7 @@ const initializeMap = async (promise, map) => {
 
     // Create clusters & markers
     createClusters(map);
-    placeMarkers(map, data.updatedAt);
+    placeMarkers(map);
 
     // Allow users to locate themselves
     const locateButton = document.querySelector('.controls__icon--locate').parentElement;

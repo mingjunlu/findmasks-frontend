@@ -2,7 +2,7 @@ import Sheet from '../classes/Sheet';
 import loadMarkerImages from './loadMarkerImages';
 import setLastLocation from './setLastLocation';
 
-const placeMarkers = async (map, time) => {
+const placeMarkers = async (map) => {
     // Load marker images
     const markerImages = await Promise.allSettled(loadMarkerImages([
         { id: 'insufficient-marker', color: 'rgb(142, 142, 147)' },
@@ -50,10 +50,24 @@ const placeMarkers = async (map, time) => {
 
     // Show place info on click
     const sheet = new Sheet('sheet');
-    map.on('click', 'unclustered-point', (event) => {
+    map.on('click', 'unclustered-point', async (event) => {
         const [feature] = event.features;
         const { geometry, properties } = feature;
-        sheet.update({ ...properties, updatedAt: time });
+
+        sheet.update({
+            id: properties.id,
+            name: properties.name,
+            phone: undefined,
+            address: undefined,
+            masksLeft: properties.masksLeft,
+            childMasksLeft: properties.childMasksLeft,
+            opensOn: undefined,
+            note: undefined,
+            updatedAt: undefined,
+        });
+        sheet.render();
+
+        const promise = sheet.loadData();
         sheet.show();
 
         // Update the last known location
@@ -61,6 +75,8 @@ const placeMarkers = async (map, time) => {
             longitude: geometry.coordinates[0],
             latitude: geometry.coordinates[1],
         });
+
+        await promise;
     });
 
     // Change the cursor on hover & blur

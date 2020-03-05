@@ -2,10 +2,13 @@ import 'tocca';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-tw';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import weekday from 'dayjs/plugin/weekday';
 import getClassSufix from '../utilities/getClassSufix';
+import fetchData from '../utilities/fetchData';
 
 dayjs.locale('zh-tw');
 dayjs.extend(relativeTime);
+dayjs.extend(weekday);
 window.tocca({
     justTouchEvents: true,
     swipeThreshold: 50,
@@ -26,6 +29,8 @@ const Sheet = class {
             address: undefined,
             masksLeft: undefined,
             childMasksLeft: undefined,
+            opensOn: undefined,
+            note: undefined,
             updatedAt: undefined,
         };
 
@@ -58,12 +63,47 @@ const Sheet = class {
             <div class="sheet__details">
                 <a class="sheet__touchable">
                     <span class="sheet__label">地址</span>
-                    <span class="sheet__value sheet__value--highlighted"></span>
+                    <span class="sheet__value sheet__value--highlighted sheet__value--long"></span>
                 </a>
                 <a class="sheet__touchable">
                     <span class="sheet__label">電話</span>
-                    <span class="sheet__value sheet__value--highlighted"></span>
+                    <span class="sheet__value sheet__value--highlighted sheet__value--short"></span>
                 </a>
+                <p class="sheet__touchable">
+                    <span class="sheet__label">備註</span>
+                    <span class="sheet__value sheet__value--short"></span>
+                </p>
+                <div class="sheet__touchable">
+                    <p class="sheet__label">營業時間</p>
+                    <p class="sheet__value sheet__value--nested sheet__value--bold">
+                        <span></span>
+                        <span></span>
+                    </p>
+                    <p class="sheet__value sheet__value--nested">
+                        <span></span>
+                        <span></span>
+                    </p>
+                    <p class="sheet__value sheet__value--nested">
+                        <span></span>
+                        <span></span>
+                    </p>
+                    <p class="sheet__value sheet__value--nested">
+                        <span></span>
+                        <span></span>
+                    </p>
+                    <p class="sheet__value sheet__value--nested">
+                        <span></span>
+                        <span></span>
+                    </p>
+                    <p class="sheet__value sheet__value--nested">
+                        <span></span>
+                        <span></span>
+                    </p>
+                    <p class="sheet__value sheet__value--nested">
+                        <span></span>
+                        <span></span>
+                    </p>
+                </div>
             </div>
         `;
 
@@ -75,10 +115,10 @@ const Sheet = class {
         this.container.addEventListener('swipeup', () => {
             if (this.isCondensed) { this.expand(); }
         });
-        this.container.addEventListener('swipedown', () => {
+        this.container.addEventListener('swipedown', (event) => {
             if (this.isCondensed) {
                 this.hide();
-            } else {
+            } else if (event.distance.y > 110) {
                 this.show();
             }
         });
@@ -104,17 +144,46 @@ const Sheet = class {
         placeName.textContent = this.data.name;
 
         // Update the update time
-        updateTime.textContent = dayjs(this.data.updatedAt).fromNow();
+        const updateTimeText = this.data.updatedAt ? dayjs(this.data.updatedAt).fromNow() : '';
+        updateTime.textContent = updateTimeText;
 
         // Update address and add hyperlinks to Google Maps
-        const mapLink = `https://www.google.com/maps/dir/current+location/${this.data.address}`;
+        const mapLink = this.data.address
+            ? `https://www.google.com/maps/dir/current+location/${this.data.address}`
+            : '';
         sheetDetails.children[0].setAttribute('href', mapLink);
-        sheetDetails.children[0].lastElementChild.textContent = this.data.address;
+        sheetDetails.children[0].lastElementChild.textContent = this.data.address || '';
 
         // Update the phone number
-        const phoneLink = `tel:${this.data.phone.replace(/\(0.*\)/, '+886')}`;
+        const phoneLink = this.data.phone
+            ? `tel:${this.data.phone.replace(/\(0.*\)/, '+886')}`
+            : '';
         sheetDetails.children[1].setAttribute('href', phoneLink);
-        sheetDetails.children[1].lastElementChild.textContent = this.data.phone;
+        sheetDetails.children[1].lastElementChild.textContent = this.data.phone || '';
+
+        // Update the note
+        sheetDetails.children[2].lastElementChild.textContent = this.data.note || '';
+        if (this.data.note) {
+            sheetDetails.children[2].classList.remove('sheet__touchable--vanished');
+        } else {
+            sheetDetails.children[2].classList.add('sheet__touchable--vanished');
+        }
+
+        // Update the opening hours
+        if (Array.isArray(this.data.opensOn) && (this.data.opensOn.length > 0)) {
+            sheetDetails.children[3].classList.remove('sheet__touchable--vanished');
+        } else {
+            sheetDetails.children[3].classList.add('sheet__touchable--vanished');
+        }
+        [...sheetDetails.children[3].children].slice(1).forEach((element, index) => {
+            const dayOfWeek = dayjs().add(index, 'day');
+            /* eslint-disable no-param-reassign */
+            element.firstElementChild.textContent = dayOfWeek.format('dddd');
+            element.lastElementChild.textContent = this.data.opensOn
+                ? this.data.opensOn[dayOfWeek.day()]
+                : '';
+            /* eslint-enable no-param-reassign */
+        });
 
         // Update the masksLeft value and determine its color
         sheetCards.firstElementChild.lastElementChild.textContent = this.data.masksLeft;
@@ -144,6 +213,12 @@ const Sheet = class {
 
     update(props) {
         this.data = props;
+    }
+
+    async loadData() {
+        const feature = await fetchData(`/${this.data.id}`);
+        this.update(feature.properties);
+        this.render();
     }
 };
 

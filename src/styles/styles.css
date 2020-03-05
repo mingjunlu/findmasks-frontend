@@ -22,6 +22,11 @@ body {
     100% { transform: rotate(360deg); }
 }
 
+@keyframes fetching {
+    0% { background-position-x: 100%; }
+    100% { background-position-x: 0%; }
+}
+
 .locating-layer {
     position: fixed;
     top: 0;
@@ -83,9 +88,11 @@ body {
 
 .sheet {
     position: fixed;
+    top: 5vh;
     right: 0;
-    left: 0;
     bottom: 0;
+    left: 0;
+    overflow-y: auto;
     padding: 2.0rem 1.6rem 0 1.6rem;
     background-color: rgb(250, 250, 250);
     z-index: 4;
@@ -110,7 +117,9 @@ body {
 }
 
 .sheet--condensed {
-    transform: translateY(41%);
+    transform: translateY(57%);
+    overflow-y: hidden;
+    transition-delay: 1ms; /* Prevent Safari's twitching bug */
 }
 
 .sheet--vanished {
@@ -141,16 +150,35 @@ body {
     color: rgb(142, 142, 147);
 }
 
+.sheet__time:empty {
+    background: linear-gradient(
+        -90deg,
+        rgb(229, 229, 234) 0%,
+        rgb(229, 229, 234) 40%,
+        rgb(225, 225, 230) 50%,
+        rgb(229, 229, 234) 60%,
+        rgb(229, 229, 234) 100%
+    );
+    background-repeat: repeat;
+    background-size: 250% 100%;
+    animation: fetching 1.2s ease infinite;
+    border-radius: 0.2rem;
+    width: 7.2rem;
+}
+
 .sheet__time::after {
     content: "更新";
 }
 
-.sheet__time:empty {
-    display: none;
+.sheet__time:empty::after {
+    visibility: hidden;
 }
 
 .sheet__buttons {
     display: inline-flex;
+    position: sticky;
+    top: 0;
+    right:0;
 }
 
 .sheet__button {
@@ -225,12 +253,16 @@ body {
     display: block;
     width: 100%;
     text-align: left;
-    border-bottom: 0.5px solid rgb(142, 142, 147);
+    border-top: 0.5px solid rgb(142, 142, 147);
     padding: 1.4rem 0;
 }
 
-.sheet__touchable:last-child {
-    border-bottom: 0;
+.sheet__touchable:first-child {
+    border-top: 0;
+}
+
+.sheet__touchable--vanished {
+    display: none;
 }
 
 .sheet__label {
@@ -243,13 +275,51 @@ body {
 .sheet__value {
     display: block;
     color: rgb(44, 44, 46);
+    line-height: 1.25;
 }
 
 .sheet__value--highlighted {
     color: rgb(10, 132, 255);
 }
 
-@media (min-width: 540px) {
+.sheet__value--bold {
+    font-weight: bold;
+}
+
+.sheet__value:empty {
+    background: linear-gradient(
+        -90deg,
+        rgb(229, 229, 234) 0%,
+        rgb(229, 229, 234) 40%,
+        rgb(225, 225, 230) 50%,
+        rgb(229, 229, 234) 60%,
+        rgb(229, 229, 234) 100%
+    );
+    background-repeat: repeat;
+    background-size: 250% 100%;
+    animation: fetching 1.2s ease infinite;
+    border-radius: 0.2rem;
+}
+
+.sheet__value:empty::after {
+    content: "讀取中";
+    visibility: hidden;
+}
+
+.sheet__value--long:empty {
+    width: 65%;
+}
+
+.sheet__value--short:empty {
+    width: 30%;
+}
+
+.sheet__value--nested {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (min-width: 640px) {
     .sheet {
         top: 0.8rem;
         right: unset;
