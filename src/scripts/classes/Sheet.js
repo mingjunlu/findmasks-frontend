@@ -74,7 +74,7 @@ const Sheet = class {
                     <span class="sheet__value sheet__value--short"></span>
                 </p>
                 <div class="sheet__touchable">
-                    <p class="sheet__label">營業時間</p>
+                    <p class="sheet__label">營業時段</p>
                     <p class="sheet__value sheet__value--nested sheet__value--bold">
                         <span></span>
                         <span></span>
