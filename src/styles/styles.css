@@ -325,7 +325,7 @@ body {
         right: unset;
         bottom: unset;
         left: 0.8rem;
-        min-width: 400px;
+        width: 400px;
         border-radius: 1.2rem;
         transform: unset;
         padding-bottom: 2.0rem;
