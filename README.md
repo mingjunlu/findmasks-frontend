@@ -13,11 +13,11 @@ npm install
 ```
 MAPBOX_TOKEN=pk.eyJ1IjoiZDIzNTc5PleaSEBeAwarE2s3OGU2bThiSISafAKetOkeN250MmU0MiJ9.DET8IkWRT1ySRM2mePvjcA
 GIST_URL=https://gist.githubusercontent.com/mingjunlu/20310975a61fd8bbd5c36905c1aaaa25/raw/places.geojson
-ENDPOINT=http://your.api.endpoint
+ENDPOINT=https://your.api.endpoint
 ```
 * MAPBOX_TOKEN：Mapbox access token，[註冊 Mapbox 帳號](https://www.mapbox.com/signup)後可取得（上方範例為無效 token，請記得替換）
-* GIST_URL：口罩剩餘數量資料網址（格式：GeoJson）
-* ENDPOINT：後端 API 端點網址，沒有的話可以使用 `GIST_URL` 的網址代替
+* GIST_URL：口罩剩餘數量資料網址（離峰時段用）
+* ENDPOINT：後端 API 端點網址（尖峰時段用）
 
 ## 檢查程式語法錯誤
 ```bash
@@ -35,5 +35,5 @@ npm run build
 ```
 
 ## 相關資源
-* 原始資料來源：[健保特約機構口罩剩餘數量明細清單](https://data.nhi.gov.tw/Datasets/DatasetDetail.aspx?id=656)
+* 原始資料來源：[健保特約機構口罩剩餘數量明細清單](https://data.nhi.gov.tw/Datasets/DatasetDetail.aspx?id=656)、[全民健康保險特約院所固定服務時段](https://data.nhi.gov.tw/Datasets/DatasetDetail.aspx?id=441&Mid=A111068)
 * 各方資訊彙整：[口罩供需資訊平台](https://g0v.hackmd.io/gGrOI4_aTsmpoMfLP1OU4A)
