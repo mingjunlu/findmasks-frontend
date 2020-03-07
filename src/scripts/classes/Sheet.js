@@ -144,8 +144,13 @@ const Sheet = class {
         placeName.textContent = this.data.name;
 
         // Update the update time
-        const updateTimeText = this.data.updatedAt ? dayjs(this.data.updatedAt).fromNow() : '';
-        updateTime.textContent = updateTimeText;
+        if (!this.data.updatedAt) {
+            updateTime.textContent = '';
+        } else if (this.data.updatedAt) {
+            const sixtyFiveSeconds = 65;
+            const isUpToDate = (dayjs().diff(dayjs(this.data.updatedAt), 'second') < sixtyFiveSeconds);
+            updateTime.textContent = isUpToDate ? '剛剛' : dayjs(this.data.updatedAt).fromNow();
+        }
 
         // Update address and add hyperlinks to Google Maps
         const mapLink = this.data.address
