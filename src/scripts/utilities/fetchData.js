@@ -13,10 +13,15 @@ const fetchData = async (path = '') => {
         if (!isPeakTime && path) {
             const segments = path.split('/');
             const placeId = segments[segments.length - 1];
+
             const target = data.features.find((feature) => (feature.properties.id === placeId));
-            if (!target) {
-                throw new Error();
-            }
+            if (!target) { throw new Error(); }
+
+            // Add a short delay
+            await new Promise((resolve) => {
+                const shortDelay = 400;
+                setTimeout(resolve, shortDelay);
+            });
             return target;
         }
 
