@@ -64,8 +64,8 @@ body {
 }
 
 .controls--top-right {
-    top: 0.8rem;
-    right: 0.8rem;
+    top: 1.0rem;
+    right: 1.0rem;
 }
 
 .controls__button {
@@ -73,10 +73,22 @@ body {
     height: 4.4rem;
     outline: none;
     display: block;
+    border-top: 0.5px solid rgba(142, 142, 147, 0.5);
+}
+
+.controls__button:first-child {
+    border-top: 0;
 }
 
 .controls__button:disabled {
     cursor: not-allowed;
+}
+
+.controls__icon--report {
+    width: 1.6rem;
+    height: 1.6rem;
+    position: relative;
+    top: 0.1rem;
 }
 
 .controls__icon--locate {
@@ -345,7 +357,6 @@ body {
     }
 
     .sheet__touchable {
-        border-bottom: 0;
         padding: 0.8rem 0;
     }
 }
