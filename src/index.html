@@ -101,6 +101,89 @@
             </svg>
         </div>
 
+        <!-- Section for Reporting Issues -->
+        <div class="issues-layer issues-layer--vanished">
+            <form name="issue" class="issues" netlify-honeypot="message" data-netlify="true">
+                <header class="issues__header">
+                    <button type="button" class="issues__button">取消</button>
+                    <h1 class="issues__heading">回報問題</h1>
+                    <button disabled type="submit" class="issues__button issues__button--bold issues__button--hidden">送出</button>
+                </header>
+                <div class="issues__pages">
+                    <section class="issues__page">
+                        <h2 class="issues__subheading">問題類型</h2>
+                        <ul class="issues__touchables">
+                            <li>
+                                <button type="button" data-issue="incorrect-place" class="issues__touchable issues__touchable--first">
+                                    <div class="issues__icon-wrapper issues__icon-wrapper--red">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 512" class="issues__icon issues__icon--pin">
+                                            <path fill="white" d="M112 316.94v156.7l22.02 33.02c4.75 7.12 15.22 7.12 19.97 0l22-33.02v-156.7c-10.4 1.92-21.06 3.06-32 3.06s-21.6-1.14-32-3.06zM144 0C64.47 0 0 64.47 0 144s64.47 144 144 144 144-64.47 144-144S223.53 0 144 0zm0 76c-37.5 0-68 30.5-68 68 0 6.62-5.38 12-12 12s-12-5.38-12-12c0-50.73 41.28-92 92-92 6.62 0 12 5.38 12 12s-5.38 12-12 12z" />
+                                        </svg>
+                                    </div>
+                                    <div class="issues__text">
+                                        <h3 class="issues__touchable-heading">地點資訊錯誤</h3>
+                                        <p class="issues__touchable-description">回報錯誤的藥局、衛生所資訊</p>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="issues__arrow">
+                                        <path fill="rgb(199, 199, 204)" d="M285.476 272.97L91.132 467.314c-9.373 9.373-24.57 9.373-33.94 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.9L188.505 256 34.484 101.255c-9.335-9.38-9.317-24.544.04-33.9L57.19 44.687c9.373-9.373 24.57-9.373 33.94 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.94z" />
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" data-issue="website-issue" class="issues__touchable">
+                                    <div class="issues__icon-wrapper issues__icon-wrapper--blue">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="issues__icon issues__icon--cursor">
+                                            <path fill="white" d="M302.19 329.126H196.105l55.83 135.993c3.89 9.428-.555 20-9.444 24l-49.165 21.427c-9.165 4-19.443-.57-23.332-9.714l-53.053-129.136-86.664 89.138C18.73 472.7 0 463.554 0 447.977V18.3C0 1.9 19.92-6.096 30.277 5.443L314.69 297.985c11.472 11.18 3.007 31.14-12.5 31.14z" />
+                                        </svg>
+                                    </div>
+                                    <div class="issues__text">
+                                        <h3 class="issues__touchable-heading">操作問題</h3>
+                                        <p class="issues__touchable-description">回報網站操作問題</p>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="issues__arrow">
+                                        <path fill="rgb(199, 199, 204)" d="M285.476 272.97L91.132 467.314c-9.373 9.373-24.57 9.373-33.94 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.9L188.505 256 34.484 101.255c-9.335-9.38-9.317-24.544.04-33.9L57.19 44.687c9.373-9.373 24.57-9.373 33.94 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.94z" />
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" data-issue="general-feedback" class="issues__touchable">
+                                    <div class="issues__icon-wrapper issues__icon-wrapper--lightgray">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="issues__icon issues__icon--ellipsis">
+                                            <path fill="rgb(10, 132, 255)" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+                                        </svg>
+                                    </div>
+                                    <div class="issues__text">
+                                        <h3 class="issues__touchable-heading">其他問題</h3>
+                                        <p class="issues__touchable-description">回報其他問題、提供意見回饋等</p>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="issues__arrow">
+                                        <path fill="rgb(199, 199, 204)" d="M285.476 272.97L91.132 467.314c-9.373 9.373-24.57 9.373-33.94 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.9L188.505 256 34.484 101.255c-9.335-9.38-9.317-24.544.04-33.9L57.19 44.687c9.373-9.373 24.57-9.373 33.94 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.94z" />
+                                    </svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="issues__page">
+                        <!-- Honeypot Field -->
+                        <label style="display: none;">
+                            <span>Don't fill this out if you're human: </span>
+                            <input type="text" name="message" />
+                        </label>
+                        <input type="hidden" name="type" />
+                        <label class="issues__label">
+                            <span class="issues__subheading">問題描述</span>
+                            <textarea required rows="6" maxlength="1000" placeholder="請描述您發現的問題" name="description" class="issues__input issues__input--multiline"></textarea>
+                        </label>
+                        <label class="issues__label">
+                            <span class="issues__subheading">聯絡方式</span>
+                            <input type="email" placeholder="Email（選填）" name="email" class="issues__input" />
+                            <span class="issues__subheading issues__subheading--small">若您需要進一步協助，請留下電子郵件供開發者聯繫。</span>
+                        </label>
+                    </section>
+                </div>
+            </form>
+        </div>
+
         <!-- Sheet Component -->
         <div id="sheet" class="sheet sheet--condensed sheet--vanished"></div>
 

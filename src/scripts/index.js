@@ -33,8 +33,8 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initialize the map
-    maskMap.on('load', async () => {
-        await initializeMap(promisedData, maskMap);
+    maskMap.on('load', async (event) => {
+        await initializeMap(promisedData, event.target);
         showDisclaimer();
     });
 
