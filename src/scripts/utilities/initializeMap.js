@@ -63,6 +63,7 @@ const initializeMap = async (promise, map) => {
     // Submit the form
     reportingForm.addEventListener('submit', async (event) => {
         event.preventDefault();
+        submitButton.setAttribute('disabled', true);
         const encode = (obj) => Object.keys(obj)
             .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
             .join('&');
