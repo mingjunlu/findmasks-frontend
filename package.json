@@ -1,35 +1,47 @@
 {
     "name": "findmasks-frontend",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "build": "parcel build src/index.html --out-dir build",
-        "lint": "eslint src",
-        "prebuild": "rm -rf .cache build",
-        "start": "parcel src/index.html --out-dir build"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "version": "0.1.0",
     "private": true,
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "lint": "eslint src"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
     "dependencies": {
-        "dayjs": "^1.8.20",
-        "mapbox-gl": "^1.7.0",
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.5.0",
+        "@testing-library/user-event": "^7.2.1",
+        "mapbox-gl": "^1.8.1",
         "normalize.css": "^8.0.1",
-        "tocca": "^2.0.9"
+        "prop-types": "^15.7.2",
+        "react": "^16.13.0",
+        "react-dom": "^16.13.0",
+        "react-mapbox-gl": "^4.8.2",
+        "react-scripts": "3.4.0"
     },
     "devDependencies": {
         "eslint": "^6.8.0",
-        "eslint-config-airbnb-base": "^14.0.0",
+        "eslint-config-airbnb": "^18.0.1",
         "eslint-plugin-import": "^2.20.1",
-        "parcel-bundler": "^1.12.4",
-        "parcel-plugin-static-files-copy": "^2.3.1"
-    },
-    "browserslist": [
-        "since 2017-06"
-    ],
-    "staticFiles": {
-        "staticPath": "src/assets"
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-react": "^7.19.0",
+        "eslint-plugin-react-hooks": "^1.7.0"
     }
 }

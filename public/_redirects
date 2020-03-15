@@ -1,0 +1,2 @@
+# Redirect default Netlify subdomain to primary domain
+https://findmasks.netlify.com/*     https://www.findmasks.tw/:splat     301!
