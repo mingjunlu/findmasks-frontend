@@ -20,3 +20,8 @@ body {
 html, body, #root {
     height: 100vh;
 }
+
+.mapboxgl-ctrl-attrib, .mapboxgl-ctrl-logo {
+    opacity: 0.75;
+    user-select: none;
+}

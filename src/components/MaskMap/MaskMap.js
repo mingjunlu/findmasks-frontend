@@ -20,18 +20,20 @@ const MaskMap = () => {
     };
 
     return (
-        <InteractiveMap
-            center={mapCenter}
-            containerStyle={mapProps.containerStyle}
-            maxBounds={mapProps.maxBounds}
-            onStyleLoad={mapProps.changeMapLanguage}
-            onZoomEnd={synchronizeZoomLevel}
-            // eslint-disable-next-line react/style-prop-object
-            style="mapbox://styles/mapbox/light-v10?optimize=true"
-            zoom={[zoomLevel]}
-        >
-            <MapLayers setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
-        </InteractiveMap>
+        <>
+            <InteractiveMap
+                center={mapCenter}
+                containerStyle={mapProps.containerStyle}
+                maxBounds={mapProps.maxBounds}
+                onStyleLoad={mapProps.changeMapLanguage}
+                onZoomEnd={synchronizeZoomLevel}
+                // eslint-disable-next-line react/style-prop-object
+                style="mapbox://styles/mapbox/light-v10?optimize=true"
+                zoom={[zoomLevel]}
+            >
+                <MapLayers setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
+            </InteractiveMap>
+        </>
     );
 };
 

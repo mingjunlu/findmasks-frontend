@@ -9,11 +9,31 @@
     align-items: center;
 }
 
+.button {
+    width: 4.4rem;
+    height: 4.4rem;
+    outline: none;
+    -webkit-tap-highlight-color: initial;
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+}
+
+.button:active {
+    background-color: rgb(142, 142, 147);
+}
+
+.cancelIcon {
+    width: 2.0rem;
+    height: 2.0rem;
+    fill: rgb(242, 242, 247);
+}
+
 .box {
     text-align: center;
 }
 
-.icon {
+.cautionIcon {
     display: inline-block;
     width: 3.2rem;
     fill: rgb(242, 242, 247);

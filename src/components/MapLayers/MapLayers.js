@@ -4,6 +4,7 @@ import { Source } from 'react-mapbox-gl';
 import useFetch from '../../hooks/useFetch';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import MapControls from '../MapControls/MapControls';
 import ClusterLayer from '../ClusterLayer/ClusterLayer';
 import SymbolLayer from '../SymbolLayer/SymbolLayer';
 import sourceProps from './sourceProps';
@@ -22,6 +23,7 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
 
     return (
         <>
+            <MapControls setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
             <Source id="places" geoJsonSource={{ ...sourceProps, data: featureCollection }} />
             <ClusterLayer setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
             <SymbolLayer />

@@ -1,0 +1,32 @@
+.container {
+    background-color: rgb(250, 250, 255);
+    border: 0.5px solid rgba(209, 209, 214, 0.6);
+    border-radius: 7px;
+    box-shadow: 0 0 6px 0 rgba(28, 28, 30, 0.3);
+    position: absolute;
+    z-index: 1;
+}
+
+.topRight {
+    top: 1.0rem;
+    right: 1.0rem;
+}
+
+.button {
+    width: 4.4rem;
+    height: 4.4rem;
+    outline: none;
+    -webkit-tap-highlight-color: initial;
+}
+
+.button:active {
+    background-color: rgb(142, 142, 147);
+}
+
+.locateIcon {
+    width: 1.4rem;
+    height: 1.4rem;
+    position: relative;
+    top: 0.1rem;
+    fill: rgb(58, 58, 60);
+}
