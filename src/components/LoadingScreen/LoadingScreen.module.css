@@ -1,0 +1,93 @@
+@keyframes spin {
+    0% { opacity: 0.85; }
+    50% { opacity: 0.25; }
+    100% { opacity: 0.25; }
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    position: relative;
+    width: 1.8rem;
+    height: 1.8rem;
+}
+
+.blade {
+    position: absolute;
+    top: 37%;
+    left: 44.5%;
+    width: 10%;
+    height: 25%;
+    background-color: white;
+    border-radius: 50% / 20%;
+    animation: spin 1s linear infinite;
+}
+
+.blade:nth-child(1) {
+    transform: rotate(30deg) translate(0, -150%);
+    animation-delay: -1.6666666667s;
+}
+
+.blade:nth-child(2) {
+    transform: rotate(60deg) translate(0, -150%);
+    animation-delay: -1.5833333333s;
+}
+
+.blade:nth-child(3) {
+    transform: rotate(90deg) translate(0, -150%);
+    animation-delay: -1.5s;
+}
+
+.blade:nth-child(4) {
+    transform: rotate(120deg) translate(0, -150%);
+    animation-delay: -1.4166666667s;
+}
+
+.blade:nth-child(5) {
+    transform: rotate(150deg) translate(0, -150%);
+    animation-delay: -1.3333333333s;
+}
+
+.blade:nth-child(6) {
+    transform: rotate(180deg) translate(0, -150%);
+    animation-delay: -1.25s;
+}
+
+.blade:nth-child(7) {
+    transform: rotate(210deg) translate(0, -150%);
+    animation-delay: -1.1666666667s;
+}
+
+.blade:nth-child(8) {
+    transform: rotate(240deg) translate(0, -150%);
+    animation-delay: -1.0833333333s;
+}
+
+.blade:nth-child(9) {
+    transform: rotate(270deg) translate(0, -150%);
+    animation-delay: -1s;
+}
+
+.blade:nth-child(10) {
+    transform: rotate(300deg) translate(0, -150%);
+    animation-delay: -0.9166666667s;
+}
+
+.blade:nth-child(11) {
+    transform: rotate(330deg) translate(0, -150%);
+    animation-delay: -0.8333333333s;
+}
+
+.blade:nth-child(12) {
+    transform: rotate(360deg) translate(0, -150%);
+    animation-delay: -0.75s;
+}

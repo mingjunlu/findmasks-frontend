@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactMapboxGl from 'react-mapbox-gl';
-import mapProps from './mapProps';
 import MapLayers from '../MapLayers/MapLayers';
+import mapProps from './mapProps';
 
 const InteractiveMap = ReactMapboxGl({
     accessToken: process.env.REACT_APP_MAPBOX_TOKEN,

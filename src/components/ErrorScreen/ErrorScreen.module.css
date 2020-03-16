@@ -1,0 +1,25 @@
+.container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    text-align: center;
+}
+
+.icon {
+    display: inline-block;
+    width: 3.2rem;
+    fill: rgb(242, 242, 247);
+}
+
+.text {
+    color: rgb(242, 242, 247);
+    font-size: 1.3rem;
+}

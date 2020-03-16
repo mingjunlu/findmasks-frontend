@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layer } from 'react-mapbox-gl';
-import symbolLayerProps from './symbolLayerProps';
 import generateIcon from './generateIcon';
+import symbolLayerProps from './symbolLayerProps';
 
 const images = [
     ['pharmacy--insufficient', generateIcon({ backgroundColor: 'rgb(142, 142, 147)' })],

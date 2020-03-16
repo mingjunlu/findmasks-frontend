@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Source } from 'react-mapbox-gl';
 import useFetch from '../../hooks/useFetch';
+import ErrorScreen from '../ErrorScreen/ErrorScreen';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import ClusterLayer from '../ClusterLayer/ClusterLayer';
 import SymbolLayer from '../SymbolLayer/SymbolLayer';
+import sourceProps from './sourceProps';
 
 const MapLayers = ({ setMapCenter, setZoomLevel }) => {
     const featureCollection = useFetch(process.env.REACT_APP_ENDPOINT, undefined, {
@@ -11,20 +14,15 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
         features: [],
     });
 
-    if (featureCollection instanceof Error) { return null; }
-    if (featureCollection.features.length === 0) { return null; }
+    const hasError = (featureCollection instanceof Error);
+    if (hasError) { return <ErrorScreen message="無法取得資料" />; }
 
-    const geoJsonSource = {
-        type: 'geojson',
-        data: featureCollection,
-        cluster: true,
-        clusterMaxZoom: 13,
-        clusterRadius: 80,
-    };
+    const hasData = (featureCollection.features.length > 0);
+    if (!hasData) { return <LoadingScreen />; }
 
     return (
         <>
-            <Source id="places" geoJsonSource={geoJsonSource} />
+            <Source id="places" geoJsonSource={{ ...sourceProps, data: featureCollection }} />
             <ClusterLayer setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
             <SymbolLayer />
         </>
