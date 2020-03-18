@@ -16,6 +16,7 @@ const mapProps = {
         right: 0,
         bottom: 0,
         left: 0,
+        zIndex: 0,
     },
     maxBounds: [
         [117.82303563424552, 20.555013006344305],

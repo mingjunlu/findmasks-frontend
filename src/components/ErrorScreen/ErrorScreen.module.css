@@ -15,8 +15,8 @@
     outline: none;
     -webkit-tap-highlight-color: initial;
     position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
+    top: 0.4rem;
+    right: 0.4rem;
 }
 
 .button:active {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Layer } from 'react-mapbox-gl';
 import generateIcon from './generateIcon';
 import symbolLayerProps from './symbolLayerProps';
@@ -9,16 +10,43 @@ const images = [
     ['pharmacy--sufficient', generateIcon({ backgroundColor: 'rgb(17, 120, 122)' })],
 ];
 
-const SymbolLayer = () => (
-    <Layer
-        id={symbolLayerProps.id}
-        type={symbolLayerProps.type}
-        sourceId={symbolLayerProps.sourceId}
-        images={images}
-        filter={symbolLayerProps.filter}
-        layout={symbolLayerProps.layout}
-        paint={symbolLayerProps.paint}
-    />
-);
+const SymbolLayer = ({ setIsBottomSheetVisible, setSelectedPlace }) => {
+    const displayPlaceInfo = async (event) => {
+        const { properties } = event.features[0];
+        setSelectedPlace({
+            id: properties.id,
+            name: properties.name,
+            masksLeft: properties.masksLeft,
+            childMasksLeft: properties.childMasksLeft,
+        });
+        setIsBottomSheetVisible(true);
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/${properties.id}`);
+            const feature = await response.json();
+            setSelectedPlace(feature.properties);
+        } catch (error) {
+            setSelectedPlace(error);
+        }
+    };
+
+    return (
+        <Layer
+            id={symbolLayerProps.id}
+            type={symbolLayerProps.type}
+            sourceId={symbolLayerProps.sourceId}
+            images={images}
+            filter={symbolLayerProps.filter}
+            layout={symbolLayerProps.layout}
+            paint={symbolLayerProps.paint}
+            onClick={displayPlaceInfo}
+        />
+    );
+};
+
+SymbolLayer.propTypes = {
+    setIsBottomSheetVisible: PropTypes.func.isRequired,
+    setSelectedPlace: PropTypes.func.isRequired,
+};
 
 export default SymbolLayer;

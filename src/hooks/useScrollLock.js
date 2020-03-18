@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react';
 
-const useScrollLock = () => {
+const useScrollLock = (shouldLock = true) => {
     useLayoutEffect(() => {
         // Reserve original style values
         const { body } = document;
@@ -8,7 +8,9 @@ const useScrollLock = () => {
         const { overflow: overflowValue } = window.getComputedStyle(body);
 
         // Prevent scrolling on mount
-        body.style.overflow = 'hidden';
+        if (shouldLock) {
+            body.style.overflow = 'hidden';
+        }
 
         // Enable scrolling on unmount
         return () => {
@@ -18,7 +20,7 @@ const useScrollLock = () => {
                 body.style.overflow = overflowValue;
             }
         };
-    }, []);
+    }, [shouldLock]);
 };
 
 export default useScrollLock;

@@ -22,6 +22,11 @@ html, body, #root {
 }
 
 .mapboxgl-ctrl-attrib, .mapboxgl-ctrl-logo {
-    opacity: 0.75;
     user-select: none;
+}
+
+.mapboxgl-control-container > .mapboxgl-ctrl-bottom-right > .mapboxgl-ctrl-attrib.mapboxgl-compact:after {
+    opacity: 0.3;
+    right: -0.6rem;
+    bottom: -0.5rem;
 }
