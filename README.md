@@ -9,13 +9,13 @@ npm install
 ```
 
 ## 設定環境變數
-在 `findmasks-frontend` 資料夾中新增一個 `.env` 檔案，並參考下方範例修改內容：
+在 `findmasks-frontend` 資料夾中新增一個 `.env.local` 檔案，並參考下方範例修改內容：
 ```
 REACT_APP_ENDPOINT=http://your.backend.domain:port/resource
 REACT_APP_MAPBOX_TOKEN=your.own.mapbox.access.token
 ```
-* REACT_APP_ENDPOINT：API 端點網址，提供藥局、衛生所口罩剩餘數量
-* REACT_APP_MAPBOX_TOKEN：使用 Mapbox 地圖套件時必備的 access token，[註冊 Mapbox 帳號](https://www.mapbox.com/signup)後可取得
+* REACT_APP_ENDPOINT：API 端點網址，提供健保特約機構的資訊（例如名稱、地址、口罩剩餘數量等）
+* REACT_APP_MAPBOX_TOKEN：使用 Mapbox 地圖套件時必備的通行證，[註冊 Mapbox 帳號](https://www.mapbox.com/signup)後可取得
 
 ## 檢查程式語法錯誤
 ```bash
