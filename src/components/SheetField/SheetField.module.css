@@ -1,0 +1,50 @@
+@keyframes fetching {
+    0% { background-position-x: 100%; }
+    100% { background-position-x: 0%; }
+}
+
+.container {
+    display: block;
+    width: 100%;
+    text-align: left;
+    color: rgb(44, 44, 46);
+    border-top: 0.5px solid rgb(142, 142, 147);
+    padding: 1.4rem 0;
+}
+
+.container:first-child {
+    border-top: 0;
+}
+
+.label {
+    display: block;
+    color: rgb(142, 142, 147);
+    font-size: 1.4rem;
+    line-height: 1.8;
+}
+
+.value {
+    display: block;
+    line-height: 1.25;
+}
+
+.value:empty {
+    background: linear-gradient(
+        -90deg,
+        rgb(229, 229, 234) 0%,
+        rgb(229, 229, 234) 40%,
+        rgb(225, 225, 230) 50%,
+        rgb(229, 229, 234) 60%,
+        rgb(229, 229, 234) 100%
+    );
+    background-repeat: repeat;
+    background-size: 250% 100%;
+    animation: fetching 1.2s ease infinite;
+    border-radius: 0.2rem;
+    width: var(--width);
+}
+
+.value:empty::after {
+    content: "讀取中";
+    visibility: hidden;
+}

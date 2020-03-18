@@ -1,0 +1,29 @@
+.container {
+    flex-basis: 48%;
+    border-radius: 1.0rem;
+    padding: 1.0rem 1.4rem;
+    color: rgb(250, 250, 255);
+    text-align: center;
+    position: relative;
+}
+
+.label {
+    display: block;
+    text-align: center;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+}
+
+.value {
+    display: inline-block;
+    font-size: 2.8rem;
+    text-align: center;
+}
+
+.suffix {
+    font-size: 1.0rem;
+    line-height: 2.2rem;
+    padding: 0 0.4rem;
+    position: absolute;
+    bottom: 0.9rem;
+}

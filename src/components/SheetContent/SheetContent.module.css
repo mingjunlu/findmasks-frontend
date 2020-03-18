@@ -1,0 +1,14 @@
+.container {
+    height: 100%;
+    padding: 0 1.6rem 12.0rem 1.6rem;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+}
+
+.text {
+    display: flex;
+    justify-content: space-between;
+}
