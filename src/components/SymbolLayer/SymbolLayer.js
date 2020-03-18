@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import { Layer } from 'react-mapbox-gl';
 import LastLocation from '../../classes/LastLocation';
 import changeCursor from '../../utilities/changeCursor';
-import generateIcon from './generateIcon';
+import generateImages from './generateImages';
 import symbolLayerProps from './symbolLayerProps';
 
-const images = [
-    ['pharmacy--insufficient', generateIcon({ backgroundColor: 'rgb(142, 142, 147)' })],
-    ['pharmacy--acceptable', generateIcon({ backgroundColor: 'rgb(230, 126, 34)' })],
-    ['pharmacy--sufficient', generateIcon({ backgroundColor: 'rgb(17, 120, 122)' })],
-];
+const images = generateImages();
 
 const SymbolLayer = ({ setIsSheetVisible, setSelectedPlace }) => {
     const displayPlaceInfo = async (event) => {
