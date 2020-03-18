@@ -9,7 +9,7 @@ const InteractiveMap = ReactMapboxGl({
     dragRotate: false,
 });
 
-const MaskMap = ({ setIsBottomSheetVisible, setSelectedPlace }) => {
+const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
     const [zoomLevel, setZoomLevel] = useState(9);
     const [mapCenter, setMapCenter] = useState([121.5313043, 25.0493621]);
 
@@ -33,7 +33,7 @@ const MaskMap = ({ setIsBottomSheetVisible, setSelectedPlace }) => {
                 zoom={[zoomLevel]}
             >
                 <MapLayers
-                    setIsBottomSheetVisible={setIsBottomSheetVisible}
+                    setIsSheetVisible={setIsSheetVisible}
                     setMapCenter={setMapCenter}
                     setSelectedPlace={setSelectedPlace}
                     setZoomLevel={setZoomLevel}
@@ -44,7 +44,7 @@ const MaskMap = ({ setIsBottomSheetVisible, setSelectedPlace }) => {
 };
 
 MaskMap.propTypes = {
-    setIsBottomSheetVisible: PropTypes.func.isRequired,
+    setIsSheetVisible: PropTypes.func.isRequired,
     setSelectedPlace: PropTypes.func.isRequired,
 };
 

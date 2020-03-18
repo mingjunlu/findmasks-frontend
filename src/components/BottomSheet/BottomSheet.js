@@ -20,7 +20,7 @@ const BottomSheet = (props) => {
         placeOpensOn,
         placePhone,
         placeUpdatedAt,
-        setIsBottomSheetVisible,
+        setIsSheetVisible,
     } = props;
 
     const topBoundary = 32;
@@ -32,7 +32,7 @@ const BottomSheet = (props) => {
     const [isScrollable, setIsScrollable] = useState(false);
 
     const removeSheet = () => {
-        setIsBottomSheetVisible(false);
+        setIsSheetVisible(false);
         ReactGA.event({
             category: 'BottomSheet',
             action: 'Clicked the close button',
@@ -56,7 +56,7 @@ const BottomSheet = (props) => {
             });
         } else if (newPosition > bottomBoundary) {
             setPosition(Math.round(window.innerHeight * 1.1));
-            setIsBottomSheetVisible(false);
+            setIsSheetVisible(false);
             ReactGA.event({
                 category: 'BottomSheet',
                 action: 'Swiped down to minimize the sheet',
@@ -75,11 +75,7 @@ const BottomSheet = (props) => {
     const pointerEvents = isScrollable ? null : 'none';
 
     return (
-        <FullScreenOverlay
-            backgroundColor={overlayColor}
-            pointerEvents={pointerEvents}
-            zIndex={4}
-        >
+        <FullScreenOverlay backgroundColor={overlayColor} pointerEvents={pointerEvents} zIndex={4}>
             <article className={styles.container} style={{ transform: `translateY(${position}px)` }}>
                 <SheetHeader
                     dragSheet={dragSheet}
@@ -103,23 +99,16 @@ const BottomSheet = (props) => {
 };
 
 BottomSheet.propTypes = {
-    placeAddress: PropTypes.string,
+    placeAddress: PropTypes.string.isRequired,
     placeChildMasksLeft: PropTypes.number.isRequired,
     placeMasksLeft: PropTypes.number.isRequired,
     placeName: PropTypes.string.isRequired,
-    placeNote: PropTypes.string,
-    placeOpensOn: PropTypes.arrayOf(PropTypes.string),
-    placePhone: PropTypes.string,
-    placeUpdatedAt: PropTypes.string,
-    setIsBottomSheetVisible: PropTypes.func.isRequired,
+    placeNote: PropTypes.string.isRequired,
+    placeOpensOn: PropTypes.arrayOf(PropTypes.string).isRequired,
+    placePhone: PropTypes.string.isRequired,
+    placeUpdatedAt: PropTypes.string.isRequired,
+    setIsSheetVisible: PropTypes.func.isRequired,
 };
 
-BottomSheet.defaultProps = {
-    placeAddress: '',
-    placeNote: '',
-    placeOpensOn: [],
-    placePhone: '',
-    placeUpdatedAt: '',
-};
 
 export default BottomSheet;

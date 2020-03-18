@@ -10,7 +10,7 @@ import sourceProps from './sourceProps';
 
 const MapLayers = (props) => {
     const {
-        setIsBottomSheetVisible,
+        setIsSheetVisible,
         setMapCenter,
         setSelectedPlace,
         setZoomLevel,
@@ -53,7 +53,7 @@ const MapLayers = (props) => {
     return (
         <>
             <MapControls
-                setIsBottomSheetVisible={setIsBottomSheetVisible}
+                setIsSheetVisible={setIsSheetVisible}
                 setMapCenter={setMapCenter}
                 setZoomLevel={setZoomLevel}
             />
@@ -66,7 +66,7 @@ const MapLayers = (props) => {
             />
             <ClusterLayer setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
             <SymbolLayer
-                setIsBottomSheetVisible={setIsBottomSheetVisible}
+                setIsSheetVisible={setIsSheetVisible}
                 setSelectedPlace={setSelectedPlace}
             />
         </>
@@ -74,7 +74,7 @@ const MapLayers = (props) => {
 };
 
 MapLayers.propTypes = {
-    setIsBottomSheetVisible: PropTypes.func.isRequired,
+    setIsSheetVisible: PropTypes.func.isRequired,
     setMapCenter: PropTypes.func.isRequired,
     setSelectedPlace: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,

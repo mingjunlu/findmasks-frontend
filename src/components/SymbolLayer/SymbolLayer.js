@@ -10,7 +10,7 @@ const images = [
     ['pharmacy--sufficient', generateIcon({ backgroundColor: 'rgb(17, 120, 122)' })],
 ];
 
-const SymbolLayer = ({ setIsBottomSheetVisible, setSelectedPlace }) => {
+const SymbolLayer = ({ setIsSheetVisible, setSelectedPlace }) => {
     const displayPlaceInfo = async (event) => {
         const { properties } = event.features[0];
         setSelectedPlace({
@@ -19,7 +19,7 @@ const SymbolLayer = ({ setIsBottomSheetVisible, setSelectedPlace }) => {
             masksLeft: properties.masksLeft,
             childMasksLeft: properties.childMasksLeft,
         });
-        setIsBottomSheetVisible(true);
+        setIsSheetVisible(true);
 
         try {
             const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/${properties.id}`);
@@ -45,7 +45,7 @@ const SymbolLayer = ({ setIsBottomSheetVisible, setSelectedPlace }) => {
 };
 
 SymbolLayer.propTypes = {
-    setIsBottomSheetVisible: PropTypes.func.isRequired,
+    setIsSheetVisible: PropTypes.func.isRequired,
     setSelectedPlace: PropTypes.func.isRequired,
 };
 

@@ -6,12 +6,12 @@ import { ReactComponent as LocateIcon } from '../../assets/locate.svg';
 import styles from './MapControls.module.css';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 
-const MapControls = ({ setIsBottomSheetVisible, setMapCenter, setZoomLevel }) => {
+const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
     const [isLocating, setIsLocating] = useState(false);
     const [hasError, setHasError] = useState(false);
 
     const locateUser = async () => {
-        setIsBottomSheetVisible(false);
+        setIsSheetVisible(false);
         setIsLocating(true);
         let coordinates;
 
@@ -65,7 +65,7 @@ const MapControls = ({ setIsBottomSheetVisible, setMapCenter, setZoomLevel }) =>
 };
 
 MapControls.propTypes = {
-    setIsBottomSheetVisible: PropTypes.func.isRequired,
+    setIsSheetVisible: PropTypes.func.isRequired,
     setMapCenter: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
 };

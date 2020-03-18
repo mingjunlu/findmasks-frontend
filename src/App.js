@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import BottomSheet from './components/BottomSheet/BottomSheet';
+import Sheet from './components/Sheet/Sheet';
 import MaskMap from './components/MaskMap/MaskMap';
 
 const App = () => {
     const [selectedPlace, setSelectedPlace] = useState({});
-    const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
+    const [isSheetVisible, setIsSheetVisible] = useState(false);
 
     return (
         <>
-            {isBottomSheetVisible && (
-                <BottomSheet
+            {isSheetVisible && (
+                <Sheet
                     placeAddress={selectedPlace.address}
                     placeChildMasksLeft={selectedPlace.childMasksLeft}
                     placeMasksLeft={selectedPlace.masksLeft}
@@ -18,11 +18,11 @@ const App = () => {
                     placeOpensOn={selectedPlace.opensOn}
                     placePhone={selectedPlace.phone}
                     placeUpdatedAt={selectedPlace.updatedAt}
-                    setIsBottomSheetVisible={setIsBottomSheetVisible}
+                    setIsSheetVisible={setIsSheetVisible}
                 />
             )}
             <MaskMap
-                setIsBottomSheetVisible={setIsBottomSheetVisible}
+                setIsSheetVisible={setIsSheetVisible}
                 setSelectedPlace={setSelectedPlace}
             />
         </>

@@ -36,6 +36,7 @@
         "react-dom": "^16.13.0",
         "react-ga": "^2.7.0",
         "react-mapbox-gl": "^4.8.2",
+        "react-responsive": "^8.0.3",
         "react-scripts": "3.4.0"
     },
     "devDependencies": {

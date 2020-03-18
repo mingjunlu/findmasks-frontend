@@ -54,7 +54,7 @@ const SheetContent = (props) => {
             </div>
             <div>
                 <SheetFieldLink
-                    baseWidth="65%"
+                    baseWidth="22.0rem"
                     color="rgb(10, 132, 255)"
                     href={`https://www.google.com/maps/dir/current+location/${placeAddress}`}
                     label="地址"
@@ -62,7 +62,7 @@ const SheetContent = (props) => {
                     value={placeAddress}
                 />
                 <SheetFieldLink
-                    baseWidth="30%"
+                    baseWidth="10.0rem"
                     color="rgb(10, 132, 255)"
                     href={`tel:${placePhone.replace(/\(0.*\)/, '+886')}`}
                     label="電話"
