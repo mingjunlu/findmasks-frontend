@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Layer } from 'react-mapbox-gl';
+import LastLocation from '../../classes/LastLocation';
 import generateIcon from './generateIcon';
 import symbolLayerProps from './symbolLayerProps';
 
@@ -12,7 +13,7 @@ const images = [
 
 const SymbolLayer = ({ setIsSheetVisible, setSelectedPlace }) => {
     const displayPlaceInfo = async (event) => {
-        const { properties } = event.features[0];
+        const { geometry, properties } = event.features[0];
         setSelectedPlace({
             id: properties.id,
             name: properties.name,
@@ -20,6 +21,10 @@ const SymbolLayer = ({ setIsSheetVisible, setSelectedPlace }) => {
             childMasksLeft: properties.childMasksLeft,
         });
         setIsSheetVisible(true);
+
+        // Update the last location
+        const newLocation = new LastLocation(geometry.coordinates);
+        newLocation.save();
 
         try {
             const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/${properties.id}`);

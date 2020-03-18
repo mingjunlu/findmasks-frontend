@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import LastLocation from '../../classes/LastLocation';
 import { ReactComponent as LocateIcon } from '../../assets/locate.svg';
-import styles from './MapControls.module.css';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import styles from './MapControls.module.css';
 
 const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
     const [isLocating, setIsLocating] = useState(false);
@@ -25,7 +26,10 @@ const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
                 const onError = (error) => { reject(error); };
                 const onSuccess = (position) => {
                     const { latitude, longitude } = position.coords;
-                    resolve([longitude, latitude]);
+                    const here = [longitude, latitude];
+                    const newLocation = new LastLocation(here);
+                    newLocation.save(); // Update the last location
+                    resolve(here);
                 };
                 const positionOptions = { enableHighAccuracy: true, timeout: 4000 };
                 navigator.geolocation.getCurrentPosition(onSuccess, onError, positionOptions);
@@ -52,6 +56,7 @@ const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
             />
         );
     }
+
     return (
         <>
             {isLocating && <LoadingScreen />}

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactMapboxGl from 'react-mapbox-gl';
+import LastLocation from '../../classes/LastLocation';
 import MapLayers from '../MapLayers/MapLayers';
 import mapProps from './mapProps';
 
@@ -10,8 +11,18 @@ const InteractiveMap = ReactMapboxGl({
 });
 
 const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
-    const [zoomLevel, setZoomLevel] = useState(9);
-    const [mapCenter, setMapCenter] = useState([121.5313043, 25.0493621]);
+    const [zoomLevel, setZoomLevel] = useState(null);
+    const [mapCenter, setMapCenter] = useState(null);
+
+    // Restore the last location
+    useEffect(() => {
+        const somewhereInTaipei = [121.5313043, 25.0493621];
+        const lastLocation = LastLocation.restore();
+        setZoomLevel(lastLocation ? 14 : 9);
+        setMapCenter(lastLocation || somewhereInTaipei);
+    }, []);
+
+    if (!zoomLevel || !mapCenter) { return null; }
 
     const synchronizeZoomLevel = (event, { originalEvent }) => {
         if (originalEvent) {
