@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ReactComponent as CancelIcon } from '../../assets/cancel.svg';
+import { ReactComponent as CloseIcon } from '../../assets/close.svg';
 import { ReactComponent as CautionIcon } from '../../assets/caution.svg';
 import FullScreenOverlay from '../FullScreenOverlay/FullScreenOverlay';
 import styles from './ErrorScreen.module.css';
@@ -10,7 +10,7 @@ const ErrorScreen = ({ isCloseable, message, onClick }) => (
         <div className={styles.container}>
             {isCloseable && (
                 <button type="button" onClick={onClick} className={styles.button}>
-                    <CancelIcon className={styles.cancelIcon} />
+                    <CloseIcon className={styles.closeIcon} />
                 </button>
             )}
             <div className={styles.box}>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import ReactGA from 'react-ga';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import { ReactComponent as LocateIcon } from '../../assets/locate.svg';
 import styles from './MapControls.module.css';
@@ -13,6 +14,11 @@ const MapControls = ({ setIsBottomSheetVisible, setMapCenter, setZoomLevel }) =>
         setIsBottomSheetVisible(false);
         setIsLocating(true);
         let coordinates;
+
+        ReactGA.event({
+            category: 'MapControl',
+            action: 'Clicked the locate button',
+        });
 
         try {
             coordinates = await new Promise((resolve, reject) => {

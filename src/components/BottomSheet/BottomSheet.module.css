@@ -74,7 +74,7 @@
     visibility: hidden;
 }
 
-.cancelButton {
+.closeButton {
     flex-shrink: 0;
     width: 3.2rem;
     height: 3.2rem;
@@ -84,7 +84,7 @@
     margin-left: 0.8rem;
 }
 
-.cancelIcon {
+.closeIcon {
     width: 1.6rem;
     height: 1.6rem;
     fill: rgb(142, 142, 147);

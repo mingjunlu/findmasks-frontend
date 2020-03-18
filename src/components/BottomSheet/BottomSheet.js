@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import ReactGA from 'react-ga';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-tw';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import weekday from 'dayjs/plugin/weekday';
-import { ReactComponent as CancelIcon } from '../../assets/cancel.svg';
+import { ReactComponent as CloseIcon } from '../../assets/close.svg';
 import FullScreenOverlay from '../FullScreenOverlay/FullScreenOverlay';
 import getCardColor from './getCardColor';
 import styles from './BottomSheet.module.css';
@@ -34,7 +35,13 @@ const BottomSheet = (props) => {
     const [position, setPosition] = useState(initialPosition);
     const [isScrollable, setIsScrollable] = useState(false);
 
-    const removeSheet = () => { setIsBottomSheetVisible(false); };
+    const removeSheet = () => {
+        setIsBottomSheetVisible(false);
+        ReactGA.event({
+            category: 'BottomSheet',
+            action: 'Clicked the close button',
+        });
+    };
     const dragSheet = (event) => {
         const newPosition = Math.round(event.touches[0].clientY);
         if (newPosition === position) { return; }
@@ -45,18 +52,39 @@ const BottomSheet = (props) => {
     const dropSheet = (event) => {
         const newPosition = Math.round(event.changedTouches[0].clientY);
         if (newPosition < halfHeight) {
-            // Expand the sheet
             setPosition(topBoundary);
             setIsScrollable(true);
+            ReactGA.event({
+                category: 'BottomSheet',
+                action: 'Swiped up to expand the sheet',
+            });
         } else if (newPosition > bottomBoundary) {
-            // Minimize the sheet
             setPosition(Math.round(window.innerHeight * 1.1));
             setIsBottomSheetVisible(false);
+            ReactGA.event({
+                category: 'BottomSheet',
+                action: 'Swiped down to minimize the sheet',
+            });
         } else {
-            // Condense the sheet
             setPosition(initialPosition);
             setIsScrollable(false);
+            ReactGA.event({
+                category: 'BottomSheet',
+                action: 'Swiped down to condense the sheet',
+            });
         }
+    };
+    const onAddressClick = () => {
+        ReactGA.event({
+            category: 'BottomSheet',
+            action: 'Clicked the address link',
+        });
+    };
+    const onPhoneClick = () => {
+        ReactGA.event({
+            category: 'BottomSheet',
+            action: 'Clicked the phone link',
+        });
     };
 
     const overlayColor = isScrollable ? undefined : 'transparent';
@@ -77,8 +105,8 @@ const BottomSheet = (props) => {
                 <header className={styles.header} onTouchEnd={dropSheet} onTouchMove={dragSheet}>
                     <div className={styles.topBar}>
                         <h1 className={styles.title}>{placeName}</h1>
-                        <button type="button" className={styles.cancelButton} onClick={removeSheet}>
-                            <CancelIcon className={styles.cancelIcon} />
+                        <button type="button" className={styles.closeButton} onClick={removeSheet}>
+                            <CloseIcon className={styles.closeIcon} />
                         </button>
                     </div>
                     <p className={styles.time}>
@@ -107,13 +135,13 @@ const BottomSheet = (props) => {
                         </p>
                     </div>
                     <div>
-                        <a href={addressLink} className={styles.touchable}>
+                        <a href={addressLink} onClick={onAddressClick} className={styles.touchable}>
                             <span className={styles.touchableLabel}>地址</span>
                             <span className={`${styles.touchableValue} ${styles.touchableAddress}`}>
                                 {placeAddress || ''}
                             </span>
                         </a>
-                        <a href={phoneLink} className={styles.touchable}>
+                        <a href={phoneLink} onClick={onPhoneClick} className={styles.touchable}>
                             <span className={styles.touchableLabel}>電話</span>
                             <span className={`${styles.touchableValue} ${styles.touchablePhone}`}>
                                 {placePhone || ''}
