@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Layer } from 'react-mapbox-gl';
+import changeCursor from '../../utilities/changeCursor';
 import clusterLayerProps from './clusterLayerProps';
 
 const ClusterLayer = ({ setMapCenter, setZoomLevel }) => {
@@ -17,6 +18,8 @@ const ClusterLayer = ({ setMapCenter, setZoomLevel }) => {
             filter={clusterLayerProps.filter}
             paint={clusterLayerProps.paint}
             onClick={inspectCluster}
+            onMouseEnter={changeCursor}
+            onMouseLeave={changeCursor}
         />
     );
 };

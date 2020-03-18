@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Layer } from 'react-mapbox-gl';
 import LastLocation from '../../classes/LastLocation';
+import changeCursor from '../../utilities/changeCursor';
 import generateIcon from './generateIcon';
 import symbolLayerProps from './symbolLayerProps';
 
@@ -45,6 +46,8 @@ const SymbolLayer = ({ setIsSheetVisible, setSelectedPlace }) => {
             layout={symbolLayerProps.layout}
             paint={symbolLayerProps.paint}
             onClick={displayPlaceInfo}
+            onMouseEnter={changeCursor}
+            onMouseLeave={changeCursor}
         />
     );
 };
