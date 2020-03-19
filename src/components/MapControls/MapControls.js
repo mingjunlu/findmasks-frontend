@@ -31,7 +31,7 @@ const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
                     newLocation.save(); // Update the last location
                     resolve(here);
                 };
-                const positionOptions = { enableHighAccuracy: true, timeout: 4000 };
+                const positionOptions = { enableHighAccuracy: true, timeout: 6000 };
                 navigator.geolocation.getCurrentPosition(onSuccess, onError, positionOptions);
             });
         } catch (error) {
