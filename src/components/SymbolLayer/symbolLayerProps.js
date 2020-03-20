@@ -12,15 +12,10 @@ const symbolLayerProps = {
     filter: ['!', ['has', 'point_count']],
     layout: {
         'text-field': '{name}',
-        'text-size': 11,
+        'text-size': 12,
         'text-letter-spacing': 0.05,
         'text-offset': [0.9, 1.05],
-        'text-variable-anchor': [
-            'bottom',
-            'top',
-            'right',
-            'left',
-        ],
+        'text-variable-anchor': ['bottom', 'top'],
         'icon-image': [
             'step',
             ['get', 'masksLeft'],
