@@ -10,7 +10,10 @@ const images = generateImages();
 
 const SymbolLayer = ({ setIsSheetVisible, setSelectedPlace }) => {
     const displayPlaceInfo = async (event) => {
-        const { geometry, properties } = event.features[0];
+        const map = event.target;
+        const { geometry, id, properties } = event.features[0];
+
+        map.setFeatureState({ id, source: 'places' }, { isSelected: true }); // Highlight the symbol
         setSelectedPlace({
             id: properties.id,
             name: properties.name,

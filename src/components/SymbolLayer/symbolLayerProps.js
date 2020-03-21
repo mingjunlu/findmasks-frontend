@@ -39,6 +39,18 @@ const symbolLayerProps = {
             100,
             'rgb(17, 120, 122)',
         ],
+        'text-opacity': [
+            'case',
+            ['boolean', ['feature-state', 'isSelected'], false],
+            1.0,
+            0.8,
+        ],
+        'icon-opacity': [
+            'case',
+            ['boolean', ['feature-state', 'isSelected'], false],
+            1.00,
+            0.75,
+        ],
     },
 };
 

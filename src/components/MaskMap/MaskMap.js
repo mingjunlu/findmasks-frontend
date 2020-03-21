@@ -31,6 +31,17 @@ const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
         }
     };
 
+    const unhighlightSymbol = (map) => {
+        const features = map.queryRenderedFeatures();
+        const selectedFeature = features.find((feature) => !!feature.state.isSelected);
+        if (selectedFeature) {
+            map.removeFeatureState({
+                id: selectedFeature.id,
+                source: 'places',
+            });
+        }
+    };
+
     return (
         <>
             <InteractiveMap
@@ -42,6 +53,7 @@ const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
                 // eslint-disable-next-line react/style-prop-object
                 style="mapbox://styles/mapbox/light-v10?optimize=true"
                 zoom={[zoomLevel]}
+                onClick={unhighlightSymbol}
             >
                 <MapLayers
                     setIsSheetVisible={setIsSheetVisible}
