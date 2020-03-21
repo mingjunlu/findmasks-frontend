@@ -39,6 +39,7 @@ const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
                 id: selectedFeature.id,
                 source: 'places',
             });
+            setIsSheetVisible(false);
         }
     };
 
