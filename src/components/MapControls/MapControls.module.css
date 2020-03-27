@@ -12,7 +12,13 @@
     right: 1.0rem;
 }
 
+.bottomRight {
+    bottom: 2.8rem;
+    right: 1.0rem;
+}
+
 .button {
+    display: block;
     width: 4.4rem;
     height: 4.4rem;
     outline: none;
@@ -23,10 +29,34 @@
     background-color: rgb(142, 142, 147);
 }
 
+.button:first-of-type {
+    border-bottom: 1px solid rgba(209, 209, 214, 0.6);
+}
+
 .locateIcon {
     width: 1.4rem;
     height: 1.4rem;
+    fill: rgb(58, 58, 60);
     position: relative;
     top: 0.1rem;
+}
+
+.plusIcon {
+    width: 1.6rem;
+    height: 1.6rem;
     fill: rgb(58, 58, 60);
+    position: relative;
+    top: 0.1rem;
+}
+
+.minusIcon {
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: rgb(58, 58, 60);
+}
+
+@media (max-width: 640px) {
+    .bottomRight {
+        display: none;
+    }
 }

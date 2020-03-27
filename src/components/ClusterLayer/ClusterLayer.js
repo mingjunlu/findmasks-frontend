@@ -7,7 +7,10 @@ import clusterLayerProps from './clusterLayerProps';
 
 const ClusterLayer = ({ setMapCenter, setZoomLevel }) => {
     const inspectCluster = (event) => {
-        setZoomLevel((prevState) => (prevState + 1.5));
+        setZoomLevel((prevState) => {
+            const higherZoomLevel = prevState + 1.5;
+            return higherZoomLevel;
+        });
         setMapCenter(event.features[0].geometry.coordinates);
         ReactGA.event({
             category: 'ClusterLayer',

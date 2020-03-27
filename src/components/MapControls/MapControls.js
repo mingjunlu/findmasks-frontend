@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 import LastLocation from '../../classes/LastLocation';
 import { ReactComponent as LocateIcon } from '../../assets/locate.svg';
+import { ReactComponent as PlusIcon } from '../../assets/plus.svg';
+import { ReactComponent as MinusIcon } from '../../assets/minus.svg';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import mapProps from '../MaskMap/mapProps';
 import styles from './MapControls.module.css';
 
 const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
@@ -40,10 +43,28 @@ const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
 
         setIsLocating(false);
         if (coordinates) {
-            const higherZoomLevel = 14;
-            setZoomLevel(higherZoomLevel);
+            const zoomLevelAfterLocated = 14;
+            setZoomLevel(zoomLevelAfterLocated);
             setMapCenter(coordinates);
         }
+    };
+
+    const zoomIn = () => {
+        setZoomLevel((prevState) => {
+            const higherZoomLevel = prevState + 1;
+            return (higherZoomLevel > mapProps.maxZoom)
+                ? mapProps.maxZoom
+                : higherZoomLevel;
+        });
+    };
+
+    const zoomOut = () => {
+        setZoomLevel((prevState) => {
+            const lowerZoomLevel = prevState - 1;
+            return (lowerZoomLevel < mapProps.minZoom)
+                ? mapProps.minZoom
+                : lowerZoomLevel;
+        });
     };
 
     if (hasError) {
@@ -63,6 +84,14 @@ const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
             <div className={`${styles.container} ${styles.topRight}`}>
                 <button type="button" onClick={locateUser} className={styles.button}>
                     <LocateIcon className={styles.locateIcon} />
+                </button>
+            </div>
+            <div className={`${styles.container} ${styles.bottomRight}`}>
+                <button type="button" onClick={zoomIn} className={styles.button}>
+                    <PlusIcon className={styles.plusIcon} />
+                </button>
+                <button type="button" onClick={zoomOut} className={styles.button}>
+                    <MinusIcon className={styles.minusIcon} />
                 </button>
             </div>
         </>

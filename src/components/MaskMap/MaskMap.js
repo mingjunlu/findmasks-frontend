@@ -18,7 +18,8 @@ const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
     useEffect(() => {
         const somewhereInTaipei = [121.5313043, 25.0493621];
         const lastLocation = LastLocation.restore();
-        setZoomLevel(lastLocation ? 14 : 9);
+        const initialZoomLevel = lastLocation ? 14 : 9;
+        setZoomLevel(initialZoomLevel);
         setMapCenter(lastLocation || somewhereInTaipei);
     }, []);
 
@@ -27,7 +28,12 @@ const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
     const synchronizeZoomLevel = (event, { originalEvent }) => {
         if (originalEvent) {
             const { lastZoom } = event.style.zoomHistory;
-            setZoomLevel(lastZoom);
+            const { minZoom, maxZoom } = mapProps;
+
+            const isValidZoomLevel = (lastZoom >= minZoom) && (lastZoom <= maxZoom);
+            if (isValidZoomLevel) {
+                setZoomLevel(lastZoom);
+            }
         }
     };
 
@@ -49,6 +55,8 @@ const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
                 center={mapCenter}
                 containerStyle={mapProps.containerStyle}
                 maxBounds={mapProps.maxBounds}
+                maxZoom={mapProps.maxZoom}
+                minZoom={mapProps.minZoom}
                 onStyleLoad={mapProps.changeMapLanguage}
                 onZoomEnd={synchronizeZoomLevel}
                 // eslint-disable-next-line react/style-prop-object
