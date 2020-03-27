@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactGA from 'react-ga';
 import { Layer } from 'react-mapbox-gl';
 import LastLocation from '../../classes/LastLocation';
 import changeCursor from '../../utilities/changeCursor';
@@ -21,6 +22,11 @@ const SymbolLayer = ({ setIsSheetVisible, setSelectedPlace }) => {
             childMasksLeft: properties.childMasksLeft,
         });
         setIsSheetVisible(true);
+
+        ReactGA.event({
+            category: 'SymbolLayer',
+            action: 'Clicked a symbol',
+        });
 
         // Update the last location
         const newLocation = new LastLocation(geometry.coordinates);
