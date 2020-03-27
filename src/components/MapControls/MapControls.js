@@ -56,6 +56,10 @@ const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
                 ? mapProps.maxZoom
                 : higherZoomLevel;
         });
+        ReactGA.event({
+            category: 'MapControl',
+            action: 'Clicked the zoom-in button',
+        });
     };
 
     const zoomOut = () => {
@@ -64,6 +68,10 @@ const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
             return (lowerZoomLevel < mapProps.minZoom)
                 ? mapProps.minZoom
                 : lowerZoomLevel;
+        });
+        ReactGA.event({
+            category: 'MapControl',
+            action: 'Clicked the zoom-out button',
         });
     };
 
