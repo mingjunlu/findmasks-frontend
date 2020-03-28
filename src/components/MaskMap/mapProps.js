@@ -3,8 +3,9 @@ const mapProps = {
         map.getStyle().layers.forEach((layer) => {
             if (layer.id.endsWith('-label')) {
                 map.setLayoutProperty(layer.id, 'text-field', [
-                    'get',
-                    'name_zh-Hant',
+                    'coalesce',
+                    ['get', 'name_zh-Hant'],
+                    ['get', 'name'],
                 ]);
             }
         });
