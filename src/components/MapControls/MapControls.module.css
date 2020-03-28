@@ -29,8 +29,8 @@
     background-color: rgb(142, 142, 147);
 }
 
-.button:first-of-type {
-    border-bottom: 1px solid rgba(209, 209, 214, 0.6);
+.button:not(:first-of-type) {
+    border-top: 1px solid rgba(209, 209, 214, 0.6);
 }
 
 .locateIcon {
