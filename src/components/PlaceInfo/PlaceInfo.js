@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import ReactGA from 'react-ga';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
@@ -11,6 +11,11 @@ import styles from './PlaceInfo.module.css';
 const isProduction = (process.env.NODE_ENV === 'production');
 
 const PlaceInfo = () => {
+    const { id } = useParams();
+    const { pathname } = useLocation();
+    const history = useHistory();
+    const isTabletOrDesktop = useMediaQuery({ query: '(min-width: 640px)' });
+
     const [isScrollable, setIsScrollable] = useState(false);
     const [error, setError] = useState(null);
     const [place, setPlace] = useState({
@@ -24,14 +29,6 @@ const PlaceInfo = () => {
         updatedAt: '',
     });
 
-    // Update the page title
-    useEffect(() => {
-        const originalTitle = document.title;
-        if (place.name) { document.title = `${place.name} | 口罩咧？`; }
-        return () => { document.title = originalTitle; };
-    }, [place.name]);
-
-    const { id } = useParams();
     useEffect(() => {
         let isMounted = true;
 
@@ -58,8 +55,13 @@ const PlaceInfo = () => {
         return () => { isMounted = false; };
     }, [id]);
 
-    const history = useHistory();
-    const goToHomepage = () => { history.push('/'); };
+    // Update the page title
+    useEffect(() => {
+        const originalTitle = document.title;
+        if (place.name) { document.title = `${place.name} | 口罩咧？`; }
+        if (place.name && isProduction) { ReactGA.pageview(pathname); }
+        return () => { document.title = originalTitle; };
+    }, [place.name]);
 
     const topBoundary = 32;
     const initialPosition = Math.round(window.innerHeight * 0.6);
@@ -97,7 +99,7 @@ const PlaceInfo = () => {
             }
         } else if (shouldMinimize) {
             setPosition(Math.round(window.innerHeight * 1.1));
-            setTimeout(goToHomepage, 100);
+            setTimeout(() => { history.push('/'); }, 100);
             if (isProduction) {
                 ReactGA.event({
                     category: 'PlaceInfo',
@@ -107,13 +109,8 @@ const PlaceInfo = () => {
         }
     };
 
-    const isTabletOrDesktop = useMediaQuery({ query: '(min-width: 640px)' });
-    const mobileContainerStyle = {
-        transform: `translateY(${position}px)`,
-        willChange: 'transform',
-    };
-
     if (error) {
+        const goToHomepage = () => { history.push('/'); };
         return (
             <ErrorScreen
                 isCloseable
@@ -125,6 +122,10 @@ const PlaceInfo = () => {
 
     const overlayColor = (!isTabletOrDesktop && isScrollable) ? undefined : 'transparent';
     const pointerEvents = (!isTabletOrDesktop && isScrollable) ? null : 'none';
+    const mobileContainerStyle = {
+        transform: `translateY(${position}px)`,
+        willChange: 'transform',
+    };
 
     return (
         <FullScreenOverlay backgroundColor={overlayColor} pointerEvents={pointerEvents} zIndex={4}>
