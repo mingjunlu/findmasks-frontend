@@ -15,13 +15,13 @@ const SymbolLayer = () => {
 
     const displayPlaceInfo = async (event) => {
         const map = event.target;
-        const { geometry, id } = event.features[0];
+        const { geometry, properties } = event.features[0];
 
         // Highlight the symbol
-        map.setFeatureState({ id, source: 'places' }, { isSelected: true });
+        map.setFeatureState({ id: properties.id, source: 'places' }, { isSelected: true });
 
         // Show place's info
-        history.push(`/places/${id}`);
+        history.push(`/places/${properties.id}`);
 
         // Update the last location
         const newLocation = new LastLocation(geometry.coordinates);
