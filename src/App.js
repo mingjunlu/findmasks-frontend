@@ -1,30 +1,36 @@
-import React, { useState } from 'react';
-import Sheet from './components/Sheet/Sheet';
+import React, { useEffect } from 'react';
+import { Route, Switch, useLocation } from 'react-router-dom';
+import ReactGA from 'react-ga';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-tw';
+import PlaceInfo from './components/PlaceInfo/PlaceInfo';
 import MaskMap from './components/MaskMap/MaskMap';
 
+// Initialize Google Analytics
+const isProduction = (process.env.NODE_ENV === 'production');
+if (isProduction) { ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID); }
+
+// Change locale globally
+dayjs.locale('zh-tw');
+
+// Clear old values from localStorage
+localStorage.removeItem('agreement');
+localStorage.removeItem('lastKnownLocation');
+
 const App = () => {
-    const [selectedPlace, setSelectedPlace] = useState({});
-    const [isSheetVisible, setIsSheetVisible] = useState(false);
+    const { pathname } = useLocation();
+    useEffect(() => {
+        if (isProduction) { ReactGA.pageview(pathname); }
+    }, [pathname]);
 
     return (
         <>
-            {isSheetVisible && (
-                <Sheet
-                    placeAddress={selectedPlace.address}
-                    placeChildMasksLeft={selectedPlace.childMasksLeft}
-                    placeMasksLeft={selectedPlace.masksLeft}
-                    placeName={selectedPlace.name}
-                    placeNote={selectedPlace.note}
-                    placeOpensOn={selectedPlace.opensOn}
-                    placePhone={selectedPlace.phone}
-                    placeUpdatedAt={selectedPlace.updatedAt}
-                    setIsSheetVisible={setIsSheetVisible}
-                />
-            )}
-            <MaskMap
-                setIsSheetVisible={setIsSheetVisible}
-                setSelectedPlace={setSelectedPlace}
-            />
+            <Switch>
+                <Route exact path="/places/:id">
+                    <PlaceInfo />
+                </Route>
+            </Switch>
+            <MaskMap />
         </>
     );
 };

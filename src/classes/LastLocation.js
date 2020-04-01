@@ -7,10 +7,6 @@ class LastLocation {
 
     static restore() {
         try {
-            // Clear the old value
-            const hasOldValue = !!localStorage.getItem('lastKnownLocation');
-            if (hasOldValue) { localStorage.removeItem('lastKnownLocation'); }
-
             const { longitude, latitude } = JSON.parse(localStorage.getItem('lastLocation'));
             return [longitude, latitude];
         } catch (error) {

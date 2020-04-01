@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import LastLocation from '../../classes/LastLocation';
 import { ReactComponent as LocateIcon } from '../../assets/locate.svg';
@@ -10,19 +11,25 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import mapProps from '../MaskMap/mapProps';
 import styles from './MapControls.module.css';
 
-const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
+const isProduction = (process.env.NODE_ENV === 'production');
+
+const MapControls = ({ setMapCenter, setZoomLevel }) => {
+    const history = useHistory();
+
     const [isLocating, setIsLocating] = useState(false);
     const [hasError, setHasError] = useState(false);
 
     const locateUser = async () => {
-        setIsSheetVisible(false);
+        history.push('/');
         setIsLocating(true);
         let coordinates;
 
-        ReactGA.event({
-            category: 'MapControl',
-            action: 'Clicked the locate button',
-        });
+        if (isProduction) {
+            ReactGA.event({
+                category: 'MapControl',
+                action: 'Clicked the locate button',
+            });
+        }
 
         try {
             coordinates = await new Promise((resolve, reject) => {
@@ -56,10 +63,12 @@ const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
                 ? mapProps.maxZoom
                 : higherZoomLevel;
         });
-        ReactGA.event({
-            category: 'MapControl',
-            action: 'Clicked the zoom-in button',
-        });
+        if (isProduction) {
+            ReactGA.event({
+                category: 'MapControl',
+                action: 'Clicked the zoom-in button',
+            });
+        }
     };
 
     const zoomOut = () => {
@@ -69,10 +78,12 @@ const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
                 ? mapProps.minZoom
                 : lowerZoomLevel;
         });
-        ReactGA.event({
-            category: 'MapControl',
-            action: 'Clicked the zoom-out button',
-        });
+        if (isProduction) {
+            ReactGA.event({
+                category: 'MapControl',
+                action: 'Clicked the zoom-out button',
+            });
+        }
     };
 
     if (hasError) {
@@ -107,7 +118,6 @@ const MapControls = ({ setIsSheetVisible, setMapCenter, setZoomLevel }) => {
 };
 
 MapControls.propTypes = {
-    setIsSheetVisible: PropTypes.func.isRequired,
     setMapCenter: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
 };

@@ -10,6 +10,7 @@
     border-top-right-radius: 1.6rem;
     box-shadow: 1px 2px 30px rgba(28, 28, 30, 0.3);
     pointer-events: auto;
+    user-select: none;
 }
 
 .container::before {
@@ -22,4 +23,16 @@
     position: absolute;
     top: 0.8rem;
     left: calc(50% - 1.6rem);
+}
+
+@media (min-width: 640px) {
+    .container {
+        right: unset;
+        width: 38.0rem;
+        border-top-left-radius: unset;
+        border-bottom-right-radius: 1.6rem;
+    }
+    .container::before {
+        display: none;
+    }
 }

@@ -5,6 +5,8 @@ import { Layer } from 'react-mapbox-gl';
 import changeCursor from '../../utilities/changeCursor';
 import clusterLayerProps from './clusterLayerProps';
 
+const isProduction = (process.env.NODE_ENV === 'production');
+
 const ClusterLayer = ({ setMapCenter, setZoomLevel }) => {
     const inspectCluster = (event) => {
         setZoomLevel((prevState) => {
@@ -12,10 +14,12 @@ const ClusterLayer = ({ setMapCenter, setZoomLevel }) => {
             return higherZoomLevel;
         });
         setMapCenter(event.features[0].geometry.coordinates);
-        ReactGA.event({
-            category: 'ClusterLayer',
-            action: 'Clicked a cluster',
-        });
+        if (isProduction) {
+            ReactGA.event({
+                category: 'ClusterLayer',
+                action: 'Clicked a cluster',
+            });
+        }
     };
 
     return (

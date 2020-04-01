@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import { Layer } from 'react-mapbox-gl';
 import LastLocation from '../../classes/LastLocation';
@@ -8,36 +8,31 @@ import generateImages from './generateImages';
 import symbolLayerProps from './symbolLayerProps';
 
 const images = generateImages();
+const isProduction = (process.env.NODE_ENV === 'production');
 
-const SymbolLayer = ({ setIsSheetVisible, setSelectedPlace }) => {
+const SymbolLayer = () => {
+    const history = useHistory();
+
     const displayPlaceInfo = async (event) => {
         const map = event.target;
-        const { geometry, id, properties } = event.features[0];
+        const { geometry, id } = event.features[0];
 
-        map.setFeatureState({ id, source: 'places' }, { isSelected: true }); // Highlight the symbol
-        setSelectedPlace({
-            id: properties.id,
-            name: properties.name,
-            masksLeft: properties.masksLeft,
-            childMasksLeft: properties.childMasksLeft,
-        });
-        setIsSheetVisible(true);
+        // Highlight the symbol
+        map.setFeatureState({ id, source: 'places' }, { isSelected: true });
 
-        ReactGA.event({
-            category: 'SymbolLayer',
-            action: 'Clicked a symbol',
-        });
+        // Show place's info
+        history.push(`/places/${id}`);
 
         // Update the last location
         const newLocation = new LastLocation(geometry.coordinates);
         newLocation.save();
 
-        try {
-            const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/${properties.id}`);
-            const feature = await response.json();
-            setSelectedPlace(feature.properties);
-        } catch (error) {
-            setSelectedPlace(error);
+        // Track the click event
+        if (isProduction) {
+            ReactGA.event({
+                category: 'SymbolLayer',
+                action: 'Clicked a symbol',
+            });
         }
     };
 
@@ -55,11 +50,6 @@ const SymbolLayer = ({ setIsSheetVisible, setSelectedPlace }) => {
             onMouseLeave={changeCursor}
         />
     );
-};
-
-SymbolLayer.propTypes = {
-    setIsSheetVisible: PropTypes.func.isRequired,
-    setSelectedPlace: PropTypes.func.isRequired,
 };
 
 export default SymbolLayer;

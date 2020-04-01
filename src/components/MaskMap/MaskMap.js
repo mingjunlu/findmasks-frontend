@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import ReactMapboxGl from 'react-mapbox-gl';
 import LastLocation from '../../classes/LastLocation';
 import MapLayers from '../MapLayers/MapLayers';
@@ -10,7 +10,9 @@ const InteractiveMap = ReactMapboxGl({
     dragRotate: false,
 });
 
-const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
+const MaskMap = () => {
+    const history = useHistory();
+
     const [zoomLevel, setZoomLevel] = useState(null);
     const [mapCenter, setMapCenter] = useState(null);
 
@@ -45,7 +47,7 @@ const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
                 id: selectedFeature.id,
                 source: 'places',
             });
-            setIsSheetVisible(false);
+            history.push('/');
         }
     };
 
@@ -64,20 +66,10 @@ const MaskMap = ({ setIsSheetVisible, setSelectedPlace }) => {
                 zoom={[zoomLevel]}
                 onClick={unhighlightSymbol}
             >
-                <MapLayers
-                    setIsSheetVisible={setIsSheetVisible}
-                    setMapCenter={setMapCenter}
-                    setSelectedPlace={setSelectedPlace}
-                    setZoomLevel={setZoomLevel}
-                />
+                <MapLayers setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
             </InteractiveMap>
         </>
     );
-};
-
-MaskMap.propTypes = {
-    setIsSheetVisible: PropTypes.func.isRequired,
-    setSelectedPlace: PropTypes.func.isRequired,
 };
 
 export default MaskMap;

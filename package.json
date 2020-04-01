@@ -37,6 +37,7 @@
         "react-ga": "^2.7.0",
         "react-mapbox-gl": "^4.8.2",
         "react-responsive": "^8.0.3",
+        "react-router-dom": "^5.1.2",
         "react-scripts": "3.4.1"
     },
     "devDependencies": {

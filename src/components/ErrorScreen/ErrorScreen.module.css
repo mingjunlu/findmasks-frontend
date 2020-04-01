@@ -42,4 +42,5 @@
 .text {
     color: rgb(242, 242, 247);
     font-size: 1.3rem;
+    line-height: 2.0rem;
 }

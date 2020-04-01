@@ -8,14 +8,7 @@ import ClusterLayer from '../ClusterLayer/ClusterLayer';
 import SymbolLayer from '../SymbolLayer/SymbolLayer';
 import sourceProps from './sourceProps';
 
-const MapLayers = (props) => {
-    const {
-        setIsSheetVisible,
-        setMapCenter,
-        setSelectedPlace,
-        setZoomLevel,
-    } = props;
-
+const MapLayers = ({ setMapCenter, setZoomLevel }) => {
     const [features, setFeatures] = useState([]);
 
     useEffect(() => {
@@ -52,11 +45,7 @@ const MapLayers = (props) => {
 
     return (
         <>
-            <MapControls
-                setIsSheetVisible={setIsSheetVisible}
-                setMapCenter={setMapCenter}
-                setZoomLevel={setZoomLevel}
-            />
+            <MapControls setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
             <Source
                 id="places"
                 geoJsonSource={{
@@ -65,18 +54,13 @@ const MapLayers = (props) => {
                 }}
             />
             <ClusterLayer setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
-            <SymbolLayer
-                setIsSheetVisible={setIsSheetVisible}
-                setSelectedPlace={setSelectedPlace}
-            />
+            <SymbolLayer />
         </>
     );
 };
 
 MapLayers.propTypes = {
-    setIsSheetVisible: PropTypes.func.isRequired,
     setMapCenter: PropTypes.func.isRequired,
-    setSelectedPlace: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
 };
 

@@ -20,10 +20,22 @@
     text-align: center;
 }
 
+.value:empty {
+    visibility: hidden;
+}
+
+.value:empty::before {
+    content: "?";
+}
+
 .suffix {
     font-size: 1.0rem;
     line-height: 2.2rem;
     padding: 0 0.4rem;
     position: absolute;
     bottom: 0.9rem;
+}
+
+.value:empty + .suffix {
+    visibility: hidden;
 }
