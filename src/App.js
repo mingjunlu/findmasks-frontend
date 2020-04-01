@@ -1,8 +1,9 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-tw';
+import ErrorScreen from './components/ErrorScreen/ErrorScreen';
 import PlaceInfo from './components/PlaceInfo/PlaceInfo';
 import MaskMap from './components/MaskMap/MaskMap';
 
@@ -20,15 +21,26 @@ dayjs.locale('zh-tw');
 localStorage.removeItem('agreement');
 localStorage.removeItem('lastKnownLocation');
 
-const App = () => (
-    <BrowserRouter>
-        <Switch>
-            <Route exact path="/places/:id">
-                <PlaceInfo />
-            </Route>
-        </Switch>
-        <MaskMap />
-    </BrowserRouter>
-);
+const App = () => {
+    const history = useHistory();
+    const goToHomepage = () => { history.push('/'); };
+
+    return (
+        <>
+            <Switch>
+                <Route exact path="/places/:id">
+                    <PlaceInfo />
+                </Route>
+                <Route exact path="/">
+                    {null}
+                </Route>
+                <Route>
+                    <ErrorScreen isCloseable onClick={goToHomepage} message="找不到網頁" />
+                </Route>
+            </Switch>
+            <MaskMap />
+        </>
+    );
+};
 
 export default App;

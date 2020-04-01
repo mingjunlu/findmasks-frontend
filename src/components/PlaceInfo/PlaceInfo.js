@@ -61,7 +61,7 @@ const PlaceInfo = () => {
         if (place.name) { document.title = `${place.name} | 口罩咧？`; }
         if (place.name && isProduction) { ReactGA.pageview(pathname); }
         return () => { document.title = originalTitle; };
-    }, [place.name]);
+    }, [place.name, pathname]);
 
     const topBoundary = 32;
     const initialPosition = Math.round(window.innerHeight * 0.6);
