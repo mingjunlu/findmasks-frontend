@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ReactMapboxGl from 'react-mapbox-gl';
-import LastLocation from '../../classes/LastLocation';
 import MapLayers from '../MapLayers/MapLayers';
 import mapProps from './mapProps';
 
@@ -10,22 +10,15 @@ const InteractiveMap = ReactMapboxGl({
     dragRotate: false,
 });
 
-const MaskMap = () => {
+const MaskMap = (props) => {
+    const {
+        mapCenter,
+        setMapCenter,
+        setZoomLevel,
+        zoomLevel,
+    } = props;
+
     const history = useHistory();
-
-    const [zoomLevel, setZoomLevel] = useState(null);
-    const [mapCenter, setMapCenter] = useState(null);
-
-    // Restore the last location
-    useEffect(() => {
-        const somewhereInTaipei = [121.5313043, 25.0493621];
-        const lastLocation = LastLocation.restore();
-        const initialZoomLevel = lastLocation ? 14 : 9;
-        setZoomLevel(initialZoomLevel);
-        setMapCenter(lastLocation || somewhereInTaipei);
-    }, []);
-
-    if (!zoomLevel || !mapCenter) { return null; }
 
     const synchronizeZoomLevel = (event, { originalEvent }) => {
         if (originalEvent) {
@@ -70,6 +63,13 @@ const MaskMap = () => {
             </InteractiveMap>
         </>
     );
+};
+
+MaskMap.propTypes = {
+    mapCenter: PropTypes.arrayOf(PropTypes.number).isRequired,
+    setMapCenter: PropTypes.func.isRequired,
+    setZoomLevel: PropTypes.func.isRequired,
+    zoomLevel: PropTypes.number.isRequired,
 };
 
 export default MaskMap;

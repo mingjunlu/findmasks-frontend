@@ -21,7 +21,7 @@ const SymbolLayer = () => {
         map.setFeatureState({ id: properties.id, source: 'places' }, { isSelected: true });
 
         // Show place's info
-        history.push(`/places/${properties.id}`);
+        history.push(`/places/${properties.id}`, { placeName: properties.name });
 
         // Update the last location
         const newLocation = new LastLocation(geometry.coordinates);

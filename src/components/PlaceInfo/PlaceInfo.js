@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import ReactGA from 'react-ga';
+import LastLocation from '../../classes/LastLocation';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import FullScreenOverlay from '../FullScreenOverlay/FullScreenOverlay';
 import PlaceInfoHeader from '../PlaceInfoHeader/PlaceInfoHeader';
@@ -10,16 +12,18 @@ import styles from './PlaceInfo.module.css';
 
 const isProduction = (process.env.NODE_ENV === 'production');
 
-const PlaceInfo = () => {
+const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
     const { id } = useParams();
-    const { pathname } = useLocation();
+    const { pathname, state: locationState } = useLocation();
     const history = useHistory();
     const isTabletOrDesktop = useMediaQuery({ query: '(min-width: 640px)' });
 
     const [isScrollable, setIsScrollable] = useState(false);
     const [error, setError] = useState(null);
+    const [coordinates, setCoordinates] = useState([]);
     const [place, setPlace] = useState({
-        name: '',
+        id: '',
+        name: (locationState && locationState.placeName) || '',
         phone: '',
         address: '',
         masksLeft: NaN,
@@ -28,6 +32,7 @@ const PlaceInfo = () => {
         note: '',
         updatedAt: '',
     });
+
 
     useEffect(() => {
         let isMounted = true;
@@ -41,12 +46,13 @@ const PlaceInfo = () => {
                     throw new Error(`${status} ${statusText}`);
                 }
                 const feature = await response.json();
-                fetchedData = feature.properties;
+                fetchedData = feature;
             } catch (err) {
                 setError(err);
             }
             if (isMounted && fetchedData) {
-                setPlace(fetchedData);
+                setCoordinates(fetchedData.geometry.coordinates);
+                setPlace(fetchedData.properties);
             }
         };
         getFeature();
@@ -62,6 +68,21 @@ const PlaceInfo = () => {
         if (place.name && isProduction) { ReactGA.pageview(pathname); }
         return () => { document.title = originalTitle; };
     }, [place.name, pathname]);
+
+    // Set the map center and update last location
+    useEffect(() => {
+        const hasPlaceName = (locationState && locationState.placeName);
+        const hasCoordinates = (coordinates.length > 0);
+        if (hasPlaceName || !hasCoordinates) { return; }
+
+        const higherZoomLevel = 16;
+        setZoomLevel(higherZoomLevel);
+        setMapCenter(coordinates);
+
+        const newLocation = new LastLocation(coordinates);
+        newLocation.save();
+    }, [coordinates, locationState, setMapCenter, setZoomLevel]);
+
 
     const topBoundary = 32;
     const initialPosition = Math.round(window.innerHeight * 0.6);
@@ -156,6 +177,11 @@ const PlaceInfo = () => {
             </article>
         </FullScreenOverlay>
     );
+};
+
+PlaceInfo.propTypes = {
+    setMapCenter: PropTypes.func.isRequired,
+    setZoomLevel: PropTypes.func.isRequired,
 };
 
 export default PlaceInfo;
