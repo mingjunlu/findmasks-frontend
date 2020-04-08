@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {
+    Route,
+    Switch,
+    useHistory,
+    useLocation,
+} from 'react-router-dom';
 import ReactGA from 'react-ga';
-import dayjs from 'dayjs';
-import 'dayjs/locale/zh-tw';
 import LastLocation from './classes/LastLocation';
 import ErrorScreen from './components/ErrorScreen/ErrorScreen';
 import PlaceInfo from './components/PlaceInfo/PlaceInfo';
@@ -12,15 +15,7 @@ import MaskMap from './components/MaskMap/MaskMap';
 const isProduction = (process.env.NODE_ENV === 'production');
 if (isProduction) {
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
-    ReactGA.pageview(`${window.location.pathname}${window.location.search}`);
 }
-
-// Change locale globally
-dayjs.locale('zh-tw');
-
-// Clear old values from localStorage
-localStorage.removeItem('agreement');
-localStorage.removeItem('lastKnownLocation');
 
 // Restore the last location
 const somewhereInTaipei = [121.5313043, 25.0493621];
@@ -28,6 +23,22 @@ const lastLocation = LastLocation.restore();
 const initialZoomLevel = lastLocation ? 14 : 9;
 
 const App = () => {
+    const {
+        pathname,
+        search,
+        hash,
+        state: locationState,
+    } = useLocation();
+
+    // Track pageviews
+    useEffect(() => {
+        if (!isProduction) { return; }
+        const hasPlaceName = (locationState && locationState.placeName);
+        const page = `${pathname}${search}${hash}`;
+        const title = hasPlaceName ? `${locationState.placeName} | 口罩咧？` : document.title;
+        ReactGA.pageview(page, undefined, title);
+    }, [hash, locationState, pathname, search]);
+
     const history = useHistory();
     const goToHomepage = () => { history.push('/'); };
 

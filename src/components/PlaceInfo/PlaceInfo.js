@@ -65,7 +65,6 @@ const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
     useEffect(() => {
         const originalTitle = document.title;
         if (place.name) { document.title = `${place.name} | 口罩咧？`; }
-        if (place.name && isProduction) { ReactGA.pageview(pathname); }
         return () => { document.title = originalTitle; };
     }, [place.name, pathname]);
 
@@ -132,13 +131,7 @@ const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
 
     if (error) {
         const goToHomepage = () => { history.push('/'); };
-        return (
-            <ErrorScreen
-                isCloseable
-                onClick={goToHomepage}
-                message="無法取得資料"
-            />
-        );
+        return <ErrorScreen isCloseable onClick={goToHomepage} message="無法取得資料" />;
     }
 
     const overlayColor = (!isTabletOrDesktop && isScrollable) ? undefined : 'transparent';
