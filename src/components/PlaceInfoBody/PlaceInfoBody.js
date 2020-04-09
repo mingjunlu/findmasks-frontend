@@ -66,7 +66,7 @@ const PlaceInfoBody = (props) => {
         >
             <div className={styles.cards}>
                 <SheetCard
-                    backgroundColor={getCardColor(masksLeft, 400)}
+                    backgroundColor={getCardColor(masksLeft, 600)}
                     label="成人口罩"
                     suffix="片"
                     value={Number.isNaN(masksLeft) ? '' : masksLeft.toLocaleString()}

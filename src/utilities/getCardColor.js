@@ -11,9 +11,9 @@ const getCardColor = (amount, quota) => {
 
     // Decide which color to return
     switch (true) {
-        case (rate >= 25):
+        case (rate >= 60):
             return colors.sufficient;
-        case (rate >= 5):
+        case (rate >= 15):
             return colors.acceptable;
         default:
             return colors.insufficient;
