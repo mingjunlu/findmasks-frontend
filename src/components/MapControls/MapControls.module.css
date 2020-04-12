@@ -13,7 +13,7 @@
 }
 
 .bottomRight {
-    bottom: 2.8rem;
+    bottom: 1.0rem;
     right: 1.0rem;
 }
 
@@ -31,6 +31,19 @@
 
 .button:not(:first-of-type) {
     border-top: 1px solid rgba(209, 209, 214, 0.6);
+}
+
+.buttonForDesktop {
+    display: none;
+}
+
+.refreshIcon {
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: rgb(58, 58, 60);
+    transform: rotate(-45deg);
+    position: relative;
+    top: 0.1rem;
 }
 
 .locateIcon {
@@ -55,8 +68,12 @@
     fill: rgb(58, 58, 60);
 }
 
-@media (max-width: 640px) {
-    .bottomRight {
-        display: none;
+@media (min-width: 640px) {
+    .containerForDesktop {
+        bottom: 10.8rem;
+    }
+
+    .buttonForDesktop {
+        display: block;
     }
 }

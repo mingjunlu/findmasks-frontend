@@ -21,7 +21,7 @@ html, body, #root {
     height: 100vh;
 }
 
-.mapboxgl-ctrl-attrib, .mapboxgl-ctrl-logo {
+.mapboxgl-ctrl-logo {
     user-select: none;
 }
 

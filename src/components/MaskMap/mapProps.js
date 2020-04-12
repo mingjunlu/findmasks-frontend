@@ -24,6 +24,7 @@ const mapProps = {
     ],
     minZoom: 7.1,
     maxZoom: 17.4,
+    attributionControl: false,
 };
 
 export default mapProps;

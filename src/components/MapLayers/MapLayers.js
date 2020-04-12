@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Source } from 'react-mapbox-gl';
+import fetchData from '../../utilities/fetchData';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import MapControls from '../MapControls/MapControls';
@@ -13,28 +14,14 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
 
     useEffect(() => {
         let isMounted = true;
-
         const getFeatureCollection = async () => {
-            let fetchedData;
-            try {
-                const response = await fetch(process.env.REACT_APP_ENDPOINT);
-                if (!response.ok) {
-                    const { status, statusText } = response;
-                    throw new Error(`${status} ${statusText}`);
-                }
-                const collection = await response.json();
-                fetchedData = collection.features;
-            } catch (error) {
-                fetchedData = error;
-            }
-            if (isMounted && fetchedData) {
-                setFeatures(fetchedData);
+            const collection = await fetchData(process.env.REACT_APP_ENDPOINT);
+            if (isMounted) {
+                setFeatures((collection instanceof Error) ? collection : collection.features);
             }
         };
         getFeatureCollection();
-
-        // Prevent setting state after unmounted
-        return () => { isMounted = false; };
+        return () => { isMounted = false; }; // Prevent setting state after unmounted
     }, []);
 
     const hasError = (features instanceof Error);
@@ -45,7 +32,11 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
 
     return (
         <>
-            <MapControls setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
+            <MapControls
+                setFeatures={setFeatures}
+                setMapCenter={setMapCenter}
+                setZoomLevel={setZoomLevel}
+            />
             <Source
                 id="places"
                 geoJsonSource={{

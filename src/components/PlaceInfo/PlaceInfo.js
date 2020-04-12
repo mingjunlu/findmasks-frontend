@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import ReactGA from 'react-ga';
+import fetchData from '../../utilities/fetchData';
 import LastLocation from '../../classes/LastLocation';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import FullScreenOverlay from '../FullScreenOverlay/FullScreenOverlay';
@@ -33,32 +34,20 @@ const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
         updatedAt: '',
     });
 
-
+    // Get the place's info
     useEffect(() => {
         let isMounted = true;
-
         const getFeature = async () => {
-            let fetchedData;
-            try {
-                const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/${id}`);
-                if (!response.ok) {
-                    const { status, statusText } = response;
-                    throw new Error(`${status} ${statusText}`);
-                }
-                const feature = await response.json();
-                fetchedData = feature;
-            } catch (err) {
-                setError(err);
-            }
-            if (isMounted && fetchedData) {
-                setCoordinates(fetchedData.geometry.coordinates);
-                setPlace(fetchedData.properties);
+            const feature = await fetchData(`${process.env.REACT_APP_ENDPOINT}/${id}`);
+            if (isMounted && (feature instanceof Error)) {
+                setError(feature);
+            } else if (isMounted && !(feature instanceof Error)) {
+                setCoordinates(feature.geometry.coordinates);
+                setPlace(feature.properties);
             }
         };
         getFeature();
-
-        // Prevent setting state after unmounted
-        return () => { isMounted = false; };
+        return () => { isMounted = false; }; // Prevent setting state after unmounted
     }, [id]);
 
     // Update the page title
