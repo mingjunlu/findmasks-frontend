@@ -120,7 +120,7 @@ const MapControls = ({ setFeatures, setMapCenter, setZoomLevel }) => {
 
     return (
         <>
-            {isLoading && <LoadingScreen />}
+            {isLoading && <LoadingScreen message="定位中" />}
             <div className={`${styles.container} ${styles.topRight}`}>
                 <button type="button" onClick={locateUser} className={styles.button}>
                     <LocateIcon className={styles.locateIcon} />

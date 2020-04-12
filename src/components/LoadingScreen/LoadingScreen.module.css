@@ -15,10 +15,15 @@
     align-items: center;
 }
 
+.box {
+    text-align: center;
+}
+
 .spinner {
     position: relative;
     width: 1.8rem;
     height: 1.8rem;
+    margin: 0 auto;
 }
 
 .blade {
@@ -90,4 +95,10 @@
 .blade:nth-child(12) {
     transform: rotate(360deg) translate(0, -150%);
     animation-delay: -0.75s;
+}
+
+.text {
+    color: rgb(242, 242, 247);
+    font-size: 1.2rem;
+    line-height: 2.4rem;
 }
