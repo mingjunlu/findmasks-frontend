@@ -60,9 +60,17 @@ const MapControls = ({ setFeatures, setMapCenter, setZoomLevel }) => {
     };
 
     const updateFeatures = async () => {
+        const startTime = Date.now();
         history.push('/');
         setIsLoading(true);
-        const startTime = Date.now();
+
+        if (isProduction) {
+            ReactGA.event({
+                category: 'MapControl',
+                action: 'Clicked the refresh button',
+            });
+        }
+
         const collection = await fetchData(process.env.REACT_APP_ENDPOINT);
 
         // Add a delay to make it more "realistic"
