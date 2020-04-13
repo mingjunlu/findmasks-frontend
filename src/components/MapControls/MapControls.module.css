@@ -7,6 +7,10 @@
     z-index: 1;
 }
 
+.containerForDesktop {
+    display: none;
+}
+
 .topRight {
     top: 1.0rem;
     right: 1.0rem;
@@ -69,8 +73,13 @@
 }
 
 @media (min-width: 640px) {
+    .bottomRight {
+        bottom: 2.8rem;
+    }
+
     .containerForDesktop {
-        bottom: 10.8rem;
+        bottom: 12.8rem;
+        display: block;
     }
 
     .buttonForDesktop {

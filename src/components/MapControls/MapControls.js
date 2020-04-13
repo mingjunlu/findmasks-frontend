@@ -135,7 +135,11 @@ const MapControls = ({ setFeatures, setMapCenter, setZoomLevel }) => {
                 </button>
             </div>
             <div className={`${styles.container} ${styles.bottomRight} ${styles.containerForDesktop}`}>
-                <button type="button" onClick={updateFeatures} className={styles.button}>
+                <button
+                    className={`${styles.button} ${styles.buttonForDesktop}`}
+                    onClick={updateFeatures}
+                    type="button"
+                >
                     <RefreshIcon className={styles.refreshIcon} />
                 </button>
             </div>
