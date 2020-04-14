@@ -16,7 +16,14 @@ import styles from './MapControls.module.css';
 
 const isProduction = (process.env.NODE_ENV === 'production');
 
-const MapControls = ({ setFeatures, setMapCenter, setZoomLevel }) => {
+const MapControls = (props) => {
+    const {
+        setFeatures,
+        setMapCenter,
+        setPosition,
+        setZoomLevel,
+    } = props;
+
     const history = useHistory();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +32,7 @@ const MapControls = ({ setFeatures, setMapCenter, setZoomLevel }) => {
     const locateUser = async () => {
         history.push('/');
         setIsLoading(true);
-        let coordinates;
+        let currentPosition;
 
         if (isProduction) {
             ReactGA.event({
@@ -35,14 +42,14 @@ const MapControls = ({ setFeatures, setMapCenter, setZoomLevel }) => {
         }
 
         try {
-            coordinates = await new Promise((resolve, reject) => {
+            currentPosition = await new Promise((resolve, reject) => {
                 const onError = (error) => { reject(error); };
                 const onSuccess = (position) => {
-                    const { latitude, longitude } = position.coords;
+                    const { accuracy, latitude, longitude } = position.coords;
                     const here = [longitude, latitude];
                     const newLocation = new LastLocation(here);
                     newLocation.save(); // Update the last location
-                    resolve(here);
+                    resolve({ accuracy, coordinates: here });
                 };
                 const positionOptions = { enableHighAccuracy: true, timeout: 6000 };
                 navigator.geolocation.getCurrentPosition(onSuccess, onError, positionOptions);
@@ -52,10 +59,14 @@ const MapControls = ({ setFeatures, setMapCenter, setZoomLevel }) => {
         }
 
         setIsLoading(false);
-        if (coordinates) {
+        if (currentPosition) {
             const zoomLevelAfterLocated = 14;
             setZoomLevel(zoomLevelAfterLocated);
-            setMapCenter(coordinates);
+            setMapCenter(currentPosition.coordinates);
+            setPosition({
+                coordinates: currentPosition.coordinates,
+                radius: currentPosition.accuracy,
+            });
         }
     };
 
@@ -166,6 +177,7 @@ const MapControls = ({ setFeatures, setMapCenter, setZoomLevel }) => {
 MapControls.propTypes = {
     setFeatures: PropTypes.func.isRequired,
     setMapCenter: PropTypes.func.isRequired,
+    setPosition: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
 };
 
