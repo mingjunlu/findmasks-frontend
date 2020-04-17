@@ -9,12 +9,14 @@ npm install
 ```
 
 ## 設定環境變數
-在 `findmasks-frontend` 資料夾中新增一個 `.env.local` 檔案，並參考下方範例修改內容：
+在 `findmasks-frontend` 資料夾中新增一個 `.env.local` 檔案，並參考下方範例輸入內容：
 ```
-REACT_APP_ENDPOINT=http://your.backend.domain:port/resource
+HTTPS=true
+REACT_APP_ENDPOINT=https://findmasks.herokuapp.com/places
 REACT_APP_MAPBOX_TOKEN=your.own.mapbox.access.token
 ```
-* REACT_APP_ENDPOINT：API 端點網址，提供健保特約機構的資訊（例如名稱、地址、口罩剩餘數量等）
+* HTTPS：在開發伺服器上使用 HTTPS，確保能夠存取 [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API) 定位功能
+* REACT_APP_ENDPOINT：API 端點網址，提供健保特約藥局與衛生所資訊
 * REACT_APP_MAPBOX_TOKEN：使用 Mapbox 地圖套件時必備的通行證，[註冊 Mapbox 帳號](https://www.mapbox.com/signup)後可取得
 
 ## 檢查程式語法錯誤
@@ -33,5 +35,6 @@ npm run build
 ```
 
 ## 相關資源
-* 原始資料來源：[健保特約機構口罩剩餘數量明細清單](https://data.nhi.gov.tw/Datasets/DatasetDetail.aspx?id=656)、[全民健康保險特約院所固定服務時段](https://data.nhi.gov.tw/Datasets/DatasetDetail.aspx?id=441)
+* API 文件：[「口罩咧？」API 使用說明](https://hackmd.io/@mingjunlu/findmasks-api-docs)
+* 資料來源：[健保特約機構口罩剩餘數量明細清單](https://data.nhi.gov.tw/Datasets/DatasetDetail.aspx?id=656)、[全民健康保險特約院所固定服務時段](https://data.nhi.gov.tw/Datasets/DatasetDetail.aspx?id=441)
 * 各方資訊彙整：[口罩供需資訊平台](https://g0v.hackmd.io/gGrOI4_aTsmpoMfLP1OU4A)
