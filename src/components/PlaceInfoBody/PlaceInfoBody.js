@@ -115,10 +115,7 @@ const PlaceInfoBody = (props) => {
                     })}
                 </SheetField>
             )}
-            <SheetField
-                label="使用須知"
-                value="以上資訊僅供參考，實際情形請以藥局與衛生所現場狀況為準。此外，健保署系統無法顯示藥局發放的號碼牌數量，請格外留意。"
-            />
+            <SheetField label="使用須知" value="以上資訊僅供參考，實際情形請以藥局與衛生所現場狀況為準。" />
         </div>
     );
 };
