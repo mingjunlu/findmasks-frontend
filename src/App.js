@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import {
-    Route,
-    Switch,
-    useHistory,
-    useLocation,
-} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import LastLocation from './classes/LastLocation';
+import usePageView from './hooks/usePageView';
 import ErrorScreen from './components/ErrorScreen/ErrorScreen';
 import PlaceInfo from './components/PlaceInfo/PlaceInfo';
 import MaskMap from './components/MaskMap/MaskMap';
@@ -23,27 +19,13 @@ const lastLocation = LastLocation.restore();
 const initialZoomLevel = lastLocation ? 14 : 9;
 
 const App = () => {
-    const {
-        pathname,
-        search,
-        hash,
-        state: locationState,
-    } = useLocation();
-
-    // Track pageviews
-    useEffect(() => {
-        if (!isProduction) { return; }
-        const hasPlaceName = (locationState && locationState.placeName);
-        const page = `${pathname}${search}${hash}`;
-        const title = hasPlaceName ? `${locationState.placeName} | 口罩咧？` : document.title;
-        ReactGA.pageview(page, undefined, title);
-    }, [hash, locationState, pathname, search]);
-
     const history = useHistory();
     const goToHomepage = () => { history.push('/'); };
 
     const [mapCenter, setMapCenter] = useState(lastLocation || somewhereInTaipei);
     const [zoomLevel, setZoomLevel] = useState(initialZoomLevel);
+
+    usePageView(); // Track the pageview
 
     return (
         <>
