@@ -132,4 +132,4 @@ PlaceInfoBody.propTypes = {
     setPosition: PropTypes.func.isRequired,
 };
 
-export default PlaceInfoBody;
+export default React.memo(PlaceInfoBody);

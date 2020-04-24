@@ -86,4 +86,4 @@ PlaceInfoHeader.propTypes = {
     updatedAt: PropTypes.string.isRequired,
 };
 
-export default PlaceInfoHeader;
+export default React.memo(PlaceInfoHeader);
