@@ -17,18 +17,7 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
         const getFeatureCollection = async () => {
             const collection = await fetchData(process.env.REACT_APP_ENDPOINT);
             if (isMounted) {
-                if (collection instanceof Error) {
-                    setFeatures(collection);
-                    return;
-                }
-                const now = new Date().getTime();
-                const eightHours = 1000 * 60 * 60 * 8;
-                const filteredFeatures = collection.features.filter((feature) => {
-                    const updateTime = new Date(feature.properties.updatedAt).getTime();
-                    const isOutdated = (now - updateTime) > eightHours;
-                    return !isOutdated;
-                });
-                setFeatures(filteredFeatures);
+                setFeatures((collection instanceof Error) ? collection : collection.features);
             }
         };
         getFeatureCollection();
