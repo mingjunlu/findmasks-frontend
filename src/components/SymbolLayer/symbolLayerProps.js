@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+
+const anHourAgo = dayjs().subtract(1, 'hour').toISOString();
 const placeType = [
     'case',
     ['in', '藥局', ['get', 'name']],
@@ -17,13 +20,18 @@ const symbolLayerProps = {
         'text-offset': [0.9, 1.05],
         'text-variable-anchor': ['bottom', 'top'],
         'icon-image': [
-            'step',
-            ['get', 'childMasksLeft'],
+            'case',
+            ['<', ['to-string', ['get', 'updatedAt']], anHourAgo],
             ['concat', placeType, '--insufficient'],
-            Math.round(200 * 0.15),
-            ['concat', placeType, '--acceptable'],
-            Math.round(200 * 0.60),
-            ['concat', placeType, '--sufficient'],
+            [
+                'step',
+                ['get', 'childMasksLeft'],
+                ['concat', placeType, '--insufficient'],
+                Math.round(200 * 0.15),
+                ['concat', placeType, '--acceptable'],
+                Math.round(200 * 0.60),
+                ['concat', placeType, '--sufficient'],
+            ],
         ],
         'icon-size': 0.4,
     },
@@ -31,13 +39,18 @@ const symbolLayerProps = {
         'text-halo-color': 'rgb(250, 250, 255)',
         'text-halo-width': 1,
         'text-color': [
-            'step',
-            ['get', 'childMasksLeft'],
+            'case',
+            ['<', ['to-string', ['get', 'updatedAt']], anHourAgo],
             'rgb(142, 142, 147)',
-            Math.round(200 * 0.15),
-            'rgb(230, 126, 34)',
-            Math.round(200 * 0.60),
-            'rgb(17, 120, 122)',
+            [
+                'step',
+                ['get', 'childMasksLeft'],
+                'rgb(142, 142, 147)',
+                Math.round(200 * 0.15),
+                'rgb(230, 126, 34)',
+                Math.round(200 * 0.60),
+                'rgb(17, 120, 122)',
+            ],
         ],
         'text-opacity': [
             'case',
