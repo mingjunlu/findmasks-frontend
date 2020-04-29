@@ -5,7 +5,7 @@ import { useMediaQuery } from 'react-responsive';
 import ReactGA from 'react-ga';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { ReactComponent as CloseIcon } from '../../assets/close.svg';
+import { ReactComponent as CloseIcon } from '../../assets/icons/close.svg';
 import styles from './PlaceInfoHeader.module.css';
 
 dayjs.extend(relativeTime);

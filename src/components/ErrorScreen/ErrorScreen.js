@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { ReactComponent as CloseIcon } from '../../assets/close.svg';
-import { ReactComponent as CautionIcon } from '../../assets/caution.svg';
+import { ReactComponent as CloseIcon } from '../../assets/icons/close.svg';
+import { ReactComponent as CautionIcon } from '../../assets/icons/caution.svg';
 import FullScreenOverlay from '../FullScreenOverlay/FullScreenOverlay';
 import styles from './ErrorScreen.module.css';
 

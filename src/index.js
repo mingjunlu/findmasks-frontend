@@ -4,8 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-tw';
 import 'normalize.css/normalize.css';
-import './reset.css';
-import './index.css';
+import './assets/stylesheets/reset.css';
+import './assets/stylesheets/index.css';
 import App from './App';
 
 // Clear old values from localStorage
