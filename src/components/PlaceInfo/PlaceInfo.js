@@ -155,6 +155,7 @@ const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
                     phone={place.phone}
                     setIsScrollable={setIsScrollable}
                     setPosition={setPosition}
+                    updatedAt={place.updatedAt}
                 />
             </article>
         </FullScreenOverlay>

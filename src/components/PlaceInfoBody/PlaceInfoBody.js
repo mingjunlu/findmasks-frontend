@@ -22,6 +22,7 @@ const PlaceInfoBody = (props) => {
         phone,
         setIsScrollable,
         setPosition,
+        updatedAt,
     } = props;
 
     const initialPosition = Math.round(window.innerHeight * 0.6);
@@ -57,6 +58,7 @@ const PlaceInfoBody = (props) => {
     };
 
     const isTabletOrDesktop = useMediaQuery({ query: '(min-width: 640px)' });
+    const isOutdated = dayjs(updatedAt).isBefore(dayjs().subtract(1, 'hour'));
 
     return (
         <div
@@ -64,7 +66,7 @@ const PlaceInfoBody = (props) => {
             onScroll={isTabletOrDesktop ? null : condenseInfo}
             style={{ overflowY: (isTabletOrDesktop || isScrollable) ? 'auto' : 'hidden' }}
         >
-            <div className={styles.cards}>
+            <div className={isOutdated ? `${styles.cards} ${styles.outdated}` : styles.cards}>
                 <SheetCard
                     backgroundColor={getCardColor(masksLeft, 600)}
                     label="成人口罩"
@@ -130,6 +132,7 @@ PlaceInfoBody.propTypes = {
     phone: PropTypes.string.isRequired,
     setIsScrollable: PropTypes.func.isRequired,
     setPosition: PropTypes.func.isRequired,
+    updatedAt: PropTypes.string.isRequired,
 };
 
 export default React.memo(PlaceInfoBody);
