@@ -2,4 +2,4 @@
 /*                                  /index.html                         200
 
 # Redirect default Netlify subdomain to primary domain
-https://findmasks.netlify.com/*     https://www.findmasks.tw/:splat     301!
+https://findmasks.netlify.app/*     https://www.findmasks.tw/:splat     301!
