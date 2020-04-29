@@ -11,11 +11,9 @@ npm install
 ## 設定環境變數
 在 `findmasks-frontend` 資料夾中新增一個 `.env.local` 檔案，並參考下方範例輸入內容：
 ```
-HTTPS=true
 REACT_APP_ENDPOINT=https://findmasks.herokuapp.com/places
 REACT_APP_MAPBOX_TOKEN=your.own.mapbox.access.token
 ```
-* HTTPS：在開發伺服器上使用 HTTPS，確保能夠存取 [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API) 定位功能
 * REACT_APP_ENDPOINT：API 端點網址，提供健保特約藥局與衛生所資訊
 * REACT_APP_MAPBOX_TOKEN：使用 Mapbox 地圖套件時必備的通行證，[註冊 Mapbox 帳號](https://www.mapbox.com/signup)後可取得
 
