@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import ReactMapboxGl from 'react-mapbox-gl';
 import MapLayers from '../MapLayers/MapLayers';
 import mapProps from './mapProps';
@@ -18,7 +18,20 @@ const MaskMap = (props) => {
         zoomLevel,
     } = props;
 
+    // Temporary hack for https://github.com/alex3165/react-mapbox-gl/issues/748
+    const { pathname } = useLocation();
+    const pathnameRef = useRef(pathname);
+    useEffect(() => {
+        pathnameRef.current = pathname;
+    }, [pathname]);
+
     const history = useHistory();
+    const unhighlightSymbol = () => {
+        const shouldNavigate = pathnameRef.current.startsWith('/places/');
+        if (shouldNavigate) {
+            history.push('/');
+        }
+    };
 
     const synchronizeZoomLevel = (event, { originalEvent }) => {
         if (originalEvent) {
@@ -29,18 +42,6 @@ const MaskMap = (props) => {
             if (isValidZoomLevel) {
                 setZoomLevel(lastZoom);
             }
-        }
-    };
-
-    const unhighlightSymbol = (map) => {
-        const features = map.queryRenderedFeatures();
-        const selectedFeature = features.find((feature) => !!feature.state.isSelected);
-        if (selectedFeature) {
-            map.removeFeatureState({
-                id: selectedFeature.id,
-                source: 'places',
-            });
-            history.push('/');
         }
     };
 

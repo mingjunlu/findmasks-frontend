@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Layer } from 'react-mapbox-gl';
-import { userLocationProps, userLocationRadiusProps } from './userLocationLayerProps';
+import { userLocationProps, userLocationRadiusProps } from './userLocationLayersProps';
 
 const UserLocationLayer = ({ radius }) => (
     <>

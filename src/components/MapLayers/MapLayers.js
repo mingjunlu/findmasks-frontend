@@ -5,9 +5,9 @@ import fetchData from '../../utilities/fetchData';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import MapControls from '../MapControls/MapControls';
-import UserLocationLayer from '../UserLocationLayer/UserLocationLayer';
+import UserLocationLayers from '../UserLocationLayers/UserLocationLayers';
 import ClusterLayer from '../ClusterLayer/ClusterLayer';
-import SymbolLayer from '../SymbolLayer/SymbolLayer';
+import PointLayers from '../PointLayers/PointLayers';
 import sourceProps from './sourceProps';
 
 const MapLayers = ({ setMapCenter, setZoomLevel }) => {
@@ -61,9 +61,9 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
                     data: { type: 'FeatureCollection', features },
                 }}
             />
-            <UserLocationLayer radius={position.radius} />
+            <UserLocationLayers radius={position.radius} />
             <ClusterLayer setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
-            <SymbolLayer />
+            <PointLayers />
         </>
     );
 };
