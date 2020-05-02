@@ -5,6 +5,7 @@ import LastLocation from './classes/LastLocation';
 import usePageView from './hooks/usePageView';
 import ErrorScreen from './components/ErrorScreen/ErrorScreen';
 import PlaceInfo from './components/PlaceInfo/PlaceInfo';
+import ResetTitle from './components/ResetTitle/ResetTitle';
 import MaskMap from './components/MaskMap/MaskMap';
 
 // Initialize Google Analytics
@@ -34,7 +35,7 @@ const App = () => {
                     <PlaceInfo setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
                 </Route>
                 <Route exact path="/">
-                    {null}
+                    <ResetTitle />
                 </Route>
                 <Route>
                     <ErrorScreen isCloseable onClick={goToHomepage} message="找不到網頁" />

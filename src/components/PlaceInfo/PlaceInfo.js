@@ -12,32 +12,42 @@ import PlaceInfoBody from '../PlaceInfoBody/PlaceInfoBody';
 import styles from './PlaceInfo.module.css';
 
 const isProduction = (process.env.NODE_ENV === 'production');
+const initialPlace = {
+    id: '',
+    name: '',
+    phone: '',
+    address: '',
+    masksLeft: NaN,
+    childMasksLeft: NaN,
+    opensOn: [],
+    note: '',
+    updatedAt: '',
+};
 
 const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
     const { id } = useParams();
-    const { pathname, state: locationState } = useLocation();
+    const { state: locationState } = useLocation();
     const history = useHistory();
     const isTabletOrDesktop = useMediaQuery({ query: '(min-width: 640px)' });
 
     const [isScrollable, setIsScrollable] = useState(false);
     const [error, setError] = useState(null);
     const [coordinates, setCoordinates] = useState([]);
-    const [place, setPlace] = useState({
-        id: '',
-        name: (locationState && locationState.placeName) || '',
-        phone: '',
-        address: '',
-        masksLeft: NaN,
-        childMasksLeft: NaN,
-        opensOn: [],
-        note: '',
-        updatedAt: '',
-    });
+    const [place, setPlace] = useState(initialPlace);
 
     // Get the place's info
     useEffect(() => {
         let isMounted = true;
         const getFeature = async () => {
+            // Clear the previous info first
+            if (isMounted) {
+                setPlace({
+                    ...initialPlace,
+                    name: (locationState && locationState.placeName) || '',
+                    opensOn: [...initialPlace.opensOn],
+                });
+            }
+
             const feature = await fetchData(`${process.env.REACT_APP_ENDPOINT}/${id}`);
             if (isMounted && (feature instanceof Error)) {
                 setError(feature);
@@ -48,14 +58,14 @@ const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
         };
         getFeature();
         return () => { isMounted = false; }; // Prevent setting state after unmounted
-    }, [id]);
+    }, [id, locationState]);
 
     // Update the page title
     useEffect(() => {
-        const originalTitle = document.title;
-        if (place.name) { document.title = `${place.name} | 口罩咧？`; }
-        return () => { document.title = originalTitle; };
-    }, [place.name, pathname]);
+        if (place.name) {
+            document.title = `${place.name} | 口罩咧？`;
+        }
+    }, [place.name]);
 
     // Set the map center and update last location
     useEffect(() => {

@@ -26,11 +26,15 @@ const MaskMap = (props) => {
     }, [pathname]);
 
     const history = useHistory();
-    const unhighlightSymbol = () => {
-        const shouldNavigate = pathnameRef.current.startsWith('/places/');
-        if (shouldNavigate) {
-            history.push('/');
-        }
+    const unhighlightSymbol = (map, event) => {
+        if (!pathnameRef.current.startsWith('/places/')) { return; }
+
+        const clickedSymbols = map
+            .queryRenderedFeatures(event.point)
+            .filter((feature) => (feature.layer.id === 'unclustered-point'));
+        if (clickedSymbols.length > 0) { return; }
+
+        history.push('/');
     };
 
     const synchronizeZoomLevel = (event, { originalEvent }) => {
