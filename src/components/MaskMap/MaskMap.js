@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import ReactMapboxGl from 'react-mapbox-gl';
@@ -18,22 +18,14 @@ const MaskMap = (props) => {
         zoomLevel,
     } = props;
 
-    // Temporary hack for https://github.com/alex3165/react-mapbox-gl/issues/748
     const { pathname } = useLocation();
-    const pathnameRef = useRef(pathname);
-    useEffect(() => {
-        pathnameRef.current = pathname;
-    }, [pathname]);
-
     const history = useHistory();
     const unhighlightSymbol = (map, event) => {
-        if (!pathnameRef.current.startsWith('/places/')) { return; }
-
+        if (!pathname.startsWith('/places/')) { return; }
         const clickedSymbols = map
             .queryRenderedFeatures(event.point)
             .filter((feature) => (feature.layer.id === 'unclustered-point'));
         if (clickedSymbols.length > 0) { return; }
-
         history.push('/');
     };
 
