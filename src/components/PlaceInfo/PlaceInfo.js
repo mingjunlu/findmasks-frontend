@@ -38,9 +38,11 @@ const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
     // Get the place's info
     useEffect(() => {
         let isMounted = true;
+        const abortController = new AbortController();
+
         const getFeature = async () => {
-            // Clear the previous info first
             if (isMounted) {
+                // Clear the previous info first
                 setPlace({
                     ...initialPlace,
                     name: (locationState && locationState.placeName) || '',
@@ -48,16 +50,24 @@ const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
                 });
             }
 
-            const feature = await fetchData(`${process.env.REACT_APP_ENDPOINT}/${id}`);
-            if (isMounted && (feature instanceof Error)) {
+            const feature = await fetchData(`${process.env.REACT_APP_ENDPOINT}/${id}`, {
+                signal: abortController.signal,
+            });
+
+            if (!isMounted) { return; }
+            if (feature instanceof Error) {
                 setError(feature);
-            } else if (isMounted && !(feature instanceof Error)) {
-                setCoordinates(feature.geometry.coordinates);
-                setPlace(feature.properties);
+                return;
             }
+            setCoordinates(feature.geometry.coordinates);
+            setPlace(feature.properties);
         };
         getFeature();
-        return () => { isMounted = false; }; // Prevent setting state after unmounted
+
+        return () => {
+            isMounted = false; // Prevent setting state after unmounted
+            abortController.abort(); // Cancel the ongoing request
+        };
     }, [id, locationState]);
 
     // Update the page title
