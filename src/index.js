@@ -8,10 +8,6 @@ import './assets/stylesheets/reset.css';
 import './assets/stylesheets/index.css';
 import App from './App';
 
-// Clear old values from localStorage
-localStorage.removeItem('agreement');
-localStorage.removeItem('lastKnownLocation');
-
 // Change locale globally
 dayjs.locale('zh-tw');
 
