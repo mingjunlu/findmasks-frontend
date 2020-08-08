@@ -5,6 +5,7 @@ import usePageView from './hooks/usePageView';
 import ErrorScreen from './components/ErrorScreen/ErrorScreen';
 import PlaceInfo from './components/PlaceInfo/PlaceInfo';
 import ResetTitle from './components/ResetTitle/ResetTitle';
+import MapControls from './components/MapControls/MapControls';
 import MaskMap from './components/MaskMap/MaskMap';
 
 // Restore the last location
@@ -18,6 +19,10 @@ const App = () => {
 
     const [mapCenter, setMapCenter] = useState(lastLocation || somewhereInTaipei);
     const [zoomLevel, setZoomLevel] = useState(initialZoomLevel);
+    const [userPosition, setUserPosition] = useState({
+        coordinates: [],
+        radius: 0,
+    });
 
     usePageView(); // Track the pageview
 
@@ -34,11 +39,17 @@ const App = () => {
                     <ErrorScreen isCloseable onClick={goToHomepage} message="找不到網頁" />
                 </Route>
             </Switch>
+            <MapControls
+                setMapCenter={setMapCenter}
+                setUserPosition={setUserPosition}
+                setZoomLevel={setZoomLevel}
+            />
             <MaskMap
                 mapCenter={mapCenter}
                 setMapCenter={setMapCenter}
                 setZoomLevel={setZoomLevel}
                 zoomLevel={zoomLevel}
+                userPosition={userPosition}
             />
         </>
     );

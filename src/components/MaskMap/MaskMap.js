@@ -16,6 +16,7 @@ const MaskMap = (props) => {
         setMapCenter,
         setZoomLevel,
         zoomLevel,
+        userPosition,
     } = props;
 
     const { pathname } = useLocation();
@@ -42,23 +43,25 @@ const MaskMap = (props) => {
     };
 
     return (
-        <>
-            <InteractiveMap
-                center={mapCenter}
-                containerStyle={mapProps.containerStyle}
-                maxBounds={mapProps.maxBounds}
-                maxZoom={mapProps.maxZoom}
-                minZoom={mapProps.minZoom}
-                onStyleLoad={mapProps.changeMapLanguage}
-                onZoomEnd={synchronizeZoomLevel}
-                // eslint-disable-next-line react/style-prop-object
-                style="mapbox://styles/mapbox/light-v10?optimize=true"
-                zoom={[zoomLevel]}
-                onClick={unhighlightSymbol}
-            >
-                <MapLayers setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
-            </InteractiveMap>
-        </>
+        <InteractiveMap
+            center={mapCenter}
+            containerStyle={mapProps.containerStyle}
+            maxBounds={mapProps.maxBounds}
+            maxZoom={mapProps.maxZoom}
+            minZoom={mapProps.minZoom}
+            onStyleLoad={mapProps.changeMapLanguage}
+            onZoomEnd={synchronizeZoomLevel}
+            // eslint-disable-next-line react/style-prop-object
+            style="mapbox://styles/mapbox/light-v10?optimize=true"
+            zoom={[zoomLevel]}
+            onClick={unhighlightSymbol}
+        >
+            <MapLayers
+                userPosition={userPosition}
+                setMapCenter={setMapCenter}
+                setZoomLevel={setZoomLevel}
+            />
+        </InteractiveMap>
     );
 };
 
@@ -67,6 +70,10 @@ MaskMap.propTypes = {
     setMapCenter: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
     zoomLevel: PropTypes.number.isRequired,
+    userPosition: PropTypes.exact({
+        coordinates: PropTypes.arrayOf(PropTypes.number),
+        radius: PropTypes.number,
+    }).isRequired,
 };
 
 export default MaskMap;

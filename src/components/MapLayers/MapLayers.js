@@ -4,13 +4,12 @@ import { Source } from 'react-mapbox-gl';
 import fetchData from '../../utilities/fetchData';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
-import MapControls from '../MapControls/MapControls';
 import UserLocationLayers from '../UserLocationLayers/UserLocationLayers';
 import ClusterLayer from '../ClusterLayer/ClusterLayer';
 import PointLayers from '../PointLayers/PointLayers';
 import sourceProps from './sourceProps';
 
-const MapLayers = ({ setMapCenter, setZoomLevel }) => {
+const MapLayers = ({ userPosition, setMapCenter, setZoomLevel }) => {
     const [features, setFeatures] = useState([]);
     useEffect(() => {
         let isMounted = true;
@@ -24,12 +23,6 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
         return () => { isMounted = false; }; // Prevent setting state after unmounted
     }, []);
 
-    const initialRadius = 0;
-    const [position, setPosition] = useState({
-        coordinates: [],
-        radius: initialRadius,
-    });
-
     const hasError = (features instanceof Error);
     if (hasError) { return <ErrorScreen message="無法取得資料" />; }
 
@@ -38,18 +31,16 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
 
     return (
         <>
-            <MapControls
-                setMapCenter={setMapCenter}
-                setPosition={setPosition}
-                setZoomLevel={setZoomLevel}
-            />
             <Source
                 id="user-location"
                 geoJsonSource={{
                     type: 'geojson',
                     data: {
                         type: 'Feature',
-                        geometry: { type: 'Point', coordinates: position.coordinates },
+                        geometry: {
+                            type: 'Point',
+                            coordinates: userPosition.coordinates,
+                        },
                     },
                 }}
             />
@@ -60,7 +51,7 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
                     data: { type: 'FeatureCollection', features },
                 }}
             />
-            <UserLocationLayers radius={position.radius} />
+            <UserLocationLayers radius={userPosition.radius} />
             <ClusterLayer setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
             <PointLayers />
         </>
@@ -68,6 +59,10 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
 };
 
 MapLayers.propTypes = {
+    userPosition: PropTypes.exact({
+        coordinates: PropTypes.arrayOf(PropTypes.number),
+        radius: PropTypes.number,
+    }).isRequired,
     setMapCenter: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
 };

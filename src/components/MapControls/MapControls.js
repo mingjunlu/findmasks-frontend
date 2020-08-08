@@ -13,7 +13,7 @@ import styles from './MapControls.module.css';
 
 const isProduction = (process.env.NODE_ENV === 'production');
 
-const MapControls = ({ setMapCenter, setPosition, setZoomLevel }) => {
+const MapControls = ({ setMapCenter, setUserPosition, setZoomLevel }) => {
     const history = useHistory();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +53,7 @@ const MapControls = ({ setMapCenter, setPosition, setZoomLevel }) => {
             const zoomLevelAfterLocated = 14;
             setZoomLevel(zoomLevelAfterLocated);
             setMapCenter(currentPosition.coordinates);
-            setPosition({
+            setUserPosition({
                 coordinates: currentPosition.coordinates,
                 radius: currentPosition.accuracy,
             });
@@ -131,7 +131,7 @@ const MapControls = ({ setMapCenter, setPosition, setZoomLevel }) => {
 
 MapControls.propTypes = {
     setMapCenter: PropTypes.func.isRequired,
-    setPosition: PropTypes.func.isRequired,
+    setUserPosition: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
 };
 
