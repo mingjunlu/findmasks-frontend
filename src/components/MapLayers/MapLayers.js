@@ -1,33 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Source } from 'react-mapbox-gl';
-import fetchData from '../../utilities/fetchData';
-import ErrorScreen from '../ErrorScreen/ErrorScreen';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import UserLocationLayers from '../UserLocationLayers/UserLocationLayers';
 import ClusterLayer from '../ClusterLayer/ClusterLayer';
 import PointLayers from '../PointLayers/PointLayers';
 import sourceProps from './sourceProps';
 
-const MapLayers = ({ userPosition, setMapCenter, setZoomLevel }) => {
-    const [features, setFeatures] = useState([]);
-    useEffect(() => {
-        let isMounted = true;
-        const getFeatureCollection = async () => {
-            const collection = await fetchData(process.env.REACT_APP_ENDPOINT);
-            if (isMounted) {
-                setFeatures((collection instanceof Error) ? collection : collection.features);
-            }
-        };
-        getFeatureCollection();
-        return () => { isMounted = false; }; // Prevent setting state after unmounted
-    }, []);
-
-    const hasError = (features instanceof Error);
-    if (hasError) { return <ErrorScreen message="無法取得資料" />; }
-
-    const hasData = (features.length > 0);
-    if (!hasData) { return <LoadingScreen />; }
+const MapLayers = (props) => {
+    const {
+        userPosition,
+        setMapCenter,
+        setZoomLevel,
+        features,
+    } = props;
 
     return (
         <>
@@ -65,6 +50,20 @@ MapLayers.propTypes = {
     }).isRequired,
     setMapCenter: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
+    features: PropTypes.arrayOf(PropTypes.exact({
+        type: PropTypes.oneOf(['Feature']),
+        geometry: PropTypes.exact({
+            type: PropTypes.oneOf(['Point']),
+            coordinates: PropTypes.arrayOf(PropTypes.number),
+        }),
+        properties: PropTypes.exact({
+            id: PropTypes.string,
+            name: PropTypes.string,
+            masksLeft: PropTypes.number,
+            childMasksLeft: PropTypes.number,
+            updatedAt: PropTypes.string,
+        }),
+    })).isRequired,
 };
 
 export default MapLayers;

@@ -17,10 +17,12 @@ const MaskMap = (props) => {
         setZoomLevel,
         zoomLevel,
         userPosition,
+        features,
     } = props;
 
     const { pathname } = useLocation();
     const history = useHistory();
+
     const unhighlightSymbol = (map, event) => {
         if (!pathname.startsWith('/places/')) { return; }
         const clickedSymbols = map
@@ -60,6 +62,7 @@ const MaskMap = (props) => {
                 userPosition={userPosition}
                 setMapCenter={setMapCenter}
                 setZoomLevel={setZoomLevel}
+                features={features}
             />
         </InteractiveMap>
     );
@@ -74,6 +77,20 @@ MaskMap.propTypes = {
         coordinates: PropTypes.arrayOf(PropTypes.number),
         radius: PropTypes.number,
     }).isRequired,
+    features: PropTypes.arrayOf(PropTypes.exact({
+        type: PropTypes.oneOf(['Feature']),
+        geometry: PropTypes.exact({
+            type: PropTypes.oneOf(['Point']),
+            coordinates: PropTypes.arrayOf(PropTypes.number),
+        }),
+        properties: PropTypes.exact({
+            id: PropTypes.string,
+            name: PropTypes.string,
+            masksLeft: PropTypes.number,
+            childMasksLeft: PropTypes.number,
+            updatedAt: PropTypes.string,
+        }),
+    })).isRequired,
 };
 
 export default MaskMap;
