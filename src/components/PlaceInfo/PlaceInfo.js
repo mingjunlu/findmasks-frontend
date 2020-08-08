@@ -24,7 +24,14 @@ const initialPlace = {
     updatedAt: '',
 };
 
-const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
+const PlaceInfo = (props) => {
+    const {
+        setMapCenter,
+        setZoomLevel,
+        sortedMaskNumbers,
+        sortedChildMaskNumbers,
+    } = props;
+
     const { id } = useParams();
     const { state: locationState } = useLocation();
     const history = useHistory();
@@ -176,6 +183,8 @@ const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
                     setIsScrollable={setIsScrollable}
                     setPosition={setPosition}
                     updatedAt={place.updatedAt}
+                    sortedMaskNumbers={sortedMaskNumbers}
+                    sortedChildMaskNumbers={sortedChildMaskNumbers}
                 />
             </article>
         </FullScreenOverlay>
@@ -185,6 +194,8 @@ const PlaceInfo = ({ setMapCenter, setZoomLevel }) => {
 PlaceInfo.propTypes = {
     setMapCenter: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
+    sortedMaskNumbers: PropTypes.arrayOf(PropTypes.number).isRequired,
+    sortedChildMaskNumbers: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default PlaceInfo;

@@ -23,6 +23,8 @@ const PlaceInfoBody = (props) => {
         setIsScrollable,
         setPosition,
         updatedAt,
+        sortedMaskNumbers,
+        sortedChildMaskNumbers,
     } = props;
 
     const initialPosition = Math.round(window.innerHeight * 0.6);
@@ -68,13 +70,13 @@ const PlaceInfoBody = (props) => {
         >
             <div className={isOutdated ? `${styles.cards} ${styles.outdated}` : styles.cards}>
                 <SheetCard
-                    backgroundColor={getCardColor(masksLeft, 600)}
+                    backgroundColor={getCardColor(masksLeft, sortedMaskNumbers)}
                     label="成人口罩"
                     suffix="片"
                     value={Number.isNaN(masksLeft) ? '' : masksLeft.toLocaleString()}
                 />
                 <SheetCard
-                    backgroundColor={getCardColor(childMasksLeft, 200)}
+                    backgroundColor={getCardColor(childMasksLeft, sortedChildMaskNumbers)}
                     label="兒童口罩"
                     suffix="片"
                     value={Number.isNaN(childMasksLeft) ? '' : childMasksLeft.toLocaleString()}
@@ -133,6 +135,8 @@ PlaceInfoBody.propTypes = {
     setIsScrollable: PropTypes.func.isRequired,
     setPosition: PropTypes.func.isRequired,
     updatedAt: PropTypes.string.isRequired,
+    sortedMaskNumbers: PropTypes.arrayOf(PropTypes.number).isRequired,
+    sortedChildMaskNumbers: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default React.memo(PlaceInfoBody);

@@ -35,34 +35,34 @@ const unclusteredPointProps = {
             ['!=', 'id', id],
         ];
     },
-    getIconImage() {
+    getIconImage(firstQuarter, secondQuarter) {
         return [
             'case',
             ['<', ['to-string', ['get', 'updatedAt']], getLastHourTime()],
             ['concat', placeType, '-40--insufficient'],
             [
                 'step',
-                ['get', 'childMasksLeft'],
+                ['get', 'masksLeft'],
                 ['concat', placeType, '-40--insufficient'],
-                Math.round(200 * 0.15),
+                firstQuarter,
                 ['concat', placeType, '-40--acceptable'],
-                Math.round(200 * 0.60),
+                secondQuarter,
                 ['concat', placeType, '-40--sufficient'],
             ],
         ];
     },
-    getTextColor() {
+    getTextColor(firstQuarter, secondQuarter) {
         return [
             'case',
             ['<', ['to-string', ['get', 'updatedAt']], getLastHourTime()],
             'rgb(142, 142, 147)',
             [
                 'step',
-                ['get', 'childMasksLeft'],
+                ['get', 'masksLeft'],
                 'rgb(142, 142, 147)',
-                Math.round(200 * 0.15),
+                firstQuarter,
                 'rgb(230, 126, 34)',
-                Math.round(200 * 0.60),
+                secondQuarter,
                 'rgb(17, 120, 122)',
             ],
         ];
@@ -91,34 +91,34 @@ const selectedPointProps = {
         const id = pathname.slice(prefix.length);
         return ['==', 'id', id];
     },
-    getIconImage() {
+    getIconImage(firstQuarter, secondQuarter) {
         return [
             'case',
             ['<', ['to-string', ['get', 'updatedAt']], getLastHourTime()],
             ['concat', placeType, '-80--insufficient'],
             [
                 'step',
-                ['get', 'childMasksLeft'],
+                ['get', 'masksLeft'],
                 ['concat', placeType, '-80--insufficient'],
-                Math.round(200 * 0.15),
+                firstQuarter,
                 ['concat', placeType, '-80--acceptable'],
-                Math.round(200 * 0.60),
+                secondQuarter,
                 ['concat', placeType, '-80--sufficient'],
             ],
         ];
     },
-    getTextColor() {
+    getTextColor(firstQuarter, secondQuarter) {
         return [
             'case',
             ['<', ['to-string', ['get', 'updatedAt']], getLastHourTime()],
             'rgb(142, 142, 147)',
             [
                 'step',
-                ['get', 'childMasksLeft'],
+                ['get', 'masksLeft'],
                 'rgb(142, 142, 147)',
-                Math.round(200 * 0.15),
+                firstQuarter,
                 'rgb(230, 126, 34)',
-                Math.round(200 * 0.60),
+                secondQuarter,
                 'rgb(17, 120, 122)',
             ],
         ];
@@ -137,18 +137,18 @@ const selectedDotProps = {
         const id = pathname.slice(prefix.length);
         return ['==', 'id', id];
     },
-    getCircleColor() {
+    getCircleColor(firstQuarter, secondQuarter) {
         return [
             'case',
             ['<', ['to-string', ['get', 'updatedAt']], getLastHourTime()],
             'rgb(142, 142, 147)',
             [
                 'step',
-                ['get', 'childMasksLeft'],
+                ['get', 'masksLeft'],
                 'rgb(142, 142, 147)',
-                Math.round(200 * 0.15),
+                firstQuarter,
                 'rgb(230, 126, 34)',
-                Math.round(200 * 0.60),
+                secondQuarter,
                 'rgb(17, 120, 122)',
             ],
         ];

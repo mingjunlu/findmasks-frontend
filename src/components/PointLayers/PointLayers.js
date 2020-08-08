@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import { Layer } from 'react-mapbox-gl';
 import LastLocation from '../../classes/LastLocation';
+import getQuantile from '../../utilities/getQuantile';
 import changeCursor from '../../utilities/changeCursor';
 import generateImages from './generateImages';
 import { unclusteredPointProps, selectedPointProps, selectedDotProps } from './pointLayersProps';
@@ -10,7 +12,7 @@ import { unclusteredPointProps, selectedPointProps, selectedDotProps } from './p
 const images = generateImages();
 const isProduction = (process.env.NODE_ENV === 'production');
 
-const SymbolLayer = () => {
+const SymbolLayer = ({ sortedMaskNumbers }) => {
     const history = useHistory();
     const { pathname } = useLocation();
 
@@ -33,6 +35,9 @@ const SymbolLayer = () => {
         }
     };
 
+    const firstQuarter = getQuantile(sortedMaskNumbers, 0.25);
+    const secondQuarter = getQuantile(sortedMaskNumbers, 0.5);
+
     return (
         <>
             <Layer
@@ -43,11 +48,11 @@ const SymbolLayer = () => {
                 filter={unclusteredPointProps.getFilter(pathname)}
                 layout={{
                     ...unclusteredPointProps.layout,
-                    'icon-image': unclusteredPointProps.getIconImage(),
+                    'icon-image': unclusteredPointProps.getIconImage(firstQuarter, secondQuarter),
                 }}
                 paint={{
                     ...unclusteredPointProps.paint,
-                    'text-color': unclusteredPointProps.getTextColor(),
+                    'text-color': unclusteredPointProps.getTextColor(firstQuarter, secondQuarter),
                 }}
                 onClick={displayPlaceInfo}
                 onMouseEnter={changeCursor}
@@ -61,11 +66,11 @@ const SymbolLayer = () => {
                 filter={selectedPointProps.getFilter(pathname)}
                 layout={{
                     ...selectedPointProps.layout,
-                    'icon-image': selectedPointProps.getIconImage(),
+                    'icon-image': selectedPointProps.getIconImage(firstQuarter, secondQuarter),
                 }}
                 paint={{
                     ...selectedPointProps.paint,
-                    'text-color': selectedPointProps.getTextColor(),
+                    'text-color': selectedPointProps.getTextColor(firstQuarter, secondQuarter),
                 }}
             />
             <Layer
@@ -75,11 +80,15 @@ const SymbolLayer = () => {
                 filter={selectedDotProps.getFilter(pathname)}
                 paint={{
                     ...selectedDotProps.paint,
-                    'circle-color': selectedDotProps.getCircleColor(),
+                    'circle-color': selectedDotProps.getCircleColor(firstQuarter, secondQuarter),
                 }}
             />
         </>
     );
+};
+
+SymbolLayer.propTypes = {
+    sortedMaskNumbers: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default SymbolLayer;

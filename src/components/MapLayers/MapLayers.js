@@ -12,6 +12,7 @@ const MapLayers = (props) => {
         setMapCenter,
         setZoomLevel,
         features,
+        sortedMaskNumbers,
     } = props;
 
     return (
@@ -38,7 +39,7 @@ const MapLayers = (props) => {
             />
             <UserLocationLayers radius={userPosition.radius} />
             <ClusterLayer setMapCenter={setMapCenter} setZoomLevel={setZoomLevel} />
-            <PointLayers />
+            <PointLayers sortedMaskNumbers={sortedMaskNumbers} />
         </>
     );
 };
@@ -64,6 +65,7 @@ MapLayers.propTypes = {
             updatedAt: PropTypes.string,
         }),
     })).isRequired,
+    sortedMaskNumbers: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default MapLayers;

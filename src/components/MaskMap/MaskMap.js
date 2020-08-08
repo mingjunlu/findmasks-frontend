@@ -18,6 +18,7 @@ const MaskMap = (props) => {
         zoomLevel,
         userPosition,
         features,
+        sortedMaskNumbers,
     } = props;
 
     const { pathname } = useLocation();
@@ -63,6 +64,7 @@ const MaskMap = (props) => {
                 setMapCenter={setMapCenter}
                 setZoomLevel={setZoomLevel}
                 features={features}
+                sortedMaskNumbers={sortedMaskNumbers}
             />
         </InteractiveMap>
     );
@@ -91,6 +93,7 @@ MaskMap.propTypes = {
             updatedAt: PropTypes.string,
         }),
     })).isRequired,
+    sortedMaskNumbers: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default MaskMap;
