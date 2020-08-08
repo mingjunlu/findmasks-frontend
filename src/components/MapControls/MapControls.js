@@ -44,6 +44,10 @@ const MapControls = ({ setMapCenter, setUserPosition, setZoomLevel }) => {
                 const positionOptions = { enableHighAccuracy: true, timeout: 6000 };
                 navigator.geolocation.getCurrentPosition(onSuccess, onError, positionOptions);
             });
+            setUserPosition({
+                coordinates: currentPosition.coordinates,
+                radius: currentPosition.accuracy,
+            });
         } catch (error) {
             setHasError(true);
         }
@@ -53,10 +57,6 @@ const MapControls = ({ setMapCenter, setUserPosition, setZoomLevel }) => {
             const zoomLevelAfterLocated = 14;
             setZoomLevel(zoomLevelAfterLocated);
             setMapCenter(currentPosition.coordinates);
-            setUserPosition({
-                coordinates: currentPosition.coordinates,
-                radius: currentPosition.accuracy,
-            });
         }
     };
 
