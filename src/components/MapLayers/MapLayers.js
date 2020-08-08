@@ -39,7 +39,6 @@ const MapLayers = ({ setMapCenter, setZoomLevel }) => {
     return (
         <>
             <MapControls
-                setFeatures={setFeatures}
                 setMapCenter={setMapCenter}
                 setPosition={setPosition}
                 setZoomLevel={setZoomLevel}

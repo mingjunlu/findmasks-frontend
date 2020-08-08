@@ -41,15 +41,6 @@
     display: none;
 }
 
-.refreshIcon {
-    width: 1.6rem;
-    height: 1.6rem;
-    fill: rgb(58, 58, 60);
-    transform: rotate(-45deg);
-    position: relative;
-    top: 0.1rem;
-}
-
 .locateIcon {
     width: 1.4rem;
     height: 1.4rem;

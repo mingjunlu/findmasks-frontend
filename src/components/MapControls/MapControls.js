@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ReactGA from 'react-ga';
-import fetchData from '../../utilities/fetchData';
-import generateNumber from '../../utilities/generateNumber';
 import LastLocation from '../../classes/LastLocation';
-import { ReactComponent as RefreshIcon } from '../../assets/icons/refresh.svg';
 import { ReactComponent as LocateIcon } from '../../assets/icons/locate.svg';
 import { ReactComponent as PlusIcon } from '../../assets/icons/plus.svg';
 import { ReactComponent as MinusIcon } from '../../assets/icons/minus.svg';
@@ -16,14 +13,7 @@ import styles from './MapControls.module.css';
 
 const isProduction = (process.env.NODE_ENV === 'production');
 
-const MapControls = (props) => {
-    const {
-        setFeatures,
-        setMapCenter,
-        setPosition,
-        setZoomLevel,
-    } = props;
-
+const MapControls = ({ setMapCenter, setPosition, setZoomLevel }) => {
     const history = useHistory();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -68,32 +58,6 @@ const MapControls = (props) => {
                 radius: currentPosition.accuracy,
             });
         }
-    };
-
-    const updateFeatures = async () => {
-        const startTime = Date.now();
-        history.push('/');
-        setIsLoading(true);
-
-        if (isProduction) {
-            ReactGA.event({
-                category: 'MapControl',
-                action: 'Clicked the refresh button',
-            });
-        }
-
-        const collection = await fetchData(process.env.REACT_APP_ENDPOINT);
-
-        // Add a delay to make it more "realistic"
-        await new Promise((resolve) => {
-            const requestTime = Date.now() - startTime;
-            const idealLoadingTime = generateNumber(500, 800);
-            const delay = (requestTime < idealLoadingTime) ? (idealLoadingTime - requestTime) : 0;
-            setTimeout(resolve, delay);
-        });
-
-        setFeatures(collection instanceof Error ? collection : collection.features);
-        setIsLoading(false);
     };
 
     const zoomIn = () => {
@@ -145,15 +109,6 @@ const MapControls = (props) => {
                     <LocateIcon className={styles.locateIcon} />
                 </button>
             </div>
-            <div className={`${styles.container} ${styles.bottomRight} ${styles.containerForDesktop}`}>
-                <button
-                    className={`${styles.button} ${styles.buttonForDesktop}`}
-                    onClick={updateFeatures}
-                    type="button"
-                >
-                    <RefreshIcon className={styles.refreshIcon} />
-                </button>
-            </div>
             <div className={`${styles.container} ${styles.bottomRight}`}>
                 <button
                     className={`${styles.button} ${styles.buttonForDesktop}`}
@@ -175,7 +130,6 @@ const MapControls = (props) => {
 };
 
 MapControls.propTypes = {
-    setFeatures: PropTypes.func.isRequired,
     setMapCenter: PropTypes.func.isRequired,
     setPosition: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
