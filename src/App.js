@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import ReactGA from 'react-ga';
 import LastLocation from './classes/LastLocation';
 import usePageView from './hooks/usePageView';
 import ErrorScreen from './components/ErrorScreen/ErrorScreen';
 import PlaceInfo from './components/PlaceInfo/PlaceInfo';
 import ResetTitle from './components/ResetTitle/ResetTitle';
 import MaskMap from './components/MaskMap/MaskMap';
-
-// Initialize Google Analytics
-const isProduction = (process.env.NODE_ENV === 'production');
-if (isProduction) {
-    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
-}
 
 // Restore the last location
 const somewhereInTaipei = [121.5313043, 25.0493621];
