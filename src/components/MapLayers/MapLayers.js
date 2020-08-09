@@ -15,6 +15,9 @@ const MapLayers = (props) => {
         sortedMaskNumbers,
     } = props;
 
+    const hasData = (features.length > 0);
+    if (!hasData) { return null; }
+
     return (
         <>
             <Source

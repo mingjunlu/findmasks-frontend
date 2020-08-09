@@ -4,7 +4,6 @@ import LastLocation from './classes/LastLocation';
 import usePageView from './hooks/usePageView';
 import fetchData from './utilities/fetchData';
 import ErrorScreen from './components/ErrorScreen/ErrorScreen';
-import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import PlaceInfo from './components/PlaceInfo/PlaceInfo';
 import ResetTitle from './components/ResetTitle/ResetTitle';
 import MapControls from './components/MapControls/MapControls';
@@ -48,25 +47,29 @@ const App = () => {
     if (hasError) { return <ErrorScreen message="無法取得資料" />; }
 
     const hasData = (features.length > 0);
-    if (!hasData) { return <LoadingScreen />; }
-
-    const sortedMaskNumbers = features
-        .map((feature) => feature.properties.masksLeft)
-        .sort((a, b) => (a - b));
-    const sortedChildMaskNumbers = features
-        .map((feature) => feature.properties.childMasksLeft)
-        .sort((a, b) => (a - b));
+    const sortedMaskNumbers = hasData
+        ? features
+            .map((feature) => feature.properties.masksLeft)
+            .sort((a, b) => (a - b))
+        : [];
+    const sortedChildMaskNumbers = hasData
+        ? features
+            .map((feature) => feature.properties.childMasksLeft)
+            .sort((a, b) => (a - b))
+        : [];
 
     return (
         <>
             <Switch>
                 <Route exact path="/places/:id">
-                    <PlaceInfo
-                        setMapCenter={setMapCenter}
-                        setZoomLevel={setZoomLevel}
-                        sortedMaskNumbers={sortedMaskNumbers}
-                        sortedChildMaskNumbers={sortedChildMaskNumbers}
-                    />
+                    {hasData && (
+                        <PlaceInfo
+                            setMapCenter={setMapCenter}
+                            setZoomLevel={setZoomLevel}
+                            sortedMaskNumbers={sortedMaskNumbers}
+                            sortedChildMaskNumbers={sortedChildMaskNumbers}
+                        />
+                    )}
                 </Route>
 
                 <Route exact path="/">
@@ -82,11 +85,13 @@ const App = () => {
                 </Route>
             </Switch>
 
-            <MapControls
-                setMapCenter={setMapCenter}
-                setUserPosition={setUserPosition}
-                setZoomLevel={setZoomLevel}
-            />
+            {hasData && (
+                <MapControls
+                    setMapCenter={setMapCenter}
+                    setUserPosition={setUserPosition}
+                    setZoomLevel={setZoomLevel}
+                />
+            )}
 
             <MaskMap
                 mapCenter={mapCenter}
