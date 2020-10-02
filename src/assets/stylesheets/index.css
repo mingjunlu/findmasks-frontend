@@ -21,6 +21,10 @@ html, body, #root {
     height: 100vh;
 }
 
+.mapboxgl-canvas {
+    outline: none;
+}
+
 .mapboxgl-ctrl-logo {
     user-select: none;
 }
