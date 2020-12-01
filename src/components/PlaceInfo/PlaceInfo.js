@@ -98,7 +98,6 @@ const PlaceInfo = (props) => {
         newLocation.save();
     }, [coordinates, locationState, setMapCenter, setZoomLevel]);
 
-
     const topBoundary = 32;
     const initialPosition = Math.round(window.innerHeight * 0.6);
     const [position, setPosition] = useState(initialPosition);
