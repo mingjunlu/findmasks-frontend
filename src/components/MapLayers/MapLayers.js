@@ -55,6 +55,7 @@ MapLayers.propTypes = {
     setMapCenter: PropTypes.func.isRequired,
     setZoomLevel: PropTypes.func.isRequired,
     features: PropTypes.arrayOf(PropTypes.exact({
+        /* eslint-disable react/no-unused-prop-types */
         type: PropTypes.oneOf(['Feature']),
         geometry: PropTypes.exact({
             type: PropTypes.oneOf(['Point']),
@@ -67,6 +68,7 @@ MapLayers.propTypes = {
             childMasksLeft: PropTypes.number,
             updatedAt: PropTypes.string,
         }),
+        /* eslint-enable react/no-unused-prop-types */
     })).isRequired,
     sortedMaskNumbers: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
