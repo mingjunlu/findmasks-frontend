@@ -76,10 +76,13 @@ MaskMap.propTypes = {
     setZoomLevel: PropTypes.func.isRequired,
     zoomLevel: PropTypes.number.isRequired,
     userPosition: PropTypes.exact({
+        /* eslint-disable react/no-unused-prop-types */
         coordinates: PropTypes.arrayOf(PropTypes.number),
         radius: PropTypes.number,
+        /* eslint-enable react/no-unused-prop-types */
     }).isRequired,
     features: PropTypes.arrayOf(PropTypes.exact({
+        /* eslint-disable react/no-unused-prop-types */
         type: PropTypes.oneOf(['Feature']),
         geometry: PropTypes.exact({
             type: PropTypes.oneOf(['Point']),
@@ -92,6 +95,7 @@ MaskMap.propTypes = {
             childMasksLeft: PropTypes.number,
             updatedAt: PropTypes.string,
         }),
+        /* eslint-enable react/no-unused-prop-types */
     })).isRequired,
     sortedMaskNumbers: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
