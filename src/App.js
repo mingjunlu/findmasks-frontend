@@ -60,6 +60,22 @@ const App = () => {
 
     return (
         <>
+            <MaskMap
+                mapCenter={mapCenter}
+                setMapCenter={setMapCenter}
+                setZoomLevel={setZoomLevel}
+                zoomLevel={zoomLevel}
+                userPosition={userPosition}
+                features={features}
+                sortedMaskNumbers={sortedMaskNumbers}
+            />
+            {hasData && (
+                <MapControls
+                    setMapCenter={setMapCenter}
+                    setUserPosition={setUserPosition}
+                    setZoomLevel={setZoomLevel}
+                />
+            )}
             <Switch>
                 <Route exact path="/places/:id">
                     {hasData && (
@@ -84,24 +100,6 @@ const App = () => {
                     />
                 </Route>
             </Switch>
-
-            {hasData && (
-                <MapControls
-                    setMapCenter={setMapCenter}
-                    setUserPosition={setUserPosition}
-                    setZoomLevel={setZoomLevel}
-                />
-            )}
-
-            <MaskMap
-                mapCenter={mapCenter}
-                setMapCenter={setMapCenter}
-                setZoomLevel={setZoomLevel}
-                zoomLevel={zoomLevel}
-                userPosition={userPosition}
-                features={features}
-                sortedMaskNumbers={sortedMaskNumbers}
-            />
         </>
     );
 };
