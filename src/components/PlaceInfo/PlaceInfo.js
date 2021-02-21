@@ -4,6 +4,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import ReactGA from 'react-ga';
 import fetchData from '../../utilities/fetchData';
+import generateNumber from '../../utilities/generateNumber';
 import LastLocation from '../../classes/LastLocation';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import FullScreenOverlay from '../FullScreenOverlay/FullScreenOverlay';
@@ -57,9 +58,21 @@ const PlaceInfo = (props) => {
                 });
             }
 
+            const startTime = Date.now();
             const feature = await fetchData(`${process.env.REACT_APP_ENDPOINT}/${id}`, {
                 signal: abortController.signal,
             });
+            const endTime = Date.now();
+
+            // Prevent the skeleton screen from flashing
+            const elapsedTime = endTime - startTime;
+            const minimumResponseTime = generateNumber(450, 750);
+            if (elapsedTime < minimumResponseTime) {
+                await new Promise((resolve) => {
+                    const delay = minimumResponseTime - elapsedTime;
+                    setTimeout(resolve, delay);
+                });
+            }
 
             if (!isMounted) { return; }
             if (feature instanceof Error) {
