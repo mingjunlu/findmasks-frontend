@@ -29,6 +29,10 @@ html, body, #root {
     user-select: none;
 }
 
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl-logo {
+    margin: 0;
+}
+
 .mapboxgl-ctrl-bottom-right > .mapboxgl-ctrl-attrib.mapboxgl-compact {
     opacity: 0.3;
     min-height: 24px;
