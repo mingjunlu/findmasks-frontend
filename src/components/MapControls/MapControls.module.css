@@ -12,6 +12,7 @@
 }
 
 .topRight {
+    position: fixed;
     top: 1.0rem;
     right: 1.0rem;
 }
