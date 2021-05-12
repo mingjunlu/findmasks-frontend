@@ -66,7 +66,7 @@ const PlaceInfo = (props) => {
 
             // Prevent the skeleton screen from flashing
             const elapsedTime = endTime - startTime;
-            const minimumResponseTime = generateNumber(450, 750);
+            const minimumResponseTime = generateNumber(200, 400);
             if (elapsedTime < minimumResponseTime) {
                 await new Promise((resolve) => {
                     const delay = minimumResponseTime - elapsedTime;
