@@ -7,6 +7,10 @@ const colors = {
 };
 
 const getCardColor = (amount, sortedArray) => {
+    if (amount === 0) {
+        return colors.insufficient;
+    }
+
     const firstQuarter = getQuantile(sortedArray, 0.25);
     const secondQuarter = getQuantile(sortedArray, 0.5);
 

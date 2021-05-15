@@ -40,6 +40,8 @@ const unclusteredPointProps = {
             'case',
             ['<', ['to-string', ['get', 'updatedAt']], getLastHourTime()],
             ['concat', placeType, '-40--insufficient'],
+            ['==', ['get', 'masksLeft'], 0],
+            ['concat', placeType, '-40--insufficient'],
             [
                 'step',
                 ['get', 'masksLeft'],
@@ -55,6 +57,8 @@ const unclusteredPointProps = {
         return [
             'case',
             ['<', ['to-string', ['get', 'updatedAt']], getLastHourTime()],
+            'rgb(142, 142, 147)',
+            ['==', ['get', 'masksLeft'], 0],
             'rgb(142, 142, 147)',
             [
                 'step',
@@ -96,6 +100,8 @@ const selectedPointProps = {
             'case',
             ['<', ['to-string', ['get', 'updatedAt']], getLastHourTime()],
             ['concat', placeType, '-80--insufficient'],
+            ['==', ['get', 'masksLeft'], 0],
+            ['concat', placeType, '-80--insufficient'],
             [
                 'step',
                 ['get', 'masksLeft'],
@@ -111,6 +117,8 @@ const selectedPointProps = {
         return [
             'case',
             ['<', ['to-string', ['get', 'updatedAt']], getLastHourTime()],
+            'rgb(142, 142, 147)',
+            ['==', ['get', 'masksLeft'], 0],
             'rgb(142, 142, 147)',
             [
                 'step',
@@ -141,6 +149,8 @@ const selectedDotProps = {
         return [
             'case',
             ['<', ['to-string', ['get', 'updatedAt']], getLastHourTime()],
+            'rgb(142, 142, 147)',
+            ['==', ['get', 'masksLeft'], 0],
             'rgb(142, 142, 147)',
             [
                 'step',
